@@ -29,6 +29,18 @@ describe("payment scenarios", () => {
       expect.objectContaining({ group: "no-payment-path", severity: "critical" }),
     ]));
   });
+
+  it("treats an explicit neither-app answer as no mobile payment path", () => {
+    const report = evaluateCheck(paymentConfig, {
+      paymentApps: ["none"],
+      physicalCard: false,
+      cashBackup: false,
+    });
+
+    expect(report.findings).toEqual(expect.arrayContaining([
+      expect.objectContaining({ group: "no-payment-path", severity: "critical" }),
+    ]));
+  });
 });
 
 describe("hotel arrival scenarios", () => {
@@ -89,6 +101,17 @@ describe("readiness scenarios", () => {
 });
 
 describe("date scenarios", () => {
+  it("flags a departure date earlier than the arrival date", () => {
+    const report = evaluateCheck(datesConfig, {
+      arrivalDate: "2026-08-10",
+      departureDate: "2026-08-05",
+    });
+
+    expect(report.findings).toEqual(expect.arrayContaining([
+      expect.objectContaining({ group: "invalid-date-order", severity: "critical" }),
+    ]));
+  });
+
   it("detects a National Day overlap", () => {
     const report = evaluateCheck(datesConfig, {
       arrivalDate: "2026-10-02",

@@ -39,6 +39,13 @@ export const datesConfig: ToolConfig = {
     choice("bookingsComplete", "Are your key transport and hotel bookings confirmed?", yesNo),
   ],
   rules: [
+    {
+      code: "DATES_INVALID_ORDER", severity: "critical", priority: 1, group: "invalid-date-order",
+      all: [{ field: "arrivalDate", endField: "departureDate", operator: "date-after-field" }],
+      title: "Your departure date is earlier than your arrival date.",
+      explanation: "The trip window cannot be checked until the dates are in chronological order.",
+      actions: ["Correct the arrival or departure date and run the check again."],
+    },
     ...holidayRules,
     {
       code: "DATES_OUTSIDE_WINDOW", severity: "information", priority: 1, group: "invalid-verified-window",

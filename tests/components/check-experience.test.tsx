@@ -45,6 +45,7 @@ describe("CheckExperience", () => {
     saveDraft("readiness", { currentStep: 0, answers: { paymentReady: true } });
 
     render(<CheckExperience config={miniConfig} />);
+    expect(screen.getByText("Pending")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Continue my check" }));
 
     expect(screen.getByRole("radio", { name: "Yes, it is ready" })).toBeChecked();

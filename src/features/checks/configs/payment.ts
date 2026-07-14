@@ -12,7 +12,7 @@ export const paymentConfig: ToolConfig = {
     { id: "paymentApps", prompt: "Which mobile payment apps have you set up?", type: "multiple", required: true, options: [
       { label: "Alipay", value: "alipay" },
       { label: "WeChat Pay", value: "wechat" },
-      { label: "Neither", value: "none" },
+      { label: "Neither", value: "none", exclusive: true },
     ] },
     choice("identityVerified", "Is your identity verification complete?"),
     choice("foreignCardLinked", "Have you linked a foreign bank card?"),
@@ -30,9 +30,12 @@ export const paymentConfig: ToolConfig = {
     {
       code: "PAY_NO_PATH", severity: "critical", priority: 1, group: "no-payment-path",
       all: [
-        { field: "paymentApps", operator: "missing" },
         { field: "physicalCard", operator: "eq", value: false },
         { field: "cashBackup", operator: "eq", value: false },
+      ],
+      any: [
+        { field: "paymentApps", operator: "missing" },
+        { field: "paymentApps", operator: "includes", value: "none" },
       ],
       title: "You do not have a practical payment path.",
       explanation: "Without mobile payment, a physical card or cash, routine purchases may become impossible.",

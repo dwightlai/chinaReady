@@ -86,6 +86,16 @@ describe("evaluateCondition", () => {
       }),
     ).toBe(true);
   });
+
+  it("compares two answer dates", () => {
+    expect(
+      evaluateCondition({ arrival: "2026-08-10", departure: "2026-08-05" }, {
+        field: "arrival",
+        endField: "departure",
+        operator: "date-after-field",
+      }),
+    ).toBe(true);
+  });
 });
 
 describe("evaluateCheck", () => {

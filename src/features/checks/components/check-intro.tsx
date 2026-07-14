@@ -12,6 +12,7 @@ export function CheckIntro({ config, hasDraft, onStart }: CheckIntroProps) {
   return (
     <section className="mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 sm:py-20">
       <p className="text-xs font-extrabold uppercase tracking-[0.12em] text-[var(--primary)]">Trip preparation tool</p>
+      {hasDraft ? <span className="mt-4 inline-block rounded-lg bg-[var(--surface-strong)] px-3 py-1.5 text-xs font-extrabold uppercase tracking-[0.08em] text-[var(--pending)]">Pending</span> : null}
       <h1 className="mt-4 max-w-3xl font-[var(--font-display)] text-4xl leading-[1.06] tracking-[-0.045em] text-[var(--ink)] sm:text-6xl">
         {config.name}
       </h1>

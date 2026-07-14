@@ -1,11 +1,18 @@
+"use client";
+
+import { List, X } from "@phosphor-icons/react";
 import Link from "next/link";
+import { useState } from "react";
 
 import { Container } from "./container";
 
 export function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+  const close = () => setIsOpen(false);
+
   return (
-    <header className="border-b border-[var(--line)] bg-white/95">
-      <Container className="flex min-h-20 items-center justify-between gap-8">
+    <header className="relative z-50 border-b border-[var(--line)] bg-white/95">
+      <Container className="flex min-h-20 items-center justify-between gap-3">
         <Link aria-label="ChinaTripCheck home" className="text-lg font-extrabold tracking-[-0.035em] text-[var(--ink)]" href="/">
           China<span className="text-[var(--primary)]">TripCheck</span>
         </Link>
@@ -15,10 +22,30 @@ export function Header() {
           <Link className="transition hover:text-[var(--ink)]" href="/how-it-works">How it works</Link>
           <Link className="transition hover:text-[var(--ink)]" href="/about">About</Link>
         </nav>
-        <Link className="whitespace-nowrap rounded-full bg-[var(--primary)] px-5 py-2.5 text-sm font-extrabold text-white transition hover:bg-[var(--primary-dark)]" href="/checks/readiness">
+        <Link className="hidden whitespace-nowrap rounded-full bg-[var(--primary)] px-5 py-2.5 text-sm font-extrabold text-white transition hover:bg-[var(--primary-dark)] sm:inline-flex" href="/checks/readiness">
           Check my trip
         </Link>
+        <button
+          aria-expanded={isOpen}
+          aria-label={isOpen ? "Close navigation" : "Open navigation"}
+          className="grid size-11 place-items-center rounded-full border border-[var(--line)] text-[var(--ink)] md:hidden"
+          onClick={() => setIsOpen((open) => !open)}
+          type="button"
+        >
+          {isOpen ? <X aria-hidden size={21} weight="bold" /> : <List aria-hidden size={22} weight="bold" />}
+        </button>
       </Container>
+      {isOpen ? (
+        <nav aria-label="Mobile navigation" className="absolute inset-x-0 top-full border-y border-[var(--line)] bg-white p-5 shadow-[0_18px_45px_rgba(20,43,62,0.12)] md:hidden">
+          <div className="mx-auto grid max-w-[1180px] gap-1">
+            <Link className="rounded-xl px-4 py-3 font-bold" href="/checks" onClick={close}>Checks</Link>
+            <Link className="rounded-xl px-4 py-3 font-bold" href="/guides" onClick={close}>Guides</Link>
+            <Link className="rounded-xl px-4 py-3 font-bold" href="/how-it-works" onClick={close}>How it works</Link>
+            <Link className="rounded-xl px-4 py-3 font-bold" href="/about" onClick={close}>About</Link>
+            <Link className="mt-2 rounded-full bg-[var(--primary)] px-5 py-3 text-center font-extrabold text-white" href="/checks/readiness" onClick={close}>Check my trip</Link>
+          </div>
+        </nav>
+      ) : null}
     </header>
   );
 }

@@ -56,9 +56,14 @@ export function QuestionField({ question, value, error, onChange }: QuestionFiel
                 checked={selected.includes(optionValue)}
                 className="h-4 w-4 accent-[var(--primary)]"
                 onChange={() => {
+                  const exclusiveValues = question.options
+                    ?.filter((candidate) => candidate.exclusive)
+                    .map((candidate) => String(candidate.value)) ?? [];
                   const next = selected.includes(optionValue)
                     ? selected.filter((item) => item !== optionValue)
-                    : [...selected, optionValue];
+                    : option.exclusive
+                      ? [optionValue]
+                      : [...selected.filter((item) => !exclusiveValues.includes(item)), optionValue];
                   onChange(next);
                 }}
                 type="checkbox"

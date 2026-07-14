@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 
 import { evaluateCheck } from "../evaluate";
 import {
@@ -18,20 +18,20 @@ import { RiskReport } from "./risk-report";
 
 type Phase = "intro" | "questions" | "report";
 
+const subscribeToBrowser = () => () => undefined;
+const browserSnapshot = () => true;
+const serverSnapshot = () => false;
+
 export function CheckExperience({ config }: { config: ToolConfig }) {
-  const [isReady, setIsReady] = useState(false);
-  const [phase, setPhase] = useState<Phase>("intro");
+  const isBrowser = useSyncExternalStore(subscribeToBrowser, browserSnapshot, serverSnapshot);
+  const [phase, setPhase] = useState<Phase | null>(null);
   const [draft, setDraft] = useState<DraftState | null>(null);
   const [report, setReport] = useState<RiskReportData | null>(null);
-
-  useEffect(() => {
-    const storedDraft = loadDraft(config.slug);
-    const storedReport = loadReport(config.slug)?.report ?? null;
-    setDraft(storedDraft);
-    setReport(storedReport);
-    setPhase(storedReport ? "report" : "intro");
-    setIsReady(true);
-  }, [config.slug]);
+  const storedDraft = isBrowser && phase === null ? loadDraft(config.slug) : null;
+  const storedReport = isBrowser && phase === null ? loadReport(config.slug)?.report ?? null : null;
+  const activeDraft = draft ?? storedDraft;
+  const activeReport = report ?? storedReport;
+  const activePhase = phase ?? (activeReport ? "report" : "intro");
 
   function persistDraft(nextDraft: DraftState) {
     setDraft(nextDraft);
@@ -61,13 +61,18 @@ export function CheckExperience({ config }: { config: ToolConfig }) {
     setPhase("intro");
   }
 
-  if (!isReady) return <div className="min-h-[22rem]" aria-hidden />;
+  function beginQuestions() {
+    setDraft(activeDraft);
+    setPhase("questions");
+  }
 
-  if (phase === "questions") {
+  if (!isBrowser) return <div className="min-h-[22rem]" aria-hidden />;
+
+  if (activePhase === "questions") {
     return (
       <Questionnaire
         config={config}
-        initialDraft={draft}
+        initialDraft={activeDraft}
         onComplete={completeCheck}
         onExit={() => setPhase("intro")}
         onSave={persistDraft}
@@ -75,16 +80,16 @@ export function CheckExperience({ config }: { config: ToolConfig }) {
     );
   }
 
-  if (phase === "report" && report) {
+  if (activePhase === "report" && activeReport) {
     return (
       <RiskReport
         onClear={clearReport}
-        onEdit={() => setPhase("questions")}
+        onEdit={beginQuestions}
         onRestart={restartCheck}
-        report={report}
+        report={activeReport}
       />
     );
   }
 
-  return <CheckIntro config={config} hasDraft={Boolean(draft)} onStart={() => setPhase("questions")} />;
+  return <CheckIntro config={config} hasDraft={Boolean(activeDraft)} onStart={beginQuestions} />;
 }

@@ -60,6 +60,12 @@ export function evaluateCondition(answers: Answers, condition: Condition): boole
       const boundary = dateValue(condition.value);
       return actualDate !== null && boundary !== null && actualDate > boundary;
     }
+    case "date-after-field": {
+      if (!condition.endField) return false;
+      const actualDate = dateValue(actual);
+      const comparedDate = dateValue(answers[condition.endField]);
+      return actualDate !== null && comparedDate !== null && actualDate > comparedDate;
+    }
     case "time-between": {
       if (!condition.value || typeof condition.value !== "object" || Array.isArray(condition.value)) return false;
       const actualTime = timeValue(actual);

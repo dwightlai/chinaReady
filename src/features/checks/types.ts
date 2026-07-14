@@ -14,6 +14,7 @@ export type Operator =
   | "lte"
   | "date-before"
   | "date-after"
+  | "date-after-field"
   | "time-between"
   | "date-overlaps";
 
@@ -28,6 +29,7 @@ export interface QuestionOption {
   label: string;
   value: string | boolean;
   description?: string;
+  exclusive?: boolean;
 }
 
 export interface VisibilityRule {
