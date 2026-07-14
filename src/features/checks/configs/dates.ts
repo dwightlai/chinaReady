@@ -31,7 +31,7 @@ function overlapCondition(window: { start: string; end: string }): Condition {
   };
 }
 
-const holidayRules: RiskRule[] = holidayEvents2026.flatMap((event, index) => {
+const holidayRules: RiskRule[] = holidayEvents2026.flatMap((event, index): RiskRule[] => {
   const window = holidayWindow(event);
   const scopedCities = event.affectedCities.filter((city) => city !== "ALL");
   const guides = event.code.includes("NATIONAL_DAY")
@@ -41,7 +41,7 @@ const holidayRules: RiskRule[] = holidayEvents2026.flatMap((event, index) => {
   if (scopedCities.length === 0) {
     return [{
       code: `${event.code}_OVERLAP`,
-      severity: "high" as const,
+      severity: "high",
       priority: 10 + index,
       group: `holiday-overlap-${event.code}`,
       all: [overlapCondition(window)],
@@ -55,7 +55,7 @@ const holidayRules: RiskRule[] = holidayEvents2026.flatMap((event, index) => {
   return [
     {
       code: `${event.code}_LOCAL`,
-      severity: "high" as const,
+      severity: "high",
       priority: 10 + index,
       group: `holiday-overlap-${event.code}-local`,
       all: [overlapCondition(window)],
@@ -67,7 +67,7 @@ const holidayRules: RiskRule[] = holidayEvents2026.flatMap((event, index) => {
     },
     {
       code: `${event.code}_OTHER`,
-      severity: "information" as const,
+      severity: "information",
       priority: 50 + index,
       group: `holiday-overlap-${event.code}-other`,
       all: [overlapCondition(window), ...cityExcludeConditions(scopedCities)],
