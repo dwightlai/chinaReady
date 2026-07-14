@@ -1,4 +1,4 @@
-# China Ready MVP Design Specification
+# China Trip Check MVP Design Specification
 
 **Date:** 2026-07-14  
 **Status:** Approved design draft  
@@ -10,7 +10,16 @@
 
 ## 1. Product decision
 
-China Ready is an English, mobile-first pre-trip risk checking website for international visitors to China. It is not a general travel guide, itinerary generator, booking platform, or destination directory.
+China Trip Check is an English, mobile-first pre-trip risk checking website for international visitors to China. It is not a general travel guide, itinerary generator, booking platform, or destination directory. The original project documents and internal project directory use the working name China Ready; all public-facing product copy uses China Trip Check.
+
+Brand and domain rules:
+
+- Canonical production domain: `https://chinatripcheck.com`
+- Public brand name: `China Trip Check`
+- Navigation wordmark: `ChinaTripCheck`
+- Browser title suffix: `China Trip Check`
+- Social sharing and structured-data organization name: `China Trip Check`
+- Public copy must not display the old China Ready working name.
 
 The first release helps users identify problems that could prevent payment, increase booking risk, or cause a failed hotel arrival. It converts answers into conservative, specific, ordered actions.
 
@@ -104,7 +113,7 @@ Within two to four minutes, a user can identify concrete blockers, understand wh
 
 ### 4.1 Primary navigation
 
-- China Ready brand link
+- ChinaTripCheck wordmark linking to the homepage
 - Checks
 - How it works
 - About
@@ -380,7 +389,7 @@ On load:
 3. Restore valid data.
 4. Discard invalid data and show a quiet recovery notice.
 
-Users can clear a single tool or all locally stored China Ready data. The interface explicitly states that no account is required and answers remain on the current device.
+Users can clear a single tool or all locally stored China Trip Check data. The interface explicitly states that no account is required and answers remain on the current device.
 
 ## 11. Error and edge-case handling
 
