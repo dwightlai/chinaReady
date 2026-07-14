@@ -16,7 +16,9 @@ export type Operator =
   | "date-after"
   | "date-after-field"
   | "time-between"
-  | "date-overlaps";
+  | "date-overlaps"
+  | "text-includes"
+  | "text-excludes";
 
 export interface Condition {
   field: string;

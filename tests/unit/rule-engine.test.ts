@@ -74,6 +74,8 @@ describe("evaluateCondition", () => {
     [{ field: "arrivalDate", operator: "date-before", value: "2026-12-31" }, true],
     [{ field: "arrivalDate", operator: "date-after", value: "2026-01-01" }, true],
     [{ field: "hotelArrivalTime", operator: "time-between", value: { start: "23:00", end: "05:00" } }, true],
+    [{ field: "mode", operator: "text-includes", value: "mobile" }, true],
+    [{ field: "mode", operator: "text-excludes", value: "cash" }, true],
   ] as const)("evaluates %o", (condition, expected) => {
     expect(evaluateCondition(answers, condition)).toBe(expected);
   });
@@ -198,5 +200,34 @@ describe("dates holiday windows", () => {
     });
 
     expect(report.findings.some((finding) => finding.codes.includes("DATES_OUTSIDE_WINDOW"))).toBe(true);
+  });
+
+  it("keeps Canton Fair high only for Guangzhou trips", async () => {
+    const { datesConfig } = await import("@/features/checks/configs/dates");
+    const guangzhou = evaluateCheck(datesConfig, {
+      arrivalDate: "2026-04-20",
+      departureDate: "2026-04-25",
+      cities: "Guangzhou",
+      intercityTravel: false,
+      highSpeedRail: false,
+      popularAttractions: false,
+      datesFlexible: true,
+      bookingsComplete: true,
+    });
+    const beijing = evaluateCheck(datesConfig, {
+      arrivalDate: "2026-04-20",
+      departureDate: "2026-04-25",
+      cities: "Beijing",
+      intercityTravel: false,
+      highSpeedRail: false,
+      popularAttractions: false,
+      datesFlexible: true,
+      bookingsComplete: true,
+    });
+
+    expect(guangzhou.findings.some((finding) => finding.codes.includes("CN_CANTON_FAIR_SPRING_2026_LOCAL") && finding.severity === "high")).toBe(true);
+    expect(beijing.findings.some((finding) => finding.codes.includes("CN_CANTON_FAIR_SPRING_2026_OTHER") && finding.severity === "information")).toBe(true);
+    expect(beijing.findings.some((finding) => finding.codes.includes("CN_CANTON_FAIR_SPRING_2026_LOCAL"))).toBe(false);
+    expect(beijing.findings.some((finding) => /Guangzhou hotels/i.test(finding.actions.join(" ")))).toBe(false);
   });
 });

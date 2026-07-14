@@ -1,32 +1,82 @@
-import type { RiskRule, ToolConfig } from "../types";
+import type { Condition, RiskRule, ToolConfig } from "../types";
 import { holidayEvents2026, holidayWindow } from "./holiday-events";
 import { choice, yesNo } from "./shared";
 
-const holidayRules: RiskRule[] = holidayEvents2026.map((event, index) => {
-  const window = holidayWindow(event);
-  const isCantonFair = event.code.includes("CANTON_FAIR");
+const cityAliases: Record<string, string[]> = {
+  Guangzhou: ["guangzhou", "广州", "canton"],
+};
+
+function cityMatchConditions(cities: string[]): Condition[] {
+  return cities.flatMap((city) => (cityAliases[city] ?? [city.toLowerCase()]).map((alias) => ({
+    field: "cities",
+    operator: "text-includes" as const,
+    value: alias,
+  })));
+}
+
+function cityExcludeConditions(cities: string[]): Condition[] {
+  return cities.flatMap((city) => (cityAliases[city] ?? [city.toLowerCase()]).map((alias) => ({
+    field: "cities",
+    operator: "text-excludes" as const,
+    value: alias,
+  })));
+}
+
+function overlapCondition(window: { start: string; end: string }): Condition {
   return {
-    code: `${event.code}_OVERLAP`,
-    severity: "high" as const,
-    priority: 10 + index,
-    group: `holiday-overlap-${event.code}`,
-    all: [{
-      field: "arrivalDate",
-      endField: "departureDate",
-      operator: "date-overlaps",
-      value: { start: window.start, end: window.end },
-    }],
-    title: `Your trip overlaps with ${event.name}.`,
-    explanation: isCantonFair
-      ? "Hotel and transport demand can rise sharply in Guangzhou during the fair."
-      : "Transport, hotels and popular attractions may have less availability than usual.",
-    actions: isCantonFair
-      ? ["Confirm Guangzhou hotels early.", "Leave buffer time for crowded transfer routes."]
-      : ["Prioritize intercity transport.", "Confirm hotels and timed attractions early."],
-    relatedGuides: event.code.includes("NATIONAL_DAY")
-      ? ["travel-during-china-national-day"]
-      : ["china-holidays-tickets-hotels"],
+    field: "arrivalDate",
+    endField: "departureDate",
+    operator: "date-overlaps",
+    value: { start: window.start, end: window.end },
   };
+}
+
+const holidayRules: RiskRule[] = holidayEvents2026.flatMap((event, index) => {
+  const window = holidayWindow(event);
+  const scopedCities = event.affectedCities.filter((city) => city !== "ALL");
+  const guides = event.code.includes("NATIONAL_DAY")
+    ? ["travel-during-china-national-day"]
+    : ["china-holidays-tickets-hotels"];
+
+  if (scopedCities.length === 0) {
+    return [{
+      code: `${event.code}_OVERLAP`,
+      severity: "high" as const,
+      priority: 10 + index,
+      group: `holiday-overlap-${event.code}`,
+      all: [overlapCondition(window)],
+      title: `Your trip overlaps with ${event.name}.`,
+      explanation: "Transport, hotels and popular attractions may have less availability than usual.",
+      actions: ["Prioritize intercity transport.", "Confirm hotels and timed attractions early."],
+      relatedGuides: guides,
+    }];
+  }
+
+  return [
+    {
+      code: `${event.code}_LOCAL`,
+      severity: "high" as const,
+      priority: 10 + index,
+      group: `holiday-overlap-${event.code}-local`,
+      all: [overlapCondition(window)],
+      any: cityMatchConditions(scopedCities),
+      title: `Your trip overlaps with ${event.name}.`,
+      explanation: "Hotel and transport demand can rise sharply in Guangzhou during the fair.",
+      actions: ["Confirm Guangzhou hotels early.", "Leave buffer time for crowded transfer routes."],
+      relatedGuides: guides,
+    },
+    {
+      code: `${event.code}_OTHER`,
+      severity: "information" as const,
+      priority: 50 + index,
+      group: `holiday-overlap-${event.code}-other`,
+      all: [overlapCondition(window), ...cityExcludeConditions(scopedCities)],
+      title: `Your trip overlaps with ${event.name.replace(/\s*\(Guangzhou[^)]*\)/, "").trim()} dates.`,
+      explanation: "Trade-fair periods can raise hotel and transport demand in the host city. This may matter less if you are not visiting that city.",
+      actions: ["Confirm whether your cities are affected before changing bookings."],
+      relatedGuides: guides,
+    },
+  ];
 });
 
 export const datesConfig: ToolConfig = {

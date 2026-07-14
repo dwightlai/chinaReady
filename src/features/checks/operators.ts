@@ -89,6 +89,14 @@ export function evaluateCondition(answers: Answers, condition: Condition): boole
       }
       return arrival <= windowEnd && departure >= windowStart;
     }
+    case "text-includes": {
+      if (typeof actual !== "string" || typeof condition.value !== "string") return false;
+      return actual.toLowerCase().includes(condition.value.toLowerCase());
+    }
+    case "text-excludes": {
+      if (typeof actual !== "string" || typeof condition.value !== "string") return false;
+      return !actual.toLowerCase().includes(condition.value.toLowerCase());
+    }
   }
 }
 
