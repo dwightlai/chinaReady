@@ -55,6 +55,7 @@ describe("evaluateCondition", () => {
     apps: ["alipay", "wechat"],
     cards: 1,
     optional: null,
+    hotelArrivalTime: "00:30",
     arrivalDate: "2026-10-01",
     departureDate: "2026-10-05",
   };
@@ -68,6 +69,9 @@ describe("evaluateCondition", () => {
     [{ field: "cards", operator: "gte", value: 1 }, true],
     [{ field: "cards", operator: "lt", value: 2 }, true],
     [{ field: "cards", operator: "lte", value: 1 }, true],
+    [{ field: "arrivalDate", operator: "date-before", value: "2026-12-31" }, true],
+    [{ field: "arrivalDate", operator: "date-after", value: "2026-01-01" }, true],
+    [{ field: "hotelArrivalTime", operator: "time-between", value: { start: "23:00", end: "05:00" } }, true],
   ] as const)("evaluates %o", (condition, expected) => {
     expect(evaluateCondition(answers, condition)).toBe(expected);
   });

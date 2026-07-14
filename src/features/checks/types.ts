@@ -12,6 +12,9 @@ export type Operator =
   | "gte"
   | "lt"
   | "lte"
+  | "date-before"
+  | "date-after"
+  | "time-between"
   | "date-overlaps";
 
 export interface Condition {

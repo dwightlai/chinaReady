@@ -15,6 +15,13 @@ function dateValue(value: unknown): number | null {
   return Number.isNaN(timestamp) ? null : timestamp;
 }
 
+function timeValue(value: unknown): number | null {
+  if (typeof value !== "string" || !/^\d{2}:\d{2}$/.test(value)) return null;
+  const [hours, minutes] = value.split(":").map(Number);
+  if (hours === undefined || minutes === undefined || hours > 23 || minutes > 59) return null;
+  return hours * 60 + minutes;
+}
+
 export function evaluateCondition(answers: Answers, condition: Condition): boolean {
   const actual = answers[condition.field];
 
@@ -42,6 +49,26 @@ export function evaluateCondition(answers: Answers, condition: Condition): boole
     case "lte": {
       const number = asNumber(actual);
       return number !== null && number <= Number(condition.value);
+    }
+    case "date-before": {
+      const actualDate = dateValue(actual);
+      const boundary = dateValue(condition.value);
+      return actualDate !== null && boundary !== null && actualDate < boundary;
+    }
+    case "date-after": {
+      const actualDate = dateValue(actual);
+      const boundary = dateValue(condition.value);
+      return actualDate !== null && boundary !== null && actualDate > boundary;
+    }
+    case "time-between": {
+      if (!condition.value || typeof condition.value !== "object" || Array.isArray(condition.value)) return false;
+      const actualTime = timeValue(actual);
+      const start = timeValue(condition.value.start);
+      const end = timeValue(condition.value.end);
+      if (actualTime === null || start === null || end === null) return false;
+      return start <= end
+        ? actualTime >= start && actualTime <= end
+        : actualTime >= start || actualTime <= end;
     }
     case "date-overlaps": {
       if (!condition.endField || !condition.value || typeof condition.value !== "object" || Array.isArray(condition.value)) {
