@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Lora, Manrope } from "next/font/google";
+import Script from "next/script";
 
 import { siteConfig } from "@/lib/site";
 import { Footer } from "@/components/site/footer";
@@ -37,7 +38,17 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${sans.variable} ${display.variable}`}>
-      <body><Header />{children}<Footer /></body>
+      <body>
+        <Header />
+        {children}
+        <Footer />
+        <Script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="4a540b7a-e978-4d3b-9cb3-c585c9e42fea"
+          strategy="afterInteractive"
+        />
+      </body>
     </html>
   );
 }
