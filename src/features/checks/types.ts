@@ -41,6 +41,7 @@ export interface Question {
   id: string;
   prompt: string;
   help?: string;
+  section?: string;
   type: "single" | "multiple" | "date" | "time" | "text";
   required: boolean;
   options?: QuestionOption[];
@@ -62,6 +63,12 @@ export interface RiskRule {
   relatedCheck?: CheckSlug;
 }
 
+export interface SampleFindingPreview {
+  severity: "critical" | "high";
+  title: string;
+  explanation: string;
+}
+
 export interface ToolConfig {
   slug: CheckSlug;
   name: string;
@@ -69,6 +76,8 @@ export interface ToolConfig {
   description: string;
   duration: string;
   lastReviewedAt: string;
+  coveragePoints: string[];
+  sampleFinding: SampleFindingPreview;
   questions: Question[];
   rules: RiskRule[];
 }

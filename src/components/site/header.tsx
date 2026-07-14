@@ -2,12 +2,28 @@
 
 import { List, X } from "@phosphor-icons/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 import { Container } from "./container";
 
+const navItems = [
+  { href: "/checks", label: "Checks" },
+  { href: "/guides", label: "Guides" },
+  { href: "/how-it-works", label: "How it works" },
+  { href: "/about", label: "About" },
+] as const;
+
+function navClass(pathname: string, href: string) {
+  const active = pathname === href || pathname.startsWith(`${href}/`);
+  return active
+    ? "text-[var(--ink)]"
+    : "text-[var(--muted)] transition hover:text-[var(--ink)]";
+}
+
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname() ?? "";
   const close = () => setIsOpen(false);
 
   return (
@@ -16,11 +32,12 @@ export function Header() {
         <Link aria-label="ChinaTripCheck home" className="text-lg font-extrabold tracking-[-0.035em] text-[var(--ink)]" href="/">
           China<span className="text-[var(--primary)]">TripCheck</span>
         </Link>
-        <nav aria-label="Main navigation" className="hidden items-center gap-7 text-sm font-bold text-[var(--muted)] md:flex">
-          <Link className="transition hover:text-[var(--ink)]" href="/checks">Checks</Link>
-          <Link className="transition hover:text-[var(--ink)]" href="/guides">Guides</Link>
-          <Link className="transition hover:text-[var(--ink)]" href="/how-it-works">How it works</Link>
-          <Link className="transition hover:text-[var(--ink)]" href="/about">About</Link>
+        <nav aria-label="Main navigation" className="hidden items-center gap-7 text-sm font-bold md:flex">
+          {navItems.map((item) => (
+            <Link aria-current={pathname === item.href || pathname.startsWith(`${item.href}/`) ? "page" : undefined} className={navClass(pathname, item.href)} href={item.href} key={item.href}>
+              {item.label}
+            </Link>
+          ))}
         </nav>
         <Link className="hidden whitespace-nowrap rounded-full bg-[var(--primary)] px-5 py-2.5 text-sm font-extrabold text-white transition hover:bg-[var(--primary-dark)] sm:inline-flex" href="/checks/readiness">
           Check my trip
@@ -38,10 +55,11 @@ export function Header() {
       {isOpen ? (
         <nav aria-label="Mobile navigation" className="absolute inset-x-0 top-full border-y border-[var(--line)] bg-white p-5 shadow-[0_18px_45px_rgba(20,43,62,0.12)] md:hidden">
           <div className="mx-auto grid max-w-[1180px] gap-1">
-            <Link className="rounded-xl px-4 py-3 font-bold" href="/checks" onClick={close}>Checks</Link>
-            <Link className="rounded-xl px-4 py-3 font-bold" href="/guides" onClick={close}>Guides</Link>
-            <Link className="rounded-xl px-4 py-3 font-bold" href="/how-it-works" onClick={close}>How it works</Link>
-            <Link className="rounded-xl px-4 py-3 font-bold" href="/about" onClick={close}>About</Link>
+            {navItems.map((item) => (
+              <Link className={`rounded-xl px-4 py-3 font-bold ${navClass(pathname, item.href)}`} href={item.href} key={item.href} onClick={close}>
+                {item.label}
+              </Link>
+            ))}
             <Link className="mt-2 rounded-full bg-[var(--primary)] px-5 py-3 text-center font-extrabold text-white" href="/checks/readiness" onClick={close}>Check my trip</Link>
           </div>
         </nav>

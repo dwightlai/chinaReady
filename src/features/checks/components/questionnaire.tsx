@@ -72,6 +72,7 @@ export function Questionnaire({ config, initialDraft, onSave, onComplete, onExit
     <section className="mx-auto w-full max-w-2xl px-4 py-8 sm:px-6 sm:py-12">
       <Progress current={safeStep + 1} total={questions.length} />
       <div aria-live="polite" className="mt-10">
+        {currentQuestion.section ? <p className="mb-3 text-sm font-bold text-[var(--primary)]">{currentQuestion.section}</p> : null}
         <h1 className="font-[var(--font-display)] text-3xl leading-tight tracking-[-0.035em] text-[var(--ink)] sm:text-4xl">
           {currentQuestion.prompt}
         </h1>

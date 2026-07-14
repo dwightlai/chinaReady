@@ -9,10 +9,10 @@ test("homepage exposes the approved four-check experience", async ({ page }) => 
   await expect(page.getByText(/China Ready|coming soon|train checker/i)).toHaveCount(0);
 });
 
-test("all eight guide cards open real guide pages", async ({ page }) => {
+test("guide cards open real guide pages", async ({ page }) => {
   await page.goto("/guides");
-  await expect(page.getByRole("link", { name: "Read guide" })).toHaveCount(8);
+  await expect(page.getByRole("link", { name: "Read guide" })).toHaveCount(9);
   await page.locator('a[href="/guides/test-mobile-payment-before-china"]').click();
   await expect(page).toHaveURL(/\/guides\/test-mobile-payment-before-china$/);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("mobile payment setup");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Alipay or WeChat Pay");
 });

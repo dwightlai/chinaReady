@@ -8,6 +8,7 @@ const GUIDE_SLUGS = new Set([
   "foreign-card-fails-in-china",
   "esim-bank-verification-messages",
   "one-payment-method-is-not-enough",
+  "arrive-with-working-internet",
   "china-holidays-tickets-hotels",
   "travel-during-china-national-day",
   "confirm-late-hotel-check-in-china",

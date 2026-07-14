@@ -13,6 +13,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...guideCatalog.map((guide) => `/guides/${guide.slug}`),
     "/how-it-works",
     "/about",
+    "/privacy",
+    "/terms",
   ];
 
   return paths.map((path) => ({ url: `${siteConfig.url}${path}`, lastModified: "2026-07-14" }));

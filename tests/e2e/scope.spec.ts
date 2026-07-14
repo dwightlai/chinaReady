@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-const routes = ["/", "/checks", "/guides", "/how-it-works", "/about"];
+const routes = ["/", "/checks", "/guides", "/how-it-works", "/about", "/privacy", "/terms"];
 
 for (const route of routes) {
   test(`keeps excluded product scope off ${route}`, async ({ page }) => {

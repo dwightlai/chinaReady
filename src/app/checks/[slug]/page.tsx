@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { Breadcrumbs } from "@/components/site/breadcrumbs";
+import { Container } from "@/components/site/container";
 import { CheckExperience } from "@/features/checks/components/check-experience";
 import { checkConfigs } from "@/features/checks/configs";
 import type { CheckSlug } from "@/features/checks/types";
@@ -20,5 +22,12 @@ export default async function CheckPage({ params }: { params: Promise<{ slug: st
   const { slug } = await params;
   const config = checkConfigs[slug as CheckSlug];
   if (!config) notFound();
-  return <main className="min-h-[65vh]"><CheckExperience config={config} /></main>;
+  return (
+    <main className="min-h-[65vh]">
+      <Container className="pt-8">
+        <Breadcrumbs items={[{ href: "/checks", label: "Checks" }, { label: config.name }]} />
+      </Container>
+      <CheckExperience config={config} />
+    </main>
+  );
 }

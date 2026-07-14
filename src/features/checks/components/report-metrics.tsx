@@ -4,11 +4,12 @@ export function ReportMetrics({ counts }: { counts: ReportCounts }) {
   const metrics = [
     ["Critical", counts.critical, "text-[var(--critical)]"],
     ["High risk", counts.high, "text-[var(--high)]"],
+    ["Info", counts.information, "text-[var(--pending)]"],
     ["Ready", counts.ready, "text-[var(--ready)]"],
   ] as const;
 
   return (
-    <div className="grid grid-cols-3 gap-2" aria-label="Report totals">
+    <div className="grid grid-cols-2 gap-2 sm:grid-cols-4" aria-label="Report totals">
       {metrics.map(([label, value, color]) => (
         <div className="rounded-[var(--radius-sm)] bg-[var(--surface)] p-3 sm:p-4" key={label}>
           <strong className={`block text-2xl ${color}`}>{value}</strong>

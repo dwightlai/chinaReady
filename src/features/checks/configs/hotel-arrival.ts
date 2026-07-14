@@ -1,5 +1,5 @@
 import type { ToolConfig } from "../types";
-import { choice, yesNo } from "./shared";
+import { choice, yesNo, yesNoUnsure } from "./shared";
 
 export const hotelArrivalConfig: ToolConfig = {
   slug: "hotel-arrival",
@@ -8,19 +8,30 @@ export const hotelArrivalConfig: ToolConfig = {
   description: "Check whether your hotel arrival has a reliable primary and backup path.",
   duration: "3 minutes",
   lastReviewedAt: "2026-07-14",
+  coveragePoints: [
+    "Late arrival and 24-hour front desk confirmation",
+    "Hotel name and address saved in Chinese",
+    "Passport name match on the booking",
+    "Nearby backup hotel and arrival transport plan",
+  ],
+  sampleFinding: {
+    severity: "critical",
+    title: "Your late hotel arrival is not confirmed.",
+    explanation: "The hotel may release the room or close its front desk before you arrive.",
+  },
   questions: [
-    { id: "city", prompt: "Which city is the hotel in?", type: "text", required: true },
-    { id: "hotelArrivalTime", prompt: "What time do you expect to reach the hotel?", type: "time", required: true },
-    choice("frontDesk24Hours", "Does the hotel confirm a 24-hour front desk?"),
-    choice("lateArrivalConfirmed", "Do you have written late-arrival confirmation?"),
-    choice("chineseHotelName", "Have you saved the hotel name in Chinese?", yesNo),
-    choice("chineseAddress", "Have you saved the full address in Chinese?", yesNo),
-    choice("hotelPhone", "Have you saved the hotel phone number?", yesNo),
-    choice("bookingNameMatches", "Does the booking name match the passport?"),
-    choice("mainstreamPlatform", "Was the stay booked through a recognized platform or directly?"),
-    choice("freeCancellation", "Can the booking still be cancelled without charge?", yesNo),
-    choice("backupHotel", "Have you identified a nearby 24-hour backup hotel?", yesNo),
-    choice("arrivalTransport", "Do you have a working transport and payment plan for arrival?"),
+    { id: "city", prompt: "Which city is the hotel in?", type: "text", required: true, section: "Stay details" },
+    { id: "hotelArrivalTime", prompt: "What time do you expect to reach the hotel?", type: "time", required: true, section: "Stay details" },
+    choice("frontDesk24Hours", "Does the hotel confirm a 24-hour front desk?", yesNoUnsure, undefined, "Late arrival"),
+    choice("lateArrivalConfirmed", "Do you have written late-arrival confirmation?", yesNoUnsure, undefined, "Late arrival"),
+    choice("chineseHotelName", "Have you saved the hotel name in Chinese?", yesNo, undefined, "Local details"),
+    choice("chineseAddress", "Have you saved the full address in Chinese?", yesNo, undefined, "Local details"),
+    choice("hotelPhone", "Have you saved the hotel phone number?", yesNo, undefined, "Local details"),
+    choice("bookingNameMatches", "Does the booking name match the passport?", yesNoUnsure, undefined, "Booking"),
+    choice("mainstreamPlatform", "Was the stay booked through a recognized platform or directly?", yesNoUnsure, undefined, "Booking"),
+    choice("freeCancellation", "Can the booking still be cancelled without charge?", yesNo, undefined, "Booking"),
+    choice("backupHotel", "Have you identified a nearby 24-hour backup hotel?", yesNo, undefined, "Backup"),
+    choice("arrivalTransport", "Do you have a working transport and payment plan for arrival?", yesNoUnsure, undefined, "Backup"),
   ],
   rules: [
     {
@@ -79,6 +90,40 @@ export const hotelArrivalConfig: ToolConfig = {
       explanation: "Finding a suitable property after midnight may be slow and stressful.",
       actions: ["Save one nearby hotel with a confirmed 24-hour front desk."],
       backup: "Keep the backup hotel's Chinese address and phone number offline.",
+    },
+    {
+      code: "HOTEL_NAME_ONLY", severity: "high", priority: 12, group: "missing-chinese-name",
+      all: [{ field: "chineseHotelName", operator: "eq", value: false }, { field: "chineseAddress", operator: "eq", value: true }],
+      title: "The hotel Chinese name is missing.",
+      explanation: "Drivers often search by the Chinese property name first.",
+      actions: ["Save the hotel name in Chinese as well as the address."],
+      relatedGuides: ["save-hotel-name-address-in-chinese"],
+    },
+    {
+      code: "HOTEL_ADDRESS_ONLY", severity: "high", priority: 13, group: "missing-chinese-address",
+      all: [{ field: "chineseAddress", operator: "eq", value: false }, { field: "chineseHotelName", operator: "eq", value: true }],
+      title: "The hotel Chinese address is missing.",
+      explanation: "A Chinese name without a full address can still send a driver to the wrong place.",
+      actions: ["Save the full Chinese address offline."],
+      relatedGuides: ["save-hotel-name-address-in-chinese"],
+    },
+    {
+      code: "HOTEL_NON_MAINSTREAM", severity: "information", priority: 31, group: "non-mainstream-booking",
+      all: [{ field: "mainstreamPlatform", operator: "eq", value: false }],
+      title: "The booking channel may be harder to support.",
+      explanation: "Less recognized booking paths can make late changes or confirmation slower.",
+      actions: ["Save written hotel confirmation and a direct hotel contact."],
+    },
+    {
+      code: "HOTEL_NO_24H", severity: "high", priority: 14, group: "no-24h-desk",
+      all: [
+        { field: "hotelArrivalTime", operator: "time-between", value: { start: "23:00", end: "05:00" } },
+        { field: "frontDesk24Hours", operator: "eq", value: false },
+      ],
+      title: "Late arrival meets a non-24-hour front desk.",
+      explanation: "Without a 24-hour desk, written late-arrival terms become essential.",
+      actions: ["Confirm late check-in in writing or choose a 24-hour property."],
+      relatedGuides: ["confirm-late-hotel-check-in-china"],
     },
   ],
 };

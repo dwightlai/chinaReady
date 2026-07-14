@@ -1,25 +1,33 @@
 import type { RiskRule, ToolConfig } from "../types";
-import { holidayEvents2026 } from "./holiday-events";
+import { holidayEvents2026, holidayWindow } from "./holiday-events";
 import { choice, yesNo } from "./shared";
 
-const holidayRules: RiskRule[] = holidayEvents2026.map((event, index) => ({
-  code: `${event.code}_OVERLAP`,
-  severity: "high",
-  priority: 10 + index,
-  group: "holiday-overlap",
-  all: [{
-    field: "arrivalDate",
-    endField: "departureDate",
-    operator: "date-overlaps",
-    value: { start: event.startDate, end: event.endDate },
-  }],
-  title: `Your trip overlaps with ${event.name}.`,
-  explanation: "Transport, hotels and popular attractions may have less availability than usual.",
-  actions: ["Prioritize intercity transport.", "Confirm hotels and timed attractions early."],
-  relatedGuides: event.code.includes("NATIONAL_DAY")
-    ? ["travel-during-china-national-day"]
-    : ["china-holidays-tickets-hotels"],
-}));
+const holidayRules: RiskRule[] = holidayEvents2026.map((event, index) => {
+  const window = holidayWindow(event);
+  const isCantonFair = event.code.includes("CANTON_FAIR");
+  return {
+    code: `${event.code}_OVERLAP`,
+    severity: "high" as const,
+    priority: 10 + index,
+    group: `holiday-overlap-${event.code}`,
+    all: [{
+      field: "arrivalDate",
+      endField: "departureDate",
+      operator: "date-overlaps",
+      value: { start: window.start, end: window.end },
+    }],
+    title: `Your trip overlaps with ${event.name}.`,
+    explanation: isCantonFair
+      ? "Hotel and transport demand can rise sharply in Guangzhou during the fair."
+      : "Transport, hotels and popular attractions may have less availability than usual.",
+    actions: isCantonFair
+      ? ["Confirm Guangzhou hotels early.", "Leave buffer time for crowded transfer routes."]
+      : ["Prioritize intercity transport.", "Confirm hotels and timed attractions early."],
+    relatedGuides: event.code.includes("NATIONAL_DAY")
+      ? ["travel-during-china-national-day"]
+      : ["china-holidays-tickets-hotels"],
+  };
+});
 
 export const datesConfig: ToolConfig = {
   slug: "dates",
@@ -28,6 +36,17 @@ export const datesConfig: ToolConfig = {
   description: "Check your dates against our verified 2026 holiday calendar.",
   duration: "2 minutes",
   lastReviewedAt: "2026-07-14",
+  coveragePoints: [
+    "Overlap with verified Chinese public holidays and pre/post risk windows",
+    "Spring travel rush, summer peak and Canton Fair pressure",
+    "High-speed rail and incomplete key bookings",
+    "Whether your dates still have room to flex",
+  ],
+  sampleFinding: {
+    severity: "high",
+    title: "Your trip overlaps with National Day Golden Week.",
+    explanation: "Transport, hotels and popular attractions may have less availability than usual.",
+  },
   questions: [
     { id: "arrivalDate", prompt: "When will you arrive in China?", type: "date", required: true },
     { id: "departureDate", prompt: "When will you leave China?", type: "date", required: true },
@@ -52,6 +71,8 @@ export const datesConfig: ToolConfig = {
       any: [
         { field: "arrivalDate", operator: "date-before", value: "2026-01-01" },
         { field: "arrivalDate", operator: "date-after", value: "2026-12-31" },
+        { field: "departureDate", operator: "date-before", value: "2026-01-01" },
+        { field: "departureDate", operator: "date-after", value: "2026-12-31" },
       ],
       title: "These dates are outside our verified holiday calendar.",
       explanation: "Official future holiday arrangements may not yet be published or reviewed here.",
@@ -67,6 +88,14 @@ export const datesConfig: ToolConfig = {
       relatedGuides: ["china-holidays-tickets-hotels"],
     },
     {
+      code: "DATES_INTERCITY", severity: "high", priority: 29, group: "intercity-unconfirmed",
+      all: [{ field: "intercityTravel", operator: "eq", value: true }, { field: "bookingsComplete", operator: "eq", value: false }],
+      title: "Intercity travel is planned without confirmed bookings.",
+      explanation: "Busy periods can make late city-to-city changes expensive or unavailable.",
+      actions: ["Confirm the main intercity legs before peak demand builds."],
+      relatedGuides: ["china-holidays-tickets-hotels"],
+    },
+    {
       code: "DATES_HOTEL", severity: "high", priority: 31, group: "hotel-price-risk",
       all: [{ field: "bookingsComplete", operator: "eq", value: false }, { field: "datesFlexible", operator: "eq", value: false }],
       title: "Fixed dates and incomplete bookings reduce your options.",
@@ -79,6 +108,13 @@ export const datesConfig: ToolConfig = {
       title: "Popular attraction reservations are not confirmed.",
       explanation: "Timed attractions may sell out during busy periods.",
       actions: ["Check passport booking support and reserve timed attractions early."],
+    },
+    {
+      code: "DATES_FLEXIBLE_GAP", severity: "information", priority: 40, group: "flexibility-gap",
+      all: [{ field: "datesFlexible", operator: "eq", value: false }, { field: "bookingsComplete", operator: "eq", value: true }],
+      title: "Your dates are fixed even though bookings look complete.",
+      explanation: "A disruption may still force expensive changes if nothing can move.",
+      actions: ["Keep one cancellable booking or a backup night if the schedule is tight."],
     },
   ],
 };

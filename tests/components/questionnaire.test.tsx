@@ -12,6 +12,8 @@ const miniConfig: ToolConfig = {
   description: "A test check.",
   duration: "1 minute",
   lastReviewedAt: "2026-07-14",
+  coveragePoints: ["Train ticket status"],
+  sampleFinding: { severity: "high", title: "Sample", explanation: "Sample explanation." },
   questions: [
     {
       id: "trainTravel",

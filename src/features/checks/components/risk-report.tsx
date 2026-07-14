@@ -1,4 +1,13 @@
-import { ArrowCounterClockwise, NotePencil, Trash } from "@phosphor-icons/react/dist/ssr";
+"use client";
+
+import { ArrowCounterClockwise, CopySimple, NotePencil, Trash } from "@phosphor-icons/react";
+import Link from "next/link";
+import { useState } from "react";
+
+import { formatReviewDate } from "@/lib/format-date";
+import { checkCatalog } from "@/features/checks/catalog";
+import { guidesBySlug } from "@/features/guides/catalog";
+import type { GuideSlug } from "@/features/guides/types";
 
 import type { RiskReport as RiskReportData } from "../types";
 import { ReportMetrics } from "./report-metrics";
@@ -18,11 +27,38 @@ const statusLabels = {
   ready: "READY",
 } as const;
 
-function displayDate(value: string): string {
-  return new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZone: "UTC" }).format(new Date(`${value}T00:00:00Z`));
+function reportSummary(report: RiskReportData): string {
+  const lines = [
+    `ChinaTripCheck report · score ${report.score} · ${statusLabels[report.overallStatus]}`,
+    `Reviewed ${formatReviewDate(report.lastReviewedAt)}`,
+    "",
+    ...report.findings.map((finding) => `- [${finding.severity}] ${finding.title}`),
+    "",
+    "Actions:",
+    ...report.actions.map((action) => `- ${action}`),
+  ];
+  return lines.join("\n");
 }
 
 export function RiskReport({ report, onEdit, onRestart, onClear }: RiskReportProps) {
+  const [copied, setCopied] = useState(false);
+  const relatedChecks = report.relatedChecks
+    .map((slug) => checkCatalog.find((check) => check.slug === slug))
+    .filter(Boolean);
+  const relatedGuides = report.relatedGuides
+    .map((slug) => guidesBySlug[slug as GuideSlug])
+    .filter(Boolean);
+
+  async function copyReport() {
+    try {
+      await navigator.clipboard.writeText(reportSummary(report));
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(false);
+    }
+  }
+
   return (
     <section className="mx-auto w-full max-w-4xl px-4 py-10 sm:px-6 sm:py-14">
       <div className="flex flex-col gap-6 rounded-[var(--radius-lg)] border border-[var(--line)] bg-white p-5 shadow-[0_20px_60px_rgba(29,58,78,0.08)] sm:p-8">
@@ -66,13 +102,43 @@ export function RiskReport({ report, onEdit, onRestart, onClear }: RiskReportPro
         </section>
       ) : null}
 
-      <p className="mt-6 text-sm text-[var(--muted)]">Last reviewed {displayDate(report.lastReviewedAt)}</p>
+      {(relatedChecks.length || relatedGuides.length) ? (
+        <section className="mt-8 grid gap-4 md:grid-cols-2">
+          {relatedChecks.length ? (
+            <div className="rounded-[var(--radius-md)] border border-[var(--line)] p-5">
+              <h2 className="font-extrabold">Next checks</h2>
+              <div className="mt-4 space-y-3">
+                {relatedChecks.map((check) => check ? (
+                  <Link className="block rounded-xl bg-[var(--surface)] px-4 py-3 text-sm font-bold" href={`/checks/${check.slug}`} key={check.slug}>
+                    Run the {check.name} →
+                  </Link>
+                ) : null)}
+              </div>
+            </div>
+          ) : null}
+          {relatedGuides.length ? (
+            <div className="rounded-[var(--radius-md)] border border-[var(--line)] p-5">
+              <h2 className="font-extrabold">Related guides</h2>
+              <div className="mt-4 space-y-3">
+                {relatedGuides.map((guide) => guide ? (
+                  <Link className="block rounded-xl bg-[var(--surface)] px-4 py-3 text-sm font-bold" href={`/guides/${guide.slug}`} key={guide.slug}>
+                    {guide.title}
+                  </Link>
+                ) : null)}
+              </div>
+            </div>
+          ) : null}
+        </section>
+      ) : null}
+
+      <p className="mt-6 text-sm text-[var(--muted)]">Last reviewed {formatReviewDate(report.lastReviewedAt)}</p>
       <p className="mt-2 max-w-[68ch] text-sm leading-6 text-[var(--muted)]">
         This check identifies likely preparation risks. Verify important details with the official provider before travel.
       </p>
       <div className="mt-7 flex flex-wrap gap-3">
         <button className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] px-4 py-2 font-bold" onClick={onEdit} type="button"><NotePencil aria-hidden size={18} />Edit answers</button>
         <button className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] px-4 py-2 font-bold" onClick={onRestart} type="button"><ArrowCounterClockwise aria-hidden size={18} />Restart</button>
+        <button className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] px-4 py-2 font-bold" onClick={copyReport} type="button"><CopySimple aria-hidden size={18} />{copied ? "Copied" : "Copy report"}</button>
         <button className="inline-flex items-center gap-2 rounded-full px-4 py-2 font-bold text-[var(--critical)]" onClick={onClear} type="button"><Trash aria-hidden size={18} />Clear report</button>
       </div>
     </section>

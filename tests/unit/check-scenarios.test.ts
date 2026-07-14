@@ -125,7 +125,7 @@ describe("date scenarios", () => {
     });
 
     expect(report.findings).toEqual(expect.arrayContaining([
-      expect.objectContaining({ group: "holiday-overlap", severity: "high" }),
+      expect.objectContaining({ group: "holiday-overlap-CN_NATIONAL_DAY_2026", severity: "high" }),
     ]));
   });
 

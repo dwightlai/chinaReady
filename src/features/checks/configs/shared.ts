@@ -16,6 +16,7 @@ export function choice(
   prompt: string,
   options: QuestionOption[] = yesNoUnsure,
   help?: string,
+  section?: string,
 ): Question {
-  return { id, prompt, help, type: "single", required: true, options };
+  return { id, prompt, help, section, type: "single", required: true, options };
 }

@@ -11,6 +11,8 @@ const sampleTool: ToolConfig = {
   description: "Find payment single points of failure.",
   duration: "3 minutes",
   lastReviewedAt: "2026-07-14",
+  coveragePoints: ["Payment test", "Backup card"],
+  sampleFinding: { severity: "high", title: "Sample", explanation: "Sample explanation." },
   questions: [],
   rules: [
     {
@@ -145,5 +147,56 @@ describe("evaluateCheck", () => {
       score: 100,
       findings: [],
     });
+  });
+});
+
+describe("dates holiday windows", () => {
+  it("applies preRiskDays before the official holiday start", async () => {
+    const { datesConfig } = await import("@/features/checks/configs/dates");
+    const report = evaluateCheck(datesConfig, {
+      arrivalDate: "2026-09-29",
+      departureDate: "2026-09-30",
+      cities: "Shanghai",
+      intercityTravel: false,
+      highSpeedRail: false,
+      popularAttractions: false,
+      datesFlexible: true,
+      bookingsComplete: true,
+    });
+
+    expect(report.findings.some((finding) => finding.codes.includes("CN_NATIONAL_DAY_2026_OVERLAP"))).toBe(true);
+  });
+
+  it("keeps multiple holiday findings instead of merging them", async () => {
+    const { datesConfig } = await import("@/features/checks/configs/dates");
+    const report = evaluateCheck(datesConfig, {
+      arrivalDate: "2026-01-20",
+      departureDate: "2026-02-20",
+      cities: "Beijing",
+      intercityTravel: false,
+      highSpeedRail: false,
+      popularAttractions: false,
+      datesFlexible: true,
+      bookingsComplete: true,
+    });
+
+    const holidayFindings = report.findings.filter((finding) => finding.group.startsWith("holiday-overlap-"));
+    expect(holidayFindings.length).toBeGreaterThan(1);
+  });
+
+  it("flags departure dates outside the verified window", async () => {
+    const { datesConfig } = await import("@/features/checks/configs/dates");
+    const report = evaluateCheck(datesConfig, {
+      arrivalDate: "2026-12-28",
+      departureDate: "2027-01-05",
+      cities: "Beijing",
+      intercityTravel: false,
+      highSpeedRail: false,
+      popularAttractions: false,
+      datesFlexible: true,
+      bookingsComplete: true,
+    });
+
+    expect(report.findings.some((finding) => finding.codes.includes("DATES_OUTSIDE_WINDOW"))).toBe(true);
   });
 });

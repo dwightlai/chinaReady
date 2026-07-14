@@ -13,6 +13,8 @@ const miniConfig: ToolConfig = {
   description: "Find the blockers that could disrupt your trip.",
   duration: "1 minute",
   lastReviewedAt: "2026-07-14",
+  coveragePoints: ["Payment readiness"],
+  sampleFinding: { severity: "critical", title: "Sample", explanation: "Sample explanation." },
   questions: [
     {
       id: "paymentReady",

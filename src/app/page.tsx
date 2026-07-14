@@ -3,10 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/site/container";
+import { FeaturedGuides } from "@/components/site/featured-guides";
 import { ResultPreview } from "@/components/site/result-preview";
+import { SampleFinding } from "@/components/site/sample-finding";
 import { SiteJsonLd } from "@/components/site/site-json-ld";
 import { ToolGrid } from "@/components/site/tool-grid";
 import { TrustStrip } from "@/components/site/trust-strip";
+import { siteConfig } from "@/lib/site";
 
 export default function HomePage() {
   return (
@@ -14,7 +17,7 @@ export default function HomePage() {
       <SiteJsonLd />
       <Container className="grid min-h-[620px] items-center gap-12 py-14 lg:grid-cols-[1.02fr_0.98fr] lg:py-16">
         <div className="relative z-10">
-          <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--primary)]">Travel prepared, arrive confident</p>
+          <p className="text-sm font-bold text-[var(--primary)]">{siteConfig.wordmark}</p>
           <h1 className="mt-5 max-w-[12ch] font-[var(--font-display)] text-5xl leading-[0.98] tracking-[-0.055em] text-[var(--ink)] sm:text-6xl lg:text-[4.5rem]">
             Find the risks before they disrupt your China trip.
           </h1>
@@ -41,10 +44,14 @@ export default function HomePage() {
 
       <section className="bg-[var(--surface)] py-16 sm:py-24">
         <Container>
-          <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--primary)]">Choose your starting point</p>
+          <p className="text-sm font-bold text-[var(--primary)]">Choose your starting point</p>
           <h2 className="mt-4 max-w-3xl font-[var(--font-display)] text-4xl tracking-[-0.045em] sm:text-5xl">Four checks. One clearer plan.</h2>
           <p className="mt-4 max-w-2xl text-lg leading-8 text-[var(--muted)]">Start with the full check or go directly to the part of your trip that needs attention.</p>
           <ToolGrid />
+          <div className="mt-14">
+            <SampleFinding />
+          </div>
+          <FeaturedGuides />
         </Container>
       </section>
 

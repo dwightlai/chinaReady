@@ -1,6 +1,7 @@
 export function ResultPreview() {
   return (
     <div className="w-[min(19rem,85%)] rounded-[1.25rem] border border-white/80 bg-white p-5 shadow-[0_24px_70px_rgba(17,42,61,0.18)]">
+      <p className="mb-3 text-[0.62rem] font-extrabold uppercase tracking-[0.12em] text-[var(--primary)]">Example report</p>
       <div className="flex items-start justify-between gap-4">
         <div>
           <p className="text-[0.62rem] font-extrabold uppercase tracking-[0.12em] text-[var(--muted)]">Readiness score</p>

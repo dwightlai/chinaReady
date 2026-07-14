@@ -7,6 +7,7 @@ const expectedSlugs = [
   "foreign-card-fails-in-china",
   "esim-bank-verification-messages",
   "one-payment-method-is-not-enough",
+  "arrive-with-working-internet",
   "china-holidays-tickets-hotels",
   "travel-during-china-national-day",
   "confirm-late-hotel-check-in-china",
@@ -14,9 +15,9 @@ const expectedSlugs = [
 ];
 
 describe("guide catalog", () => {
-  it("contains exactly the eight approved guides", () => {
+  it("contains exactly the approved guides", () => {
     expect(guideCatalog.map((guide) => guide.slug)).toEqual(expectedSlugs);
-    expect(new Set(guideCatalog.map((guide) => guide.slug)).size).toBe(8);
+    expect(new Set(guideCatalog.map((guide) => guide.slug)).size).toBe(9);
   });
 
   it("provides complete review, source and rendering metadata", () => {

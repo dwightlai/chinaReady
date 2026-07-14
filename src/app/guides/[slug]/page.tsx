@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { Container } from "@/components/site/container";
 import { checkCatalog } from "@/features/checks/catalog";
 import { guideCatalog, guidesBySlug } from "@/features/guides/catalog";
 import type { GuideSlug } from "@/features/guides/types";
+import { formatReviewDate } from "@/lib/format-date";
 
 export function generateStaticParams() {
   return guideCatalog.map((guide) => ({ slug: guide.slug }));
@@ -27,15 +29,18 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
 
   return (
     <main className="py-14 sm:py-20">
-      <Container className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem]">
+      <Container>
+        <Breadcrumbs items={[{ href: "/guides", label: "Guides" }, { label: guide.title }]} />
+      </Container>
+      <Container className="mt-2 grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <article className="max-w-3xl">
-          <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-[var(--primary)]">{guide.category}</p>
+          <p className="text-sm font-bold text-[var(--primary)]">{guide.category}</p>
           <h1 className="mt-4 font-[var(--font-display)] text-4xl leading-[1.05] tracking-[-0.05em] sm:text-6xl">{guide.title}</h1>
           <p className="mt-5 text-lg leading-8 text-[var(--muted)]">{guide.description}</p>
           <div className="my-10 h-px bg-[var(--line)]" />
           <Content />
           <div className="mt-12 border-t border-[var(--line)] pt-6 text-sm leading-6 text-[var(--muted)]">
-            <p>Last reviewed {guide.lastReviewedAt}</p>
+            <p>Last reviewed {formatReviewDate(guide.lastReviewedAt)}</p>
             <p className="mt-2">This guide is conservative preparation guidance. Confirm important details with the official provider before travel.</p>
           </div>
         </article>

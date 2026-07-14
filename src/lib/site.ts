@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "China Trip Check",
+  name: "ChinaTripCheck",
   wordmark: "ChinaTripCheck",
   url: "https://chinatripcheck.com",
   description:
