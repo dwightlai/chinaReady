@@ -88,7 +88,7 @@ Use `package.json` with these scripts:
 Run:
 
 ```powershell
-pnpm add next@latest react@latest react-dom@latest lucide-react
+pnpm add next@latest react@latest react-dom@latest @phosphor-icons/react
 pnpm add -D typescript @types/node @types/react @types/react-dom tailwindcss @tailwindcss/postcss eslint eslint-config-next vitest jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event @vitejs/plugin-react @playwright/test
 ```
 
@@ -555,6 +555,7 @@ git commit -m "feat: add accessible check and report experience"
 - Create: `src/components/site/tool-grid.tsx`
 - Create: `src/components/site/trust-strip.tsx`
 - Create: `src/components/site/site-json-ld.tsx`
+- Create: `public/images/china-trip-check-hero.png`
 - Create: `src/app/page.tsx`
 - Create: `src/app/checks/page.tsx`
 - Create: `src/app/checks/[slug]/page.tsx`
@@ -587,7 +588,7 @@ Header navigation contains Checks, How it works, About, and the `Check my trip` 
 
 - [ ] **Step 4: Implement the approved homepage composition**
 
-Use the confirmed v2 layout:
+Use the confirmed v2 layout and the generated project asset `public/images/china-trip-check-hero.png` through `next/image` with explicit dimensions and `priority`:
 
 - white hero with editorial display heading;
 - blue primary button and quiet secondary link;
