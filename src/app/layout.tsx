@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Lora, Manrope } from "next/font/google";
 
 import { siteConfig } from "@/lib/site";
+import { Footer } from "@/components/site/footer";
+import { Header } from "@/components/site/header";
 
 import "./globals.css";
 
@@ -35,7 +37,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${sans.variable} ${display.variable}`}>
-      <body>{children}</body>
+      <body><Header />{children}<Footer /></body>
     </html>
   );
 }
