@@ -35,7 +35,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
       <Container className="mt-2 grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <article className="max-w-3xl">
           <p className="text-sm font-bold text-[var(--primary)]">{guide.category}</p>
-          <h1 className="mt-4 font-[var(--font-display)] text-4xl leading-[1.05] tracking-[-0.05em] sm:text-6xl">{guide.title}</h1>
+          <h1 className="mt-4 font-[var(--font-display)] text-3xl leading-[1.2] tracking-[-0.03em] text-balance sm:text-4xl lg:text-5xl">{guide.title}</h1>
           <p className="mt-5 text-lg leading-8 text-[var(--muted)]">{guide.description}</p>
           <div className="my-10 h-px bg-[var(--line)]" />
           <Content />

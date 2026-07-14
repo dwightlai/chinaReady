@@ -14,7 +14,7 @@ export default function PrivacyPage() {
     <main className="py-16 sm:py-24">
       <Container className="max-w-3xl">
         <p className="text-sm font-bold text-[var(--primary)]">Data handling</p>
-        <h1 className="mt-4 font-[var(--font-display)] text-5xl tracking-[-0.05em] sm:text-6xl">Answers stay on your device.</h1>
+        <h1 className="mt-4 font-[var(--font-display)] text-4xl leading-[1.15] tracking-[-0.03em] text-balance sm:text-5xl">Answers stay on your device.</h1>
         <div className="mt-8 space-y-6 text-lg leading-8 text-[var(--muted)]">
           <p>
             {siteConfig.wordmark} runs preparation checks in your browser. Answers and generated reports are stored in local browser storage on this device. They are not sent to a {siteConfig.wordmark} server for scoring or profile building.

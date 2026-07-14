@@ -5,7 +5,7 @@ export function SampleFinding() {
     <aside className="rounded-[var(--radius-lg)] border border-[var(--line)] bg-white p-7 sm:p-9">
       <p className="text-sm font-bold text-[var(--primary)]">Typical finding</p>
       <p className="mt-4 text-xs font-extrabold tracking-[0.04em] text-[var(--critical)]">Critical</p>
-      <h2 className="mt-3 font-[var(--font-display)] text-3xl tracking-[-0.04em]">Your hotel details may not be usable on arrival.</h2>
+      <h2 className="mt-3 max-w-2xl font-[var(--font-display)] text-2xl leading-snug tracking-[-0.03em] text-balance sm:text-3xl">Your hotel details may not be usable on arrival.</h2>
       <p className="mt-4 max-w-[52ch] leading-8 text-[var(--muted)]">
         Drivers and local maps may not recognize an English hotel name. Save the name and full address in Chinese before you leave.
       </p>

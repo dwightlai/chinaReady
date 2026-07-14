@@ -21,7 +21,7 @@ export default function HowItWorksPage() {
     <main className="py-16 sm:py-24">
       <Container>
         <p className="text-sm font-bold text-[var(--primary)]">Transparent by design</p>
-        <h1 className="mt-4 max-w-3xl font-[var(--font-display)] text-5xl tracking-[-0.05em] sm:text-6xl">A clear check, not a black box.</h1>
+        <h1 className="mt-4 max-w-2xl font-[var(--font-display)] text-4xl leading-[1.15] tracking-[-0.03em] text-balance sm:text-5xl">A clear check, not a black box.</h1>
         <p className="mt-5 max-w-2xl text-lg leading-8 text-[var(--muted)]">{siteConfig.wordmark} turns common preparation gaps into a short, ordered action plan.</p>
         <div className="mt-14 grid gap-4 md:grid-cols-3">
           {steps.map(({ icon: Icon, text, title }, index) => (
@@ -34,7 +34,7 @@ export default function HowItWorksPage() {
           ))}
         </div>
         <div className="mt-12 max-w-3xl rounded-[var(--radius-md)] border border-[var(--line)] p-7">
-          <h2 className="font-[var(--font-display)] text-3xl">What this tool cannot do</h2>
+          <h2 className="font-[var(--font-display)] text-2xl leading-snug tracking-[-0.03em]">What this tool cannot do</h2>
           <p className="mt-4 leading-8 text-[var(--muted)]">It does not replace official provider advice, live availability or emergency help. Time-sensitive information includes a review date so you know when to verify it again.</p>
         </div>
         <Link className="mt-9 inline-block rounded-full bg-[var(--primary)] px-6 py-3 font-extrabold text-white" href="/checks/readiness">Check my trip</Link>

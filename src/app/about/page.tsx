@@ -22,7 +22,7 @@ export default function AboutPage() {
       <Container className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
         <div>
           <p className="text-sm font-bold text-[var(--primary)]">About {siteConfig.wordmark}</p>
-          <h1 className="mt-4 font-[var(--font-display)] text-5xl leading-[1.02] tracking-[-0.05em] sm:text-6xl">Fewer hidden gaps before a big trip.</h1>
+          <h1 className="mt-4 max-w-xl font-[var(--font-display)] text-4xl leading-[1.15] tracking-[-0.03em] text-balance sm:text-5xl">Fewer hidden gaps before a big trip.</h1>
         </div>
         <div className="space-y-6 text-lg leading-8 text-[var(--muted)]">
           <p>First-time independent visitors often finish their bookings but still carry fragile assumptions about payment, high-demand dates and hotel arrival.</p>

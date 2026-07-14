@@ -10,7 +10,7 @@ export default function ChecksPage() {
     <main className="bg-[var(--surface)] py-16 sm:py-24">
       <Container>
         <p className="text-sm font-bold text-[var(--primary)]">Trip preparation</p>
-        <h1 className="mt-3 font-[var(--font-display)] text-5xl tracking-[-0.05em]">Trip checks</h1>
+        <h1 className="mt-3 font-[var(--font-display)] text-4xl leading-[1.15] tracking-[-0.03em] sm:text-5xl">Trip checks</h1>
         <p className="mt-4 max-w-2xl text-lg leading-8 text-[var(--muted)]">Check the parts of your plan most likely to create avoidable problems.</p>
         <ToolGrid />
       </Container>

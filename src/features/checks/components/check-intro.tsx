@@ -15,7 +15,7 @@ export function CheckIntro({ config, hasDraft, onStart }: CheckIntroProps) {
         <div>
           <p className="text-sm font-bold text-[var(--primary)]">Trip preparation tool</p>
           {hasDraft ? <span className="mt-4 inline-block rounded-lg bg-[var(--surface-strong)] px-3 py-1.5 text-xs font-extrabold tracking-[0.04em] text-[var(--pending)]">Pending</span> : null}
-          <h1 className="mt-4 max-w-3xl font-[var(--font-display)] text-4xl leading-[1.06] tracking-[-0.045em] text-[var(--ink)] sm:text-6xl">
+          <h1 className="mt-4 max-w-2xl font-[var(--font-display)] text-4xl leading-[1.15] tracking-[-0.03em] text-balance sm:text-5xl">
             {config.name}
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-[var(--muted)]">{config.description}</p>

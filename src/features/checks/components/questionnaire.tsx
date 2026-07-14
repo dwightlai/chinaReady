@@ -73,7 +73,7 @@ export function Questionnaire({ config, initialDraft, onSave, onComplete, onExit
       <Progress current={safeStep + 1} total={questions.length} />
       <div aria-live="polite" className="mt-10">
         {currentQuestion.section ? <p className="mb-3 text-sm font-bold text-[var(--primary)]">{currentQuestion.section}</p> : null}
-        <h1 className="font-[var(--font-display)] text-3xl leading-tight tracking-[-0.035em] text-[var(--ink)] sm:text-4xl">
+        <h1 className="font-[var(--font-display)] text-3xl leading-[1.2] tracking-[-0.03em] text-[var(--ink)] text-balance sm:text-4xl">
           {currentQuestion.prompt}
         </h1>
         {currentQuestion.help ? <p className="mt-3 max-w-[60ch] leading-7 text-[var(--muted)]">{currentQuestion.help}</p> : null}
