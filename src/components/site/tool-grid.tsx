@@ -4,7 +4,9 @@ import Link from "next/link";
 import { checkCatalog } from "@/features/checks/catalog";
 
 export function ToolGrid() {
-  const [primary, ...rest] = checkCatalog;
+  const primary = checkCatalog[0];
+  const rest = checkCatalog.slice(1);
+  if (!primary) return null;
 
   return (
     <div className="mt-10 grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
