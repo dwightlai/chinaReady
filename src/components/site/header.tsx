@@ -13,6 +13,7 @@ export function Header() {
           <Link className="transition hover:text-[var(--ink)]" href="/checks">Checks</Link>
           <Link className="transition hover:text-[var(--ink)]" href="/guides">Guides</Link>
           <Link className="transition hover:text-[var(--ink)]" href="/how-it-works">How it works</Link>
+          <Link className="transition hover:text-[var(--ink)]" href="/about">About</Link>
         </nav>
         <Link className="whitespace-nowrap rounded-full bg-[var(--primary)] px-5 py-2.5 text-sm font-extrabold text-white transition hover:bg-[var(--primary-dark)]" href="/checks/readiness">
           Check my trip
