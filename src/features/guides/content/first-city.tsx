@@ -1,4 +1,15 @@
-import { ArticleSections } from "./article-sections";
+import { ArticleSections, type ArticleFaq } from "./article-sections";
+
+export const firstCityFaqs: ArticleFaq[] = [
+  {
+    question: "Is Shanghai easier than Beijing for first-time visitors?",
+    answer: "It depends on your flight and hotel plan. Ease comes from confirmed arrival logistics, not from the city brand.",
+  },
+  {
+    question: "Should I fly into one city and leave from another?",
+    answer: "Yes if the itinerary is clear and tickets are issued. Keep the first night simple so you can recover from jet lag and payment setup issues.",
+  },
+];
 
 export function FirstCityGuide() {
   return (
@@ -27,16 +38,7 @@ export function FirstCityGuide() {
           ],
         },
       ]}
-      faqs={[
-        {
-          question: "Is Shanghai easier than Beijing for first-time visitors?",
-          answer: "It depends on your flight and hotel plan. Ease comes from confirmed arrival logistics, not from the city brand.",
-        },
-        {
-          question: "Should I fly into one city and leave from another?",
-          answer: "Yes if the itinerary is clear and tickets are issued. Keep the first night simple so you can recover from jet lag and payment setup issues.",
-        },
-      ]}
+      faqs={firstCityFaqs}
     />
   );
 }

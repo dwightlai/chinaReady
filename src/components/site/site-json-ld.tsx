@@ -4,7 +4,12 @@ export function SiteJsonLd() {
   const data = {
     "@context": "https://schema.org",
     "@graph": [
-      { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
+      {
+        "@type": "Organization",
+        name: siteConfig.name,
+        url: siteConfig.url,
+        logo: `${siteConfig.url}${siteConfig.ogImage}`,
+      },
       {
         "@type": "WebSite",
         name: siteConfig.name,
@@ -18,7 +23,7 @@ export function SiteJsonLd() {
         applicationCategory: "TravelApplication",
         operatingSystem: "Web",
         description: siteConfig.description,
-        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        offers: { "@type": "Offer", price: "0", priceCurrency: "CNY" },
       },
     ],
   };

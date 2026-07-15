@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { Container } from "@/components/site/container";
-import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/site/seo-json-ld";
+import { ArticleJsonLd, BreadcrumbJsonLd, FaqPageJsonLd } from "@/components/site/seo-json-ld";
 import { checkCatalog } from "@/features/checks/catalog";
 import { guideCatalog, guidesBySlug } from "@/features/guides/catalog";
 import type { GuideSlug } from "@/features/guides/types";
@@ -22,6 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: guide.title,
     description: guide.description,
+    keywords: [...siteConfig.keywords, guide.category, guide.title],
     alternates: { canonical: `/guides/${guide.slug}` },
     openGraph: {
       title: guide.title,
@@ -49,7 +50,8 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
 
   return (
     <main className="py-14 sm:py-20">
-      <ArticleJsonLd dateModified={guide.lastReviewedAt} description={guide.description} path={path} title={guide.title} />
+      <ArticleJsonLd dateModified={guide.lastReviewedAt} datePublished={guide.lastReviewedAt} description={guide.description} path={path} title={guide.title} />
+      {guide.faqs?.length ? <FaqPageJsonLd faqs={guide.faqs} /> : null}
       <BreadcrumbJsonLd items={[{ name: "Guides", path: "/guides" }, { name: guide.title, path }]} />
       <Container>
         <Breadcrumbs items={[{ href: "/guides", label: "Guides" }, { label: guide.title }]} />

@@ -9,6 +9,12 @@ export const metadata: Metadata = {
   title: "How it works",
   description: "How ChinaTripCheck evaluates preparation risks while keeping answers on your device.",
   alternates: { canonical: "/how-it-works" },
+  openGraph: {
+    title: "How it works",
+    description: "How ChinaTripCheck evaluates preparation risks while keeping answers on your device.",
+    url: `${siteConfig.url}/how-it-works`,
+    images: [{ url: siteConfig.ogImage }],
+  },
 };
 
 const steps = [

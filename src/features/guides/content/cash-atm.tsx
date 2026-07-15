@@ -1,4 +1,15 @@
-import { ArticleSections } from "./article-sections";
+import { ArticleSections, type ArticleFaq } from "./article-sections";
+
+export const cashAtmFaqs: ArticleFaq[] = [
+  {
+    question: "How much cash should I carry?",
+    answer: "Enough for a disrupted half-day: transport, a meal and a backup hotel night buffer. Exact amounts vary by city and itinerary.",
+  },
+  {
+    question: "Can I rely only on ATMs after arrival?",
+    answer: "No. Treat ATM access as uncertain and keep another payment path ready.",
+  },
+];
 
 export function CashAtmGuide() {
   return (
@@ -27,16 +38,7 @@ export function CashAtmGuide() {
           ],
         },
       ]}
-      faqs={[
-        {
-          question: "How much cash should I carry?",
-          answer: "Enough for a disrupted half-day: transport, a meal and a backup hotel night buffer. Exact amounts vary by city and itinerary.",
-        },
-        {
-          question: "Can I rely only on ATMs after arrival?",
-          answer: "No. Treat ATM access as uncertain and keep another payment path ready.",
-        },
-      ]}
+      faqs={cashAtmFaqs}
     />
   );
 }

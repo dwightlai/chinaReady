@@ -1,4 +1,15 @@
-import { ArticleSections } from "./article-sections";
+import { ArticleSections, type ArticleFaq } from "./article-sections";
+
+export const simEsimFaqs: ArticleFaq[] = [
+  {
+    question: "Is airport Wi-Fi enough for the first day?",
+    answer: "Usually not. Captive portals, weak coverage and login friction make it unreliable for payment and transport apps.",
+  },
+  {
+    question: "Should I buy a local SIM or use an eSIM?",
+    answer: "An eSIM installed before departure is usually smoother. Keep a local SIM purchase plan as backup if the eSIM fails.",
+  },
+];
 
 export function SimEsimGuide() {
   return (
@@ -27,16 +38,7 @@ export function SimEsimGuide() {
           ],
         },
       ]}
-      faqs={[
-        {
-          question: "Is airport Wi-Fi enough for the first day?",
-          answer: "Usually not. Captive portals, weak coverage and login friction make it unreliable for payment and transport apps.",
-        },
-        {
-          question: "Should I buy a local SIM or use an eSIM?",
-          answer: "An eSIM installed before departure is usually smoother. Keep a local SIM purchase plan as backup if the eSIM fails.",
-        },
-      ]}
+      faqs={simEsimFaqs}
     />
   );
 }

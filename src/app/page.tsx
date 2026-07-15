@@ -13,6 +13,7 @@ import { TrustStrip } from "@/components/site/trust-strip";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
+  description: siteConfig.description,
   alternates: { canonical: "/" },
   openGraph: {
     title: siteConfig.name,

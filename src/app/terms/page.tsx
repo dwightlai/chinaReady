@@ -8,6 +8,12 @@ export const metadata: Metadata = {
   title: "Terms",
   description: "Terms of use for ChinaTripCheck preparation tools and guides.",
   alternates: { canonical: "/terms" },
+  openGraph: {
+    title: "Terms",
+    description: "Terms of use for ChinaTripCheck preparation tools and guides.",
+    url: `${siteConfig.url}/terms`,
+    images: [{ url: siteConfig.ogImage }],
+  },
 };
 
 export default function TermsPage() {

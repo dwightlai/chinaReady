@@ -8,6 +8,12 @@ export const metadata: Metadata = {
   title: "About",
   description: "Why ChinaTripCheck helps international visitors find preparation risks before departure.",
   alternates: { canonical: "/about" },
+  openGraph: {
+    title: "About",
+    description: "Why ChinaTripCheck helps international visitors find preparation risks before departure.",
+    url: `${siteConfig.url}/about`,
+    images: [{ url: siteConfig.ogImage }],
+  },
 };
 
 const notFor = [

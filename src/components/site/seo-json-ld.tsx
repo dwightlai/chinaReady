@@ -22,11 +22,13 @@ export function ArticleJsonLd({
   title,
   description,
   path,
+  datePublished,
   dateModified,
 }: {
   title: string;
   description: string;
   path: string;
+  datePublished: string;
   dateModified: string;
 }) {
   const data = {
@@ -34,10 +36,33 @@ export function ArticleJsonLd({
     "@type": "Article",
     headline: title,
     description,
+    image: [`${siteConfig.url}${siteConfig.ogImage}`],
+    datePublished,
     dateModified,
     author: { "@type": "Organization", name: siteConfig.name },
-    publisher: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
+    publisher: {
+      "@type": "Organization",
+      name: siteConfig.name,
+      url: siteConfig.url,
+      logo: { "@type": "ImageObject", url: `${siteConfig.url}${siteConfig.ogImage}` },
+    },
     mainEntityOfPage: `${siteConfig.url}${path}`,
+  };
+
+  return <script dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} type="application/ld+json" />;
+}
+
+export function FaqPageJsonLd({ faqs }: { faqs: Array<{ question: string; answer: string }> }) {
+  if (!faqs.length) return null;
+
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: { "@type": "Answer", text: faq.answer },
+    })),
   };
 
   return <script dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} type="application/ld+json" />;

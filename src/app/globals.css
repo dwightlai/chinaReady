@@ -19,7 +19,9 @@
   --radius-lg: 1.75rem;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 

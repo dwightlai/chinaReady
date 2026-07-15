@@ -11,7 +11,7 @@ test("homepage exposes the approved four-check experience", async ({ page }) => 
 
 test("guide cards open real guide pages", async ({ page }) => {
   await page.goto("/guides");
-  await expect(page.getByRole("link", { name: "Read guide" })).toHaveCount(12);
+  await expect(page.getByRole("link", { name: "Read guide" })).toHaveCount(15);
   await page.locator('a[href="/guides/test-mobile-payment-before-china"]').click();
   await expect(page).toHaveURL(/\/guides\/test-mobile-payment-before-china$/);
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Alipay or WeChat Pay");

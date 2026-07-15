@@ -1,4 +1,15 @@
-import { ArticleSections } from "./article-sections";
+import { ArticleSections, type ArticleFaq } from "./article-sections";
+
+export const arrivalInternetFaqs: ArticleFaq[] = [
+  {
+    question: "Can I set everything up after landing?",
+    answer: "You can, but it is slower and riskier. Install and test connectivity before departure whenever possible.",
+  },
+  {
+    question: "Does a travel eSIM always receive bank SMS?",
+    answer: "No. Many eSIMs are data-only. Keep bank app approval or your original number available.",
+  },
+];
 
 export function ArrivalInternetGuide() {
   return (
@@ -35,16 +46,7 @@ export function ArrivalInternetGuide() {
           ],
         },
       ]}
-      faqs={[
-        {
-          question: "Can I set everything up after landing?",
-          answer: "You can, but it is slower and riskier. Install and test connectivity before departure whenever possible.",
-        },
-        {
-          question: "Does a travel eSIM always receive bank SMS?",
-          answer: "No. Many eSIMs are data-only. Keep bank app approval or your original number available.",
-        },
-      ]}
+      faqs={arrivalInternetFaqs}
     />
   );
 }

@@ -10,17 +10,20 @@ const expectedSlugs = [
   "cash-and-atms-in-china",
   "arrive-with-working-internet",
   "buy-sim-or-esim-for-china",
+  "vpn-in-china-2026",
   "china-holidays-tickets-hotels",
   "travel-during-china-national-day",
   "confirm-late-hotel-check-in-china",
   "save-hotel-name-address-in-chinese",
+  "didi-without-chinese-number",
   "first-city-shanghai-or-beijing",
+  "china-entry-requirements-checklist",
 ];
 
 describe("guide catalog", () => {
   it("contains exactly the approved guides", () => {
     expect(guideCatalog.map((guide) => guide.slug)).toEqual(expectedSlugs);
-    expect(new Set(guideCatalog.map((guide) => guide.slug)).size).toBe(12);
+    expect(new Set(guideCatalog.map((guide) => guide.slug)).size).toBe(15);
   });
 
   it("provides complete review, source and rendering metadata", () => {

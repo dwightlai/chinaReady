@@ -7,7 +7,7 @@ describe("public discovery metadata", () => {
   it("publishes the complete canonical sitemap", () => {
     const entries = sitemap();
 
-    expect(entries).toHaveLength(23);
+    expect(entries).toHaveLength(26);
     expect(entries.every((entry) => entry.url.startsWith("https://chinatripcheck.com"))).toBe(true);
     expect(entries.map((entry) => entry.url)).toEqual(expect.arrayContaining([
       "https://chinatripcheck.com/checks/readiness",

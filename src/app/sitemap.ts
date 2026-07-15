@@ -6,7 +6,7 @@ import { siteConfig } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [
-    { path: "", priority: 1, changeFrequency: "weekly" as const },
+    { path: "", priority: 1, changeFrequency: "weekly" as const, images: [`${siteConfig.url}${siteConfig.ogImage}`] },
     { path: "/checks", priority: 0.9, changeFrequency: "weekly" as const },
     { path: "/guides", priority: 0.9, changeFrequency: "weekly" as const },
     { path: "/how-it-works", priority: 0.7, changeFrequency: "monthly" as const },
@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: siteConfig.lastReviewedAt,
       changeFrequency: page.changeFrequency,
       priority: page.priority,
+      ...(page.images ? { images: page.images } : {}),
     })),
     ...checkCatalog.map((check) => ({
       url: `${siteConfig.url}/checks/${check.slug}`,

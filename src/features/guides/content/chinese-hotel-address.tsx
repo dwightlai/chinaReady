@@ -1,4 +1,15 @@
-import { ArticleSections } from "./article-sections";
+import { ArticleSections, type ArticleFaq } from "./article-sections";
+
+export const chineseHotelAddressFaqs: ArticleFaq[] = [
+  {
+    question: "Is a Google Maps pin enough?",
+    answer: "Keep the Chinese address as text too. Drivers and local apps may not open the same map pin you saved at home.",
+  },
+  {
+    question: "Where do I get the Chinese address?",
+    answer: "Ask the hotel by email or chat and paste their reply into a note you can open offline.",
+  },
+];
 
 export function ChineseHotelAddressGuide() {
   return (
@@ -35,16 +46,7 @@ export function ChineseHotelAddressGuide() {
           ],
         },
       ]}
-      faqs={[
-        {
-          question: "Is a Google Maps pin enough?",
-          answer: "Keep the Chinese address as text too. Drivers and local apps may not open the same map pin you saved at home.",
-        },
-        {
-          question: "Where do I get the Chinese address?",
-          answer: "Ask the hotel by email or chat and paste their reply into a note you can open offline.",
-        },
-      ]}
+      faqs={chineseHotelAddressFaqs}
     />
   );
 }

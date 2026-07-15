@@ -43,7 +43,7 @@ export function Header() {
           Check my trip
         </Link>
         <Link className="rounded-full bg-[var(--primary)] px-4 py-2 text-sm font-extrabold text-white md:hidden" href="/checks/readiness">
-          Check
+          Check my trip
         </Link>
         <button
           aria-expanded={isOpen}

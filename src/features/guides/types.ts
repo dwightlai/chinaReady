@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 
 import type { CheckSlug } from "@/features/checks/types";
+import type { ArticleFaq } from "./content/article-sections";
 
 export type GuideSlug =
   | "test-mobile-payment-before-china"
@@ -14,7 +15,10 @@ export type GuideSlug =
   | "china-holidays-tickets-hotels"
   | "travel-during-china-national-day"
   | "confirm-late-hotel-check-in-china"
-  | "save-hotel-name-address-in-chinese";
+  | "save-hotel-name-address-in-chinese"
+  | "vpn-in-china-2026"
+  | "didi-without-chinese-number"
+  | "china-entry-requirements-checklist";
 
 export interface SourceNote {
   label: string;
@@ -29,5 +33,6 @@ export interface Guide {
   lastReviewedAt: string;
   applicableChecks: CheckSlug[];
   sourceNotes: SourceNote[];
+  faqs?: ArticleFaq[];
   Content: ComponentType;
 }
