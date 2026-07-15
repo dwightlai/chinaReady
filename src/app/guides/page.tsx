@@ -4,13 +4,21 @@ import Link from "next/link";
 
 import { Container } from "@/components/site/container";
 import { guideCatalog } from "@/features/guides/catalog";
+import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Travel risk guides",
   description: "Practical guides for payment, connectivity, date and hotel arrival risks in China.",
+  alternates: { canonical: "/guides" },
+  openGraph: {
+    title: "Travel risk guides",
+    description: "Practical guides for payment, connectivity, date and hotel arrival risks in China.",
+    url: `${siteConfig.url}/guides`,
+    images: [{ url: siteConfig.ogImage }],
+  },
 };
 
-const categories = ["Payments", "Connectivity", "Travel dates", "Hotel arrival"] as const;
+const categories = ["Payments", "Connectivity", "Travel dates", "Hotel arrival", "Planning"] as const;
 
 export default function GuidesPage() {
   return (
@@ -41,6 +49,9 @@ export default function GuidesPage() {
             );
           })}
         </div>
+        <p className="mt-12 text-sm text-[var(--muted)]">
+          Prefer a structured check instead? <Link className="font-bold text-[var(--ink)] underline underline-offset-4" href="/checks">Open the trip checks</Link>.
+        </p>
       </Container>
     </main>
   );

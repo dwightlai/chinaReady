@@ -1,4 +1,7 @@
+import Link from "next/link";
 import { Clock, LockKey } from "@phosphor-icons/react/dist/ssr";
+
+import { guideCatalog } from "@/features/guides/catalog";
 
 import type { ToolConfig } from "../types";
 
@@ -9,6 +12,8 @@ interface CheckIntroProps {
 }
 
 export function CheckIntro({ config, hasDraft, onStart }: CheckIntroProps) {
+  const relatedGuides = guideCatalog.filter((guide) => guide.applicableChecks.includes(config.slug)).slice(0, 3);
+
   return (
     <section className="mx-auto w-full max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
       <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
@@ -44,6 +49,21 @@ export function CheckIntro({ config, hasDraft, onStart }: CheckIntroProps) {
               ))}
             </ul>
           </div>
+
+          {relatedGuides.length ? (
+            <div className="mt-12">
+              <h2 className="text-sm font-extrabold tracking-[-0.02em] text-[var(--ink)]">Read before you start</h2>
+              <ul className="mt-4 space-y-3">
+                {relatedGuides.map((guide) => (
+                  <li key={guide.slug}>
+                    <Link className="font-bold text-[var(--primary)] underline-offset-4 hover:underline" href={`/guides/${guide.slug}`}>
+                      {guide.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
         </div>
 
         <aside className="rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] p-6 sm:p-7">

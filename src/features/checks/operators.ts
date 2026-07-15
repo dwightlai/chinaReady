@@ -97,6 +97,8 @@ export function evaluateCondition(answers: Answers, condition: Condition): boole
       if (typeof actual !== "string" || typeof condition.value !== "string") return false;
       return !actual.toLowerCase().includes(condition.value.toLowerCase());
     }
+    case "not-yes":
+      return actual !== true;
   }
 }
 

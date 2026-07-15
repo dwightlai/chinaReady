@@ -11,6 +11,15 @@ export function SiteJsonLd() {
         url: siteConfig.url,
         description: siteConfig.description,
       },
+      {
+        "@type": "WebApplication",
+        name: siteConfig.name,
+        url: siteConfig.url,
+        applicationCategory: "TravelApplication",
+        operatingSystem: "Web",
+        description: siteConfig.description,
+        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      },
     ],
   };
 

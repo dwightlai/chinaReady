@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +10,17 @@ import { SampleFinding } from "@/components/site/sample-finding";
 import { SiteJsonLd } from "@/components/site/site-json-ld";
 import { ToolGrid } from "@/components/site/tool-grid";
 import { TrustStrip } from "@/components/site/trust-strip";
+import { siteConfig } from "@/lib/site";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: siteConfig.name,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    images: [{ url: siteConfig.ogImage }],
+  },
+};
 
 export default function HomePage() {
   return (
@@ -16,7 +28,7 @@ export default function HomePage() {
       <SiteJsonLd />
       <Container className="grid min-h-[620px] items-center gap-12 py-14 lg:grid-cols-[1.02fr_0.98fr] lg:py-16">
         <div className="relative z-10 max-w-xl">
-          <p className="text-sm font-bold text-[var(--primary)]">Travel prepared, arrive confident</p>
+          <p className="text-sm font-bold text-[var(--primary)]">Payment, dates and hotel arrival</p>
           <h1 className="mt-4 font-[var(--font-display)] text-4xl leading-[1.12] tracking-[-0.03em] text-[var(--ink)] text-balance sm:text-5xl lg:text-[3.5rem] lg:leading-[1.1]">
             Find the risks before they disrupt your China trip.
           </h1>
@@ -43,7 +55,7 @@ export default function HomePage() {
 
       <section className="bg-[var(--surface)] py-16 sm:py-24">
         <Container>
-          <p className="text-sm font-bold text-[var(--primary)]">Choose your starting point</p>
+          <p className="text-sm font-bold text-[var(--primary)]">Start where the risk is</p>
           <h2 className="mt-4 max-w-3xl font-[var(--font-display)] text-3xl leading-[1.15] tracking-[-0.03em] text-balance sm:text-4xl">Four checks. One clearer plan.</h2>
           <p className="mt-4 max-w-2xl text-lg leading-8 text-[var(--muted)]">Start with the full check or go directly to the part of your trip that needs attention.</p>
           <ToolGrid />
@@ -54,7 +66,43 @@ export default function HomePage() {
         </Container>
       </section>
 
+      <section className="py-16 sm:py-20">
+        <Container className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:items-center">
+          <div>
+            <p className="text-sm font-bold text-[var(--primary)]">How the checks work</p>
+            <h2 className="mt-4 font-[var(--font-display)] text-3xl leading-[1.15] tracking-[-0.03em] sm:text-4xl">Short questions. Clear rules. Local report.</h2>
+            <p className="mt-4 max-w-xl text-lg leading-8 text-[var(--muted)]">
+              Answer focused questions about payment, dates and hotel arrival. Deterministic rules flag blockers and backups. Nothing is sent to a server for scoring.
+            </p>
+          </div>
+          <ol className="space-y-4">
+            {[
+              "Describe the plan you already have.",
+              "Match documented preparation risks.",
+              "Act on a private, ordered report.",
+            ].map((step, index) => (
+              <li className="rounded-[var(--radius-md)] border border-[var(--line)] bg-[var(--surface)] px-5 py-4 text-[var(--ink)]" key={step}>
+                <span className="text-sm font-bold text-[var(--muted)]">0{index + 1}</span>
+                <p className="mt-1 font-extrabold">{step}</p>
+              </li>
+            ))}
+          </ol>
+        </Container>
+      </section>
+
       <Container className="py-12 sm:py-16"><TrustStrip /></Container>
+
+      <section className="border-t border-[var(--line)] bg-[var(--surface)] py-14 sm:py-16">
+        <Container className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+          <div>
+            <h2 className="font-[var(--font-display)] text-3xl tracking-[-0.03em]">Ready to find the gaps?</h2>
+            <p className="mt-3 max-w-xl text-[var(--muted)]">Run the full readiness check before you leave. It takes about four minutes.</p>
+          </div>
+          <Link className="rounded-full bg-[var(--primary)] px-6 py-3.5 font-extrabold text-white transition hover:bg-[var(--primary-dark)]" href="/checks/readiness">
+            Check my trip
+          </Link>
+        </Container>
+      </section>
     </main>
   );
 }

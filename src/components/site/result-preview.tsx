@@ -9,9 +9,10 @@ export function ResultPreview() {
         </div>
         <span className="rounded-lg bg-[#fff0e4] px-2.5 py-2 text-[0.62rem] font-extrabold tracking-[0.05em] text-[#9a4311]">ACTION REQUIRED</span>
       </div>
-      <div className="mt-4 grid grid-cols-3 gap-2">
+      <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
         <Metric label="Critical" value="2" tone="text-[var(--critical)]" />
-        <Metric label="High risk" value="3" tone="text-[var(--high)]" />
+        <Metric label="High" value="3" tone="text-[var(--high)]" />
+        <Metric label="Info" value="1" tone="text-[var(--pending)]" />
         <Metric label="Ready" value="4" tone="text-[var(--ready)]" />
       </div>
     </div>

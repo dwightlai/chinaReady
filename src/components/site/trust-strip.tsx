@@ -1,9 +1,9 @@
 import { CheckCircle, Eye, LockKey } from "@phosphor-icons/react/dist/ssr";
 
 const items = [
-  { icon: LockKey, title: "Private by design", text: "Answers stay in your browser." },
-  { icon: Eye, title: "Clear reasoning", text: "Every warning explains what to do." },
-  { icon: CheckCircle, title: "Sources reviewed", text: "Time-sensitive rules include review dates." },
+  { icon: LockKey, title: "Answers stay local", text: "Drafts and reports are stored only in this browser." },
+  { icon: Eye, title: "Each warning has an action", text: "Findings explain the risk and the next practical step." },
+  { icon: CheckCircle, title: "Time-sensitive rules are dated", text: "Holiday and provider guidance includes a review date." },
 ];
 
 export function TrustStrip() {

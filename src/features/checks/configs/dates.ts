@@ -3,7 +3,7 @@ import { holidayEvents2026, holidayWindow } from "./holiday-events";
 import { choice, yesNo } from "./shared";
 
 const cityAliases: Record<string, string[]> = {
-  Guangzhou: ["guangzhou", "广州", "canton"],
+  Guangzhou: ["guangzhou", "guang zhou", "广州", "廣州", "canton", "gz"],
 };
 
 function cityMatchConditions(cities: string[]): Condition[] {
@@ -100,7 +100,7 @@ export const datesConfig: ToolConfig = {
   questions: [
     { id: "arrivalDate", prompt: "When will you arrive in China?", type: "date", required: true },
     { id: "departureDate", prompt: "When will you leave China?", type: "date", required: true },
-    { id: "cities", prompt: "Which city or cities will you visit?", type: "text", required: true },
+    { id: "cities", prompt: "Which city or cities will you visit?", help: "Use common English names such as Guangzhou, Shanghai or Beijing. Multiple cities are fine.", type: "text", required: true },
     choice("intercityTravel", "Will you travel between cities?", yesNo),
     choice("highSpeedRail", "Do you plan to use high-speed rail?", yesNo),
     choice("popularAttractions", "Will you visit major timed or ticketed attractions?", yesNo),

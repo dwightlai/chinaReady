@@ -8,6 +8,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = {
   title: "How it works",
   description: "How ChinaTripCheck evaluates preparation risks while keeping answers on your device.",
+  alternates: { canonical: "/how-it-works" },
 };
 
 const steps = [
@@ -20,7 +21,7 @@ export default function HowItWorksPage() {
   return (
     <main className="py-16 sm:py-24">
       <Container>
-        <p className="text-sm font-bold text-[var(--primary)]">Transparent by design</p>
+        <p className="text-sm font-bold text-[var(--primary)]">No black box</p>
         <h1 className="mt-4 max-w-2xl font-[var(--font-display)] text-4xl leading-[1.15] tracking-[-0.03em] text-balance sm:text-5xl">A clear check, not a black box.</h1>
         <p className="mt-5 max-w-2xl text-lg leading-8 text-[var(--muted)]">{siteConfig.wordmark} turns common preparation gaps into a short, ordered action plan.</p>
         <div className="mt-14 grid gap-4 md:grid-cols-3">

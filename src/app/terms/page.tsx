@@ -7,6 +7,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Terms",
   description: "Terms of use for ChinaTripCheck preparation tools and guides.",
+  alternates: { canonical: "/terms" },
 };
 
 export default function TermsPage() {

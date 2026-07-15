@@ -30,19 +30,19 @@ export const paymentConfig: ToolConfig = {
     choice("overseasTransactions", "Are overseas transactions enabled on that card?", yesNoUnsure, undefined, "Card"),
     choice("bankVerificationAccess", "Can you receive bank verification messages or app approvals?", yesNoUnsure, undefined, "Verification"),
     choice("paymentTested", "Have you completed a real payment test?", yesNoUnsure, "Linking a card does not prove a transaction will work.", "Verification"),
-    choice("backupCard", "Do you have a second card from another issuer?", yesNo, undefined, "Backup"),
-    choice("physicalCard", "Will you carry a physical bank card?", yesNo, undefined, "Backup"),
-    choice("cashBackup", "Will you carry a small amount of RMB cash?", yesNo, undefined, "Backup"),
+    choice("backupCard", "Do you have a second card from another issuer?", yesNoUnsure, undefined, "Backup"),
+    choice("physicalCard", "Will you carry a physical bank card?", yesNoUnsure, undefined, "Backup"),
+    choice("cashBackup", "Will you carry a small amount of RMB cash?", yesNoUnsure, undefined, "Backup"),
     choice("originalNumberAvailable", "Will your original mobile number remain available?", yesNoUnsure, undefined, "Verification"),
     choice("esimReceivesSms", "Can your travel SIM or eSIM receive verification messages?", yesNoUnsure, undefined, "Verification"),
-    choice("reliesOnOneApp", "Would one app failure remove your only mobile payment option?", yesNoUnsure, undefined, "Backup"),
+    choice("reliesOnOneApp", "Is Alipay or WeChat Pay your only mobile payment option?", yesNoUnsure, "Answer yes if losing one app would leave you with no other mobile payment path.", "Backup"),
   ],
   rules: [
     {
       code: "PAY_NO_PATH", severity: "critical", priority: 1, group: "no-payment-path",
       all: [
-        { field: "physicalCard", operator: "eq", value: false },
-        { field: "cashBackup", operator: "eq", value: false },
+        { field: "physicalCard", operator: "not-yes" },
+        { field: "cashBackup", operator: "not-yes" },
       ],
       any: [
         { field: "paymentApps", operator: "missing" },
@@ -67,7 +67,7 @@ export const paymentConfig: ToolConfig = {
     },
     {
       code: "PAY_NO_IDENTITY", severity: "high", priority: 3, group: "identity-incomplete",
-      all: [{ field: "identityVerified", operator: "eq", value: false }],
+      all: [{ field: "identityVerified", operator: "not-yes" }],
       any: [
         { field: "paymentApps", operator: "includes", value: "alipay" },
         { field: "paymentApps", operator: "includes", value: "wechat" },
@@ -78,7 +78,7 @@ export const paymentConfig: ToolConfig = {
     },
     {
       code: "PAY_NO_CARD_LINKED", severity: "high", priority: 4, group: "no-card-linked",
-      all: [{ field: "foreignCardLinked", operator: "eq", value: false }],
+      all: [{ field: "foreignCardLinked", operator: "not-yes" }],
       any: [
         { field: "paymentApps", operator: "includes", value: "alipay" },
         { field: "paymentApps", operator: "includes", value: "wechat" },
@@ -101,8 +101,8 @@ export const paymentConfig: ToolConfig = {
     {
       code: "PAY_SINGLE_POINT", severity: "high", priority: 11, group: "payment-single-point",
       all: [
-        { field: "backupCard", operator: "eq", value: false },
-        { field: "cashBackup", operator: "eq", value: false },
+        { field: "backupCard", operator: "not-yes" },
+        { field: "cashBackup", operator: "not-yes" },
       ],
       title: "Your payment plan has a single point of failure.",
       explanation: "One card or app problem could leave you without a usable fallback.",
@@ -112,7 +112,7 @@ export const paymentConfig: ToolConfig = {
     },
     {
       code: "PAY_NO_VERIFICATION", severity: "high", priority: 12, group: "verification-unavailable",
-      all: [{ field: "bankVerificationAccess", operator: "eq", value: false }],
+      all: [{ field: "bankVerificationAccess", operator: "not-yes" }],
       title: "Bank verification may be unavailable.",
       explanation: "Your issuer may block a transaction that cannot be approved by message or app.",
       actions: ["Confirm how your bank approves overseas transactions.", "Keep your original number available if needed."],
@@ -120,7 +120,7 @@ export const paymentConfig: ToolConfig = {
     },
     {
       code: "PAY_OVERSEAS_OFF", severity: "high", priority: 13, group: "overseas-transactions-disabled",
-      all: [{ field: "overseasTransactions", operator: "eq", value: false }],
+      all: [{ field: "overseasTransactions", operator: "not-yes" }],
       title: "Overseas transactions are not enabled.",
       explanation: "The issuing bank may reject a China transaction before the payment app can process it.",
       actions: ["Enable overseas transactions or contact your card issuer."],
@@ -134,14 +134,14 @@ export const paymentConfig: ToolConfig = {
     },
     {
       code: "PAY_NO_PHYSICAL", severity: "information", priority: 30, group: "no-physical-card",
-      all: [{ field: "physicalCard", operator: "eq", value: false }],
+      all: [{ field: "physicalCard", operator: "not-yes" }],
       title: "You are not carrying a physical card.",
       explanation: "A physical card provides another recovery path when a phone or app is unavailable.",
       actions: ["Pack a physical card and store it separately from your phone."],
     },
     {
       code: "PAY_NO_CASH", severity: "information", priority: 31, group: "no-cash",
-      all: [{ field: "cashBackup", operator: "eq", value: false }],
+      all: [{ field: "cashBackup", operator: "not-yes" }],
       title: "You have no emergency cash backup.",
       explanation: "Small amounts of RMB can help when a digital payment path is interrupted.",
       actions: ["Carry a modest amount of RMB cash for emergencies."],
@@ -149,8 +149,8 @@ export const paymentConfig: ToolConfig = {
     {
       code: "PAY_DATA_ONLY_ESIM", severity: "high", priority: 14, group: "data-only-esim",
       all: [
-        { field: "esimReceivesSms", operator: "eq", value: false },
-        { field: "originalNumberAvailable", operator: "eq", value: false },
+        { field: "esimReceivesSms", operator: "not-yes" },
+        { field: "originalNumberAvailable", operator: "not-yes" },
       ],
       title: "Your travel connectivity may not receive bank messages.",
       explanation: "Data access alone may not be enough to approve a transaction.",

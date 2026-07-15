@@ -8,6 +8,9 @@ export type GuideSlug =
   | "esim-bank-verification-messages"
   | "one-payment-method-is-not-enough"
   | "arrive-with-working-internet"
+  | "buy-sim-or-esim-for-china"
+  | "cash-and-atms-in-china"
+  | "first-city-shanghai-or-beijing"
   | "china-holidays-tickets-hotels"
   | "travel-during-china-national-day"
   | "confirm-late-hotel-check-in-china"
@@ -22,7 +25,7 @@ export interface Guide {
   slug: GuideSlug;
   title: string;
   description: string;
-  category: "Payments" | "Connectivity" | "Travel dates" | "Hotel arrival";
+  category: "Payments" | "Connectivity" | "Travel dates" | "Hotel arrival" | "Planning";
   lastReviewedAt: string;
   applicableChecks: CheckSlug[];
   sourceNotes: SourceNote[];

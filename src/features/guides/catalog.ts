@@ -1,15 +1,18 @@
 import { ArrivalInternetGuide } from "./content/arrival-internet";
+import { CashAtmGuide } from "./content/cash-atm";
 import { ChineseHotelAddressGuide } from "./content/chinese-hotel-address";
 import { EsimVerificationGuide } from "./content/esim-verification";
+import { FirstCityGuide } from "./content/first-city";
 import { ForeignCardFailureGuide } from "./content/foreign-card-failure";
 import { HolidayBookingGuide } from "./content/holiday-booking";
 import { LateCheckInGuide } from "./content/late-check-in";
 import { NationalDayGuide } from "./content/national-day";
 import { PaymentBackupGuide } from "./content/payment-backup";
 import { PaymentTestGuide } from "./content/payment-test";
+import { SimEsimGuide } from "./content/sim-esim";
 import type { Guide, GuideSlug } from "./types";
 
-const reviewed = "2026-07-14";
+const reviewed = "2026-07-15";
 const operationalNote = { label: "Conservative preparation guidance. Confirm current terms with the relevant provider." };
 const holidaySource = { label: "State Council: 2026 public holiday arrangements", url: "https://www.gov.cn/zhengce/zhengceku/202511/content_7047091.htm" };
 
@@ -18,11 +21,14 @@ export const guideCatalog: Guide[] = [
   { slug: "foreign-card-fails-in-china", title: "What to do if a foreign card fails in China", description: "Recover from a declined card without losing your only practical way to pay through Alipay, WeChat Pay or cash.", category: "Payments", lastReviewedAt: reviewed, applicableChecks: ["payment"], sourceNotes: [operationalNote], Content: ForeignCardFailureGuide },
   { slug: "esim-bank-verification-messages", title: "Why a travel eSIM may not receive bank verification messages", description: "Protect the approval route your card issuer may need during an Alipay or WeChat Pay transaction.", category: "Payments", lastReviewedAt: reviewed, applicableChecks: ["payment"], sourceNotes: [operationalNote], Content: EsimVerificationGuide },
   { slug: "one-payment-method-is-not-enough", title: "Why one Alipay or WeChat Pay method is not enough", description: "Build independent fallbacks for app, card, phone and verification failures.", category: "Payments", lastReviewedAt: reviewed, applicableChecks: ["payment", "readiness"], sourceNotes: [operationalNote], Content: PaymentBackupGuide },
+  { slug: "cash-and-atms-in-china", title: "How much cash and ATM access to prepare for China", description: "Use RMB cash as a backup while keeping Alipay, WeChat Pay and a second card ready.", category: "Payments", lastReviewedAt: reviewed, applicableChecks: ["payment", "readiness"], sourceNotes: [operationalNote], Content: CashAtmGuide },
   { slug: "arrive-with-working-internet", title: "How to arrive in China with working internet", description: "Set a primary and backup data plan so payment, maps and hotel contact work on landing.", category: "Connectivity", lastReviewedAt: reviewed, applicableChecks: ["readiness"], sourceNotes: [operationalNote], Content: ArrivalInternetGuide },
+  { slug: "buy-sim-or-esim-for-china", title: "How to choose a SIM or eSIM for mainland China travel", description: "Pick a data plan that works on landing and keep an airport backup if the first option fails.", category: "Connectivity", lastReviewedAt: reviewed, applicableChecks: ["readiness"], sourceNotes: [operationalNote], Content: SimEsimGuide },
   { slug: "china-holidays-tickets-hotels", title: "How Chinese public holidays affect train tickets and hotel bookings", description: "Spot high-demand dates and protect the bookings that hold your itinerary together.", category: "Travel dates", lastReviewedAt: reviewed, applicableChecks: ["dates", "readiness"], sourceNotes: [holidaySource], Content: HolidayBookingGuide },
   { slug: "travel-during-china-national-day", title: "Whether to travel during China National Day", description: "Decide whether fixed holiday dates fit your tolerance for demand and reduced flexibility.", category: "Travel dates", lastReviewedAt: reviewed, applicableChecks: ["dates"], sourceNotes: [holidaySource], Content: NationalDayGuide },
   { slug: "confirm-late-hotel-check-in-china", title: "How to confirm late hotel check-in in China", description: "Make sure a delayed arrival does not leave you without access to your room.", category: "Hotel arrival", lastReviewedAt: reviewed, applicableChecks: ["hotel-arrival", "readiness"], sourceNotes: [operationalNote], Content: LateCheckInGuide },
   { slug: "save-hotel-name-address-in-chinese", title: "Why to save a hotel name and address in Chinese", description: "Give drivers and local support staff a clear, offline destination reference.", category: "Hotel arrival", lastReviewedAt: reviewed, applicableChecks: ["hotel-arrival", "readiness"], sourceNotes: [operationalNote], Content: ChineseHotelAddressGuide },
+  { slug: "first-city-shanghai-or-beijing", title: "Whether to start in Shanghai or Beijing", description: "Choose the first city from arrival logistics and recovery margin, not from a generic ranking.", category: "Planning", lastReviewedAt: reviewed, applicableChecks: ["readiness", "hotel-arrival"], sourceNotes: [operationalNote], Content: FirstCityGuide },
 ];
 
 export const guidesBySlug = Object.fromEntries(guideCatalog.map((guide) => [guide.slug, guide])) as Record<GuideSlug, Guide>;

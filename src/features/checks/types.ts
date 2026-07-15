@@ -18,7 +18,8 @@ export type Operator =
   | "time-between"
   | "date-overlaps"
   | "text-includes"
-  | "text-excludes";
+  | "text-excludes"
+  | "not-yes";
 
 export interface Condition {
   field: string;

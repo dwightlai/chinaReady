@@ -39,8 +39,11 @@ export function Header() {
             </Link>
           ))}
         </nav>
-        <Link className="hidden whitespace-nowrap rounded-full bg-[var(--primary)] px-5 py-2.5 text-sm font-extrabold text-white transition hover:bg-[var(--primary-dark)] sm:inline-flex" href="/checks/readiness">
+        <Link className="hidden whitespace-nowrap rounded-full bg-[var(--primary)] px-5 py-2.5 text-sm font-extrabold text-white transition hover:bg-[var(--primary-dark)] md:inline-flex" href="/checks/readiness">
           Check my trip
+        </Link>
+        <Link className="rounded-full bg-[var(--primary)] px-4 py-2 text-sm font-extrabold text-white md:hidden" href="/checks/readiness">
+          Check
         </Link>
         <button
           aria-expanded={isOpen}

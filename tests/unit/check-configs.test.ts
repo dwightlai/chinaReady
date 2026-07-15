@@ -8,11 +8,14 @@ const GUIDE_SLUGS = new Set([
   "foreign-card-fails-in-china",
   "esim-bank-verification-messages",
   "one-payment-method-is-not-enough",
+  "cash-and-atms-in-china",
   "arrive-with-working-internet",
+  "buy-sim-or-esim-for-china",
   "china-holidays-tickets-hotels",
   "travel-during-china-national-day",
   "confirm-late-hotel-check-in-china",
   "save-hotel-name-address-in-chinese",
+  "first-city-shanghai-or-beijing",
 ]);
 
 describe("check catalog", () => {

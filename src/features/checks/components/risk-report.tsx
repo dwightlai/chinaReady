@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowCounterClockwise, CopySimple, NotePencil, Trash } from "@phosphor-icons/react";
+import { ArrowCounterClockwise, CopySimple, NotePencil, Printer, Trash } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -139,6 +139,7 @@ export function RiskReport({ report, onEdit, onRestart, onClear }: RiskReportPro
         <button className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] px-4 py-2 font-bold" onClick={onEdit} type="button"><NotePencil aria-hidden size={18} />Edit answers</button>
         <button className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] px-4 py-2 font-bold" onClick={onRestart} type="button"><ArrowCounterClockwise aria-hidden size={18} />Restart</button>
         <button className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] px-4 py-2 font-bold" onClick={copyReport} type="button"><CopySimple aria-hidden size={18} />{copied ? "Copied" : "Copy report"}</button>
+        <button className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] px-4 py-2 font-bold" onClick={() => window.print()} type="button"><Printer aria-hidden size={18} />Print</button>
         <button className="inline-flex items-center gap-2 rounded-full px-4 py-2 font-bold text-[var(--critical)]" onClick={onClear} type="button"><Trash aria-hidden size={18} />Clear report</button>
       </div>
     </section>

@@ -1,10 +1,42 @@
 import { ArticleSections } from "./article-sections";
 
 export function LateCheckInGuide() {
-  return <ArticleSections answer="Tell the hotel your expected arrival time and obtain a direct confirmation whenever you may arrive late, especially after reception hours." sections={[
-    { title: "Why confirmation matters", paragraphs: ["A booking confirmation does not always explain staffing hours, entrance access or when an unannounced room may be released. A delayed flight can turn a simple arrival into a closed-door problem."] },
-    { title: "What to send", steps: ["Your booking name and confirmation number.", "Your expected local arrival time and flight or train details.", "A request to hold the room and explain after-hours entry.", "A reachable contact method for the day of arrival."] },
-    { title: "How to verify", steps: ["Get a written reply from the property, not only the booking platform status.", "Save the reply, hotel phone number and entrance instructions offline.", "Check that the booking name matches your passport."] },
-    { title: "If the hotel does not reply", paragraphs: ["Try a verified phone number or booking-platform support. Before departure, identify a staffed fallback near your arrival point rather than assuming access will be available."] },
-  ]} />;
+  return (
+    <ArticleSections
+      answer="If you may arrive after the front desk closes, get written late-arrival confirmation and keep a 24-hour backup hotel. A booking confirmation alone is not enough."
+      sections={[
+        {
+          title: "The real failure mode",
+          paragraphs: [
+            "Late flights and long transfers often push arrival past 23:00. Hotels without a 24-hour desk may release the room or leave no staff to check you in.",
+          ],
+        },
+        {
+          title: "Confirm these three things",
+          steps: [
+            "Ask whether the front desk is open at your expected arrival time.",
+            "Request written late-arrival confirmation with the booking name and date.",
+            "Save the hotel phone number and Chinese address offline.",
+            "Identify one nearby 24-hour backup hotel.",
+          ],
+        },
+        {
+          title: "If confirmation never arrives",
+          paragraphs: [
+            "Treat the stay as incomplete. Change to a 24-hour property or delay intercity travel until morning. Do not gamble on an unlocked door after midnight.",
+          ],
+        },
+      ]}
+      faqs={[
+        {
+          question: "Does the booking platform late-arrival note count?",
+          answer: "Only if the hotel itself confirms it. Prefer written confirmation from the property.",
+        },
+        {
+          question: "What time counts as late?",
+          answer: "Treat arrivals after 23:00 China local time as late unless the hotel confirms a 24-hour desk.",
+        },
+      ]}
+    />
+  );
 }

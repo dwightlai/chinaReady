@@ -4,10 +4,12 @@ import { notFound } from "next/navigation";
 
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { Container } from "@/components/site/container";
+import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/site/seo-json-ld";
 import { checkCatalog } from "@/features/checks/catalog";
 import { guideCatalog, guidesBySlug } from "@/features/guides/catalog";
 import type { GuideSlug } from "@/features/guides/types";
 import { formatReviewDate } from "@/lib/format-date";
+import { siteConfig } from "@/lib/site";
 
 export function generateStaticParams() {
   return guideCatalog.map((guide) => ({ slug: guide.slug }));
@@ -17,7 +19,24 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const guide = guidesBySlug[slug as GuideSlug];
   if (!guide) return {};
-  return { title: guide.title, description: guide.description };
+  return {
+    title: guide.title,
+    description: guide.description,
+    alternates: { canonical: `/guides/${guide.slug}` },
+    openGraph: {
+      title: guide.title,
+      description: guide.description,
+      url: `${siteConfig.url}/guides/${guide.slug}`,
+      type: "article",
+      images: [{ url: siteConfig.ogImage }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: guide.title,
+      description: guide.description,
+      images: [siteConfig.ogImage],
+    },
+  };
 }
 
 export default async function GuidePage({ params }: { params: Promise<{ slug: string }> }) {
@@ -26,9 +45,12 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   if (!guide) notFound();
   const { Content } = guide;
   const relatedChecks = guide.applicableChecks.map((checkSlug) => checkCatalog.find((check) => check.slug === checkSlug)).filter(Boolean);
+  const path = `/guides/${guide.slug}`;
 
   return (
     <main className="py-14 sm:py-20">
+      <ArticleJsonLd dateModified={guide.lastReviewedAt} description={guide.description} path={path} title={guide.title} />
+      <BreadcrumbJsonLd items={[{ name: "Guides", path: "/guides" }, { name: guide.title, path }]} />
       <Container>
         <Breadcrumbs items={[{ href: "/guides", label: "Guides" }, { label: guide.title }]} />
       </Container>
