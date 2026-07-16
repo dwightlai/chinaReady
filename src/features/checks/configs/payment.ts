@@ -1,5 +1,11 @@
 import type { ToolConfig } from "../types";
-import { choice, yesNo, yesNoUnsure } from "./shared";
+import { choice, yesNoUnsure } from "./shared";
+
+export const paymentFaqs = [
+  { question: "Is linking a foreign card enough?", answer: "No. Linking only proves setup. A small real transaction is the clearest way to confirm the full approval path works abroad." },
+  { question: "Will my travel eSIM receive bank verification messages?", answer: "Often no. Many travel eSIMs are data-only. Keep your original number or bank app approvals available." },
+  { question: "Why carry RMB cash if I have Alipay?", answer: "Cash is a recovery path when a phone, app, card or network problem blocks digital payment." },
+];
 
 export const paymentConfig: ToolConfig = {
   slug: "payment",
@@ -19,6 +25,7 @@ export const paymentConfig: ToolConfig = {
     title: "Your payment setup has a single point of failure.",
     explanation: "There is no tested payment path or practical backup if one app or card fails.",
   },
+  faqs: paymentFaqs,
   questions: [
     { id: "paymentApps", prompt: "Which mobile payment apps have you set up?", type: "multiple", required: true, section: "Setup", options: [
       { label: "Alipay", value: "alipay" },

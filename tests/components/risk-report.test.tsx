@@ -44,7 +44,7 @@ describe("RiskReport", () => {
   it("renders labeled metrics, ordered findings and reviewed date", () => {
     render(<RiskReport report={report} onEdit={vi.fn()} onRestart={vi.fn()} onClear={vi.fn()} />);
 
-    expect(screen.getByText("ACTION REQUIRED")).toBeInTheDocument();
+    expect(screen.getByText("NOT READY")).toBeInTheDocument();
     expect(screen.getAllByText("Critical").length).toBeGreaterThan(0);
     expect(screen.getAllByText("High risk").length).toBeGreaterThan(0);
     expect(screen.getAllByRole("heading", { level: 3 }).map((heading) => heading.textContent)).toEqual([
@@ -66,6 +66,7 @@ describe("RiskReport", () => {
     ]);
 
     await user.click(screen.getByRole("button", { name: "Clear report" }));
+    await user.click(screen.getByRole("button", { name: "Yes, clear report" }));
     expect(onClear).toHaveBeenCalledOnce();
   });
 });

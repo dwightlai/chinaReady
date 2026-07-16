@@ -37,9 +37,9 @@ export function LateCheckInGuide() {
           ],
         },
         {
-          title: "What 鈥渨ritten confirmation鈥?should include",
+          title: "What \"written confirmation\" should include",
           paragraphs: [
-            "A useful reply names your booking, arrival date, estimated time after 23:00, and whether staff will still check you in. Platform auto-notes and 鈥渟pecial requests鈥?are weaker than a direct hotel message.",
+            "A useful reply names your booking, arrival date, estimated time after 23:00, and whether staff will still check you in. Platform auto-notes and \"special requests\" are weaker than a direct hotel message.",
           ],
         },
         {

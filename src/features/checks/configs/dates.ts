@@ -2,6 +2,12 @@ import type { Condition, RiskRule, ToolConfig } from "../types";
 import { holidayEvents2026, holidayWindow } from "./holiday-events";
 import { choice, yesNo } from "./shared";
 
+export const datesFaqs = [
+  { question: "Which Chinese holidays affect travel most?", answer: "Spring Festival and National Day Golden Week create the densest demand. Labor Day and Mid-Autumn weekends also tighten inventory in core cities." },
+  { question: "How far in advance should I book trains and hotels?", answer: "Book the first night and any long-distance train as soon as dates are fixed. Popular routes can fill weeks ahead of major holidays." },
+  { question: "Does the check cover 2027 dates?", answer: "No. The verified calendar currently covers 2026. Check official future holiday schedules before booking beyond that window." },
+];
+
 const cityAliases: Record<string, string[]> = {
   Guangzhou: ["guangzhou", "guang zhou", "广州", "廣州", "canton", "gz"],
 };
@@ -97,6 +103,7 @@ export const datesConfig: ToolConfig = {
     title: "Your trip overlaps with National Day Golden Week.",
     explanation: "Transport, hotels and popular attractions may have less availability than usual.",
   },
+  faqs: datesFaqs,
   questions: [
     { id: "arrivalDate", prompt: "When will you arrive in China?", type: "date", required: true },
     { id: "departureDate", prompt: "When will you leave China?", type: "date", required: true },

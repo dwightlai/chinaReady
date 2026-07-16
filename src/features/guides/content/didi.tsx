@@ -31,7 +31,7 @@ export function DidiGuide() {
           steps: [
             "Install DiDi and complete signup while you still have reliable SMS or email verification.",
             "Add Alipay, WeChat Pay or a card the app accepts, then confirm the method stays selected.",
-            "Save your first hotel鈥檚 Chinese name and address as a favorite destination.",
+            "Save your first hotel's Chinese name and address as a favorite destination.",
             "Test that the app opens on cellular data, not only hotel Wi-Fi.",
           ],
         },

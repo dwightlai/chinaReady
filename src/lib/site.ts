@@ -3,7 +3,7 @@ export const siteConfig = {
   wordmark: "ChinaTripCheck",
   url: "https://chinatripcheck.com",
   description:
-    "Find payment, travel date and hotel arrival risks before they disrupt your China trip. Check Alipay, WeChat Pay, holidays, eSIM and late hotel check-in.",
+    "Check your China trip for payment, travel date and hotel arrival risks before you leave. Verify Alipay and WeChat Pay foreign-card setup, Chinese holiday crowds, Canton Fair dates, eSIM readiness and late hotel check-in.",
   ogImage: "/images/china-trip-check-hero.png",
   lastReviewedAt: "2026-07-15",
   keywords: [

@@ -11,11 +11,13 @@ import "./globals.css";
 const sans = Manrope({
   subsets: ["latin"],
   variable: "--font-sans",
+  display: "swap",
 });
 
 const display = Lora({
   subsets: ["latin"],
   variable: "--font-display",
+  display: "swap",
 });
 
 export const metadata: Metadata = {

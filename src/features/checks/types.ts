@@ -1,3 +1,5 @@
+import type { ArticleFaq } from "@/features/guides/content/article-sections";
+
 export type CheckSlug = "readiness" | "payment" | "dates" | "hotel-arrival";
 export type Severity = "critical" | "high" | "information" | "ready";
 export type OverallStatus = "not-ready" | "action-required" | "review" | "ready";
@@ -81,6 +83,7 @@ export interface ToolConfig {
   lastReviewedAt: string;
   coveragePoints: string[];
   sampleFinding: SampleFindingPreview;
+  faqs?: ArticleFaq[];
   questions: Question[];
   rules: RiskRule[];
 }

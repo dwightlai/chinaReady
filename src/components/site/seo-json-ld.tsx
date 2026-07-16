@@ -1,5 +1,33 @@
 import { siteConfig } from "@/lib/site";
 
+export function HowToJsonLd({
+  name,
+  description,
+  steps,
+}: {
+  name: string;
+  description: string;
+  steps: Array<{ name: string; text: string }>;
+}) {
+  if (!steps.length) return null;
+
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name,
+    description,
+    totalTime: "PT15M",
+    step: steps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+    })),
+  };
+
+  return <script dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} type="application/ld+json" />;
+}
+
 export function BreadcrumbJsonLd({ items }: { items: Array<{ name: string; path: string }> }) {
   const data = {
     "@context": "https://schema.org",

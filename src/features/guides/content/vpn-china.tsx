@@ -39,7 +39,7 @@ export function VpnChinaGuide() {
         {
           title: "Decide what you truly need online",
           paragraphs: [
-            "Separate must-work local tools (Alipay or WeChat Pay, maps, hotel contact) from nice-to-have home tools (foreign social apps, cloud docs). Prioritize the local stack. If you need access to home services, confirm a lawful and reliable method with your employer or provider before travel鈥攄o not invent a last-minute workaround at the airport.",
+            "Separate must-work local tools (Alipay or WeChat Pay, maps, hotel contact) from nice-to-have home tools (foreign social apps, cloud docs). Prioritize the local stack. If you need access to home services, confirm a lawful and reliable method with your employer or provider before travel—do not invent a last-minute workaround at the airport.",
           ],
         },
         {

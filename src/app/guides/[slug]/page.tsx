@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { Container } from "@/components/site/container";
-import { ArticleJsonLd, BreadcrumbJsonLd, FaqPageJsonLd } from "@/components/site/seo-json-ld";
+import { ArticleJsonLd, BreadcrumbJsonLd, FaqPageJsonLd, HowToJsonLd } from "@/components/site/seo-json-ld";
 import { checkCatalog } from "@/features/checks/catalog";
 import { guideCatalog, guidesBySlug } from "@/features/guides/catalog";
 import type { GuideSlug } from "@/features/guides/types";
@@ -51,6 +51,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   return (
     <main className="py-14 sm:py-20">
       <ArticleJsonLd dateModified={guide.lastReviewedAt} datePublished={guide.lastReviewedAt} description={guide.description} path={path} title={guide.title} />
+      {guide.howTo?.length ? <HowToJsonLd description={guide.description} name={guide.title} steps={guide.howTo} /> : null}
       {guide.faqs?.length ? <FaqPageJsonLd faqs={guide.faqs} /> : null}
       <BreadcrumbJsonLd items={[{ name: "Guides", path: "/guides" }, { name: guide.title, path }]} />
       <Container>

@@ -86,7 +86,7 @@ function write(storageKey: string, value: unknown): void {
   try {
     storage()?.setItem(storageKey, JSON.stringify(value));
   } catch {
-    // Checks remain usable in memory when browser storage is unavailable.
+    // Storage may be unavailable in private modes or restricted contexts.
   }
 }
 
@@ -113,7 +113,7 @@ export function clearCheckData(slug: CheckSlug): void {
     store.removeItem(key(slug, "draft"));
     store.removeItem(key(slug, "report"));
   } catch {
-    // Clearing local data is best effort in restricted browser contexts.
+    // Ignore cleanup failures when storage is restricted.
   }
 }
 

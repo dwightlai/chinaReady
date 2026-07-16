@@ -24,7 +24,7 @@ export function HolidayBookingGuide() {
           title: "Why timing matters",
           paragraphs: [
             "Major holiday periods change domestic travel patterns. Popular routes, hotels and attractions can become harder to secure, including in the days around the official break.",
-            "Spring Festival travel peaks around family return journeys. National Day week fills Beijing, Shanghai, Xi鈥檃n and coastal resort corridors. Labor Day and Mid-Autumn weekends are shorter but still tighten hotel inventory in core cities.",
+            "Spring Festival travel peaks around family return journeys. National Day week fills Beijing, Shanghai, Xi'an and coastal resort corridors. Labor Day and Mid-Autumn weekends are shorter but still tighten hotel inventory in core cities.",
           ],
         },
         {

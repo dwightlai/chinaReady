@@ -65,6 +65,7 @@ describe("CheckExperience", () => {
     expect(loadReport("readiness")?.report.counts.critical).toBe(1);
 
     await user.click(screen.getByRole("button", { name: "Clear report" }));
+    await user.click(screen.getByRole("button", { name: "Yes, clear report" }));
 
     expect(screen.getByRole("button", { name: "Start readiness check" })).toBeInTheDocument();
     expect(loadReport("readiness")).toBeNull();

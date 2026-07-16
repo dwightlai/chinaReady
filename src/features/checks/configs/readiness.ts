@@ -1,6 +1,12 @@
 import type { ToolConfig } from "../types";
 import { choice, yesNo, yesNoUnsure } from "./shared";
 
+export const readinessFaqs = [
+  { question: "Do I need to create an account?", answer: "No. Answers and reports are stored in your browser. Nothing is sent to a server." },
+  { question: "How long does the check take?", answer: "About four minutes. It covers payment, internet, hotel arrival, train status and holiday dates." },
+  { question: "Is the report official advice?", answer: "No. It flags likely preparation risks. Confirm important details with the official provider before travel." },
+];
+
 export const readinessConfig: ToolConfig = {
   slug: "readiness",
   name: "China Readiness Check",
@@ -19,6 +25,7 @@ export const readinessConfig: ToolConfig = {
     title: "You may arrive without internet access.",
     explanation: "Payment, transport and hotel communication may depend on immediate connectivity.",
   },
+  faqs: readinessFaqs,
   questions: [
     choice("mobilePayment", "Have you set up at least one mobile payment app?", yesNoUnsure, undefined, "Payments"),
     choice("identityVerified", "Is identity verification complete?", yesNoUnsure, undefined, "Payments"),

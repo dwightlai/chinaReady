@@ -1,5 +1,11 @@
 import type { ToolConfig } from "../types";
-import { choice, yesNo, yesNoUnsure } from "./shared";
+import { choice, yesNoUnsure } from "./shared";
+
+export const hotelArrivalFaqs = [
+  { question: "What time counts as a late hotel arrival?", answer: "Treat arrivals after 23:00 China local time as late unless the hotel confirms a 24-hour desk." },
+  { question: "Does a booking platform late-arrival note count?", answer: "Only if the hotel itself confirms it. Prefer written confirmation from the property." },
+  { question: "Why save the hotel address in Chinese?", answer: "Drivers and local maps may not recognize the English name alone. Chinese text gives staff a precise reference." },
+];
 
 export const hotelArrivalConfig: ToolConfig = {
   slug: "hotel-arrival",
@@ -19,6 +25,7 @@ export const hotelArrivalConfig: ToolConfig = {
     title: "Your late hotel arrival is not confirmed.",
     explanation: "The hotel may release the room or close its front desk before you arrive.",
   },
+  faqs: hotelArrivalFaqs,
   questions: [
     { id: "city", prompt: "Which city is the hotel in?", type: "text", required: true, section: "Stay details" },
     { id: "hotelArrivalTime", prompt: "What time do you expect to reach the hotel?", help: "Use China local time in 24-hour format (for example 23:30).", type: "time", required: true, section: "Stay details" },

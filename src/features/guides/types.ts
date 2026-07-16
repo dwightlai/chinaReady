@@ -25,6 +25,11 @@ export interface SourceNote {
   url?: string;
 }
 
+export interface HowToStep {
+  name: string;
+  text: string;
+}
+
 export interface Guide {
   slug: GuideSlug;
   title: string;
@@ -34,5 +39,6 @@ export interface Guide {
   applicableChecks: CheckSlug[];
   sourceNotes: SourceNote[];
   faqs?: ArticleFaq[];
+  howTo?: HowToStep[];
   Content: ComponentType;
 }

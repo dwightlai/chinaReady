@@ -23,7 +23,7 @@ export function EntryRequirementsGuide() {
         {
           title: "Start with official eligibility",
           paragraphs: [
-            "Entry rules depend on nationality, passport type, stay length and purpose. Visa-free windows, transit policies and invitation requirements change. Use the embassy or official government channel for your passport country鈥攏ot a social media summary.",
+            "Entry rules depend on nationality, passport type, stay length and purpose. Visa-free windows, transit policies and invitation requirements change. Use the embassy or official government channel for your passport country—not a social media summary.",
           ],
         },
         {

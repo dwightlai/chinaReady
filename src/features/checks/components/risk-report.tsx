@@ -21,7 +21,7 @@ interface RiskReportProps {
 }
 
 const statusLabels = {
-  "not-ready": "ACTION REQUIRED",
+  "not-ready": "NOT READY",
   "action-required": "ACTION REQUIRED",
   review: "REVIEW NEEDED",
   ready: "READY",
@@ -40,8 +40,14 @@ function reportSummary(report: RiskReportData): string {
   return lines.join("\n");
 }
 
+const confirmMessages = {
+  restart: "Restarting will clear your current answers and report. This cannot be undone.",
+  clear: "Clearing will remove your saved answers and report from this browser. This cannot be undone.",
+} as const;
+
 export function RiskReport({ report, onEdit, onRestart, onClear }: RiskReportProps) {
   const [copied, setCopied] = useState(false);
+  const [pendingAction, setPendingAction] = useState<null | "restart" | "clear">(null);
   const relatedChecks = report.relatedChecks
     .map((slug) => checkCatalog.find((check) => check.slug === slug))
     .filter(Boolean);
@@ -135,12 +141,37 @@ export function RiskReport({ report, onEdit, onRestart, onClear }: RiskReportPro
       <p className="mt-2 max-w-[68ch] text-sm leading-6 text-[var(--muted)]">
         This check identifies likely preparation risks. Verify important details with the official provider before travel.
       </p>
+      {pendingAction ? (
+        <div className="mt-6 rounded-[var(--radius-md)] border border-[var(--line)] bg-[var(--surface)] p-4 sm:p-5">
+          <p className="text-sm font-medium text-[var(--ink)]">{confirmMessages[pendingAction]}</p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <button
+              className="rounded-full px-4 py-2 text-sm font-bold text-[var(--muted)] transition hover:text-[var(--ink)]"
+              onClick={() => setPendingAction(null)}
+              type="button"
+            >
+              Cancel
+            </button>
+            <button
+              className="rounded-full bg-[var(--critical)] px-5 py-2 text-sm font-extrabold text-white transition hover:opacity-90"
+              onClick={() => {
+                if (pendingAction === "restart") onRestart();
+                else onClear();
+                setPendingAction(null);
+              }}
+              type="button"
+            >
+              {pendingAction === "restart" ? "Yes, restart" : "Yes, clear report"}
+            </button>
+          </div>
+        </div>
+      ) : null}
       <div className="mt-7 flex flex-wrap gap-3">
         <button className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] px-4 py-2 font-bold" onClick={onEdit} type="button"><NotePencil aria-hidden size={18} />Edit answers</button>
-        <button className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] px-4 py-2 font-bold" onClick={onRestart} type="button"><ArrowCounterClockwise aria-hidden size={18} />Restart</button>
+        <button className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] px-4 py-2 font-bold" onClick={() => setPendingAction("restart")} type="button"><ArrowCounterClockwise aria-hidden size={18} />Restart</button>
         <button className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] px-4 py-2 font-bold" onClick={copyReport} type="button"><CopySimple aria-hidden size={18} />{copied ? "Copied" : "Copy report"}</button>
         <button className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] px-4 py-2 font-bold" onClick={() => window.print()} type="button"><Printer aria-hidden size={18} />Print</button>
-        <button className="inline-flex items-center gap-2 rounded-full px-4 py-2 font-bold text-[var(--critical)]" onClick={onClear} type="button"><Trash aria-hidden size={18} />Clear report</button>
+        <button className="inline-flex items-center gap-2 rounded-full px-4 py-2 font-bold text-[var(--critical)]" onClick={() => setPendingAction("clear")} type="button"><Trash aria-hidden size={18} />Clear report</button>
       </div>
     </section>
   );
