@@ -10,6 +10,7 @@ describe("HomePage", () => {
 
     expect(screen.getByRole("link", { name: "ChinaTripCheck home" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Find the risks before they disrupt your China trip." })).toBeInTheDocument();
+    expect(screen.getByText("Apps, payments and train booking")).toBeInTheDocument();
     expect(screen.getAllByRole("link", { name: "Check my trip" }).length).toBeGreaterThanOrEqual(2);
     expect(screen.getAllByRole("link", { name: "Check my trip" })[0]).toHaveAttribute("href", "/checks/readiness");
     expect(screen.getByRole("img", { name: /traveler preparing for a china trip/i })).toBeInTheDocument();
