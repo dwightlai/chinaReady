@@ -18,6 +18,7 @@ export type GuideSlug =
   | "save-hotel-name-address-in-chinese"
   | "vpn-in-china-2026"
   | "didi-without-chinese-number"
+  | "train-booking-for-foreign-visitors"
   | "china-entry-requirements-checklist";
 
 export interface SourceNote {
@@ -34,7 +35,7 @@ export interface Guide {
   slug: GuideSlug;
   title: string;
   description: string;
-  category: "Payments" | "Connectivity" | "Travel dates" | "Hotel arrival" | "Planning";
+  category: "Payments" | "Connectivity" | "Travel dates" | "Hotel arrival" | "Transport" | "Planning";
   lastReviewedAt: string;
   applicableChecks: CheckSlug[];
   sourceNotes: SourceNote[];

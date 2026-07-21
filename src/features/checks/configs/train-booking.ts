@@ -55,6 +55,7 @@ export const trainBookingConfig: ToolConfig = {
       title: "You have not chosen a train booking channel.",
       explanation: "Passenger verification and ticket timing depend on the channel you use.",
       actions: ["Choose 12306, Trip.com or a station counter before planning around the train."],
+      relatedGuides: ["train-booking-for-foreign-visitors"],
     },
     {
       code: "TRAIN_NAME_MISMATCH", severity: "critical", priority: 2, group: "train-name",
@@ -62,6 +63,7 @@ export const trainBookingConfig: ToolConfig = {
       title: "The passenger name does not match the passport details.",
       explanation: "Real-name rail tickets are tied to the passenger identity used during booking.",
       actions: ["Correct the passenger record before travel and bring the same original passport."],
+      relatedGuides: ["train-booking-for-foreign-visitors"],
     },
     {
       code: "TRAIN_IDENTITY", severity: "high", priority: 3, group: "train-identity",
@@ -69,6 +71,7 @@ export const trainBookingConfig: ToolConfig = {
       title: "Passport passenger verification is incomplete or unclear.",
       explanation: "A booking can remain unusable if the passenger record still needs identity review.",
       actions: ["Open the booking channel and confirm the passenger status before departure."],
+      relatedGuides: ["train-booking-for-foreign-visitors"],
     },
     {
       code: "TRAIN_ACCOUNT", severity: "high", priority: 4, group: "train-account",
@@ -76,6 +79,7 @@ export const trainBookingConfig: ToolConfig = {
       title: "Your chosen booking channel is not ready to use.",
       explanation: "An untested account or pending channel can delay payment, verification or ticket retrieval.",
       actions: ["Sign in, add the passenger and confirm the channel can display your booking."],
+      relatedGuides: ["train-booking-for-foreign-visitors"],
     },
     {
       code: "TRAIN_PHONE", severity: "high", priority: 5, group: "train-contact",
@@ -83,6 +87,7 @@ export const trainBookingConfig: ToolConfig = {
       title: "Booking recovery contact access is uncertain.",
       explanation: "Reliable access to the account email or phone helps with notices, password recovery and booking support.",
       actions: ["Confirm access to the contact method attached to the booking account."],
+      relatedGuides: ["train-booking-for-foreign-visitors"],
     },
     {
       code: "TRAIN_TRANSFER", severity: "high", priority: 6, group: "train-transfer",
@@ -90,6 +95,7 @@ export const trainBookingConfig: ToolConfig = {
       title: "Your connection may be too tight for an unfamiliar station.",
       explanation: "Platform changes, queues and long station corridors can consume a short connection buffer.",
       actions: ["Choose a longer connection or confirm the exact platform and station layout."],
+      relatedGuides: ["train-booking-for-foreign-visitors"],
     },
     {
       code: "TRAIN_PASSPORT", severity: "high", priority: 7, group: "train-passport",
@@ -97,6 +103,7 @@ export const trainBookingConfig: ToolConfig = {
       title: "You may not have the original passport used for the booking.",
       explanation: "The official 12306 FAQ directs passengers with foreign passport records to use the original passport for identity verification.",
       actions: ["Carry the original passport used in the passenger record."],
+      relatedGuides: ["train-booking-for-foreign-visitors"],
     },
     {
       code: "TRAIN_STATION_EXIT", severity: "information", priority: 20, group: "train-exit",
@@ -104,6 +111,7 @@ export const trainBookingConfig: ToolConfig = {
       title: "Your arrival station exit plan needs a quick review.",
       explanation: "Saving the destination in Chinese and the right station exit makes the final transfer easier.",
       actions: ["Save the destination address, station name and a taxi or metro fallback."],
+      relatedGuides: ["train-booking-for-foreign-visitors"],
     },
   ],
 };

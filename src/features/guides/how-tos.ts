@@ -93,6 +93,14 @@ export const guideHowTos: Record<GuideSlug, { name: string; text: string }[]> = 
     { name: "Test on cellular data", text: "Confirm the app opens on cellular data, not only hotel Wi-Fi." },
     { name: "Keep a taxi desk backup", text: "Have the official taxi queue or hotel pickup plan ready if DiDi fails." },
   ],
+  "train-booking-for-foreign-visitors": [
+    { name: "Choose the booking path", text: "Choose 12306, Trip.com or a staffed station counter before planning around a departure." },
+    { name: "Set up the passport record", text: "Enter the foreign passport details exactly and wait for a verified or ready-to-be-verified status." },
+    { name: "Set the ticket-release reminder", text: "The normal 12306 sales window is 15 days including the travel day; prepare alternatives before sales open." },
+    { name: "Confirm the ticket is issued", text: "Check that the order is issued rather than pending, waitlisted or awaiting payment." },
+    { name: "Pack the original passport", text: "Carry the passport used in the passenger record for station identity checks." },
+    { name: "Prepare a station fallback", text: "Save station names in Chinese, allow transfer time and keep a second train or counter plan." },
+  ],
   "first-city-shanghai-or-beijing": [
     { name: "Check late-arrival fit", text: "Confirm your flight arrives near a hotel with confirmed late check-in." },
     { name: "Confirm local readiness", text: "Make sure you have Chinese hotel details and a working payment path." },

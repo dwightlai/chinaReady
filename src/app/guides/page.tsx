@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
 };
 
-const categories = ["Payments", "Connectivity", "Travel dates", "Hotel arrival", "Planning"] as const;
+const categories = ["Payments", "Connectivity", "Travel dates", "Hotel arrival", "Transport", "Planning"] as const;
 
 export default function GuidesPage() {
   return (

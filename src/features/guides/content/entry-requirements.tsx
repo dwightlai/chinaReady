@@ -23,14 +23,15 @@ export function EntryRequirementsGuide() {
         {
           title: "Start with official eligibility",
           paragraphs: [
-            "Entry rules depend on nationality, passport type, stay length and purpose. Visa-free windows, transit policies and invitation requirements change. Use the embassy or official government channel for your passport country—not a social media summary.",
+            "Entry rules depend on nationality, passport type, stay length, purpose and the route through China. Use the current NIA country list and the Chinese embassy or official government channel for your passport country—not a social media summary.",
+            "The NIA's unilateral visa-exemption list and 240-hour visa-free transit policy are different routes with different conditions. A transit itinerary through China to a third country is not the same as a normal one-way holiday entry.",
           ],
         },
         {
           title: "Documents to assemble early",
           steps: [
             "Check passport validity against the rule that applies to you.",
-            "Confirm whether you need a visa, visa-free entry or another authorization.",
+            "Confirm whether you need a visa, a listed unilateral visa exemption, 240-hour visa-free transit or another authorization.",
             "Keep proof of onward or return travel and the first hotel booking.",
             "Carry printed or offline copies in case phones or foreign email apps fail on arrival.",
           ],
@@ -44,7 +45,7 @@ export function EntryRequirementsGuide() {
         {
           title: "Before you leave for the airport",
           steps: [
-            "Re-read the latest official note for your nationality.",
+            "Re-read the latest official note for your nationality and passport type.",
             "Pack the physical passport and any required printouts.",
             "Confirm the first hotel can still receive you at the planned China local time.",
             "Keep emergency contacts for your embassy or consulate offline.",

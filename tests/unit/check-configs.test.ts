@@ -18,6 +18,7 @@ const GUIDE_SLUGS = new Set([
   "save-hotel-name-address-in-chinese",
   "didi-without-chinese-number",
   "first-city-shanghai-or-beijing",
+  "train-booking-for-foreign-visitors",
   "china-entry-requirements-checklist",
 ]);
 

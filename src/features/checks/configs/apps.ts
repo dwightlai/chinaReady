@@ -79,7 +79,7 @@ export const appsConfig: ToolConfig = {
       title: "Your train booking channel is undecided.",
       explanation: "Without a chosen channel, passport verification and ticket timing cannot be checked.",
       actions: ["Choose 12306, Trip.com or a station counter and complete the passenger setup."],
-      relatedCheck: "train-booking",
+      relatedCheck: "train-booking", relatedGuides: ["train-booking-for-foreign-visitors"],
     },
     {
       code: "APP_TRAIN_IDENTITY", severity: "high", priority: 5, group: "app-train-identity",
@@ -87,7 +87,7 @@ export const appsConfig: ToolConfig = {
       title: "Train passport verification still needs attention.",
       explanation: "A ticket channel may accept your booking request while the passenger identity is still pending review.",
       actions: ["Check the passenger status and keep the original passport used for booking."],
-      relatedCheck: "train-booking",
+      relatedCheck: "train-booking", relatedGuides: ["train-booking-for-foreign-visitors"],
     },
     {
       code: "APP_NUMBER", severity: "high", priority: 6, group: "app-number-access",

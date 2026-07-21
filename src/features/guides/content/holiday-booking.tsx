@@ -7,7 +7,7 @@ export const holidayBookingFaqs: ArticleFaq[] = [
   },
   {
     question: "How early should I book trains and hotels?",
-    answer: "Book the first night and any long-distance train as soon as your dates are fixed. Popular city pairs can fill weeks ahead of major holidays.",
+    answer: "Book the first hotel night as soon as your dates are fixed. For normal 12306 rail sales, set a reminder for the release day because the sales window is usually 15 days including the travel day.",
   },
   {
     question: "Do foreign passport bookings work the same way?",
@@ -18,7 +18,7 @@ export const holidayBookingFaqs: ArticleFaq[] = [
 export function HolidayBookingGuide() {
   return (
     <ArticleSections
-      answer="Chinese public holiday periods can compress availability and increase demand. Check official dates, book critical legs early and keep flexible alternatives."
+      answer="Chinese public holiday periods can compress availability and increase demand. Check official dates, prepare for the 12306 release day and keep flexible alternatives."
       sections={[
         {
           title: "Why timing matters",
@@ -31,7 +31,7 @@ export function HolidayBookingGuide() {
           title: "What to prepare",
           steps: [
             "Compare your full itinerary with the official holiday calendar, including the days immediately before and after.",
-            "Prioritize intercity transport and the first night in each city.",
+            "Prioritize the first hotel night and set a calendar reminder for each 12306 rail release day.",
             "Use the exact passport details required by the provider.",
             "Keep one acceptable alternative route, time or hotel.",
           ],
@@ -39,7 +39,7 @@ export function HolidayBookingGuide() {
         {
           title: "Concrete booking order",
           paragraphs: [
-            "Secure the inbound hotel night first, then the longest train or flight, then secondary city hops. If Canton Fair, a concert week or a local marathon overlaps your stay, treat that city like a mini holiday even when the national calendar is quiet.",
+            "Secure the inbound hotel night first, then prepare for the official 12306 release day for each rail leg, then handle secondary city hops. If Canton Fair, a concert week or a local marathon overlaps your stay, treat that city like a mini holiday even when the national calendar is quiet.",
           ],
         },
         {

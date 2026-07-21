@@ -17,13 +17,14 @@ const expectedSlugs = [
   "save-hotel-name-address-in-chinese",
   "didi-without-chinese-number",
   "first-city-shanghai-or-beijing",
+  "train-booking-for-foreign-visitors",
   "china-entry-requirements-checklist",
 ];
 
 describe("guide catalog", () => {
   it("contains exactly the approved guides", () => {
     expect(guideCatalog.map((guide) => guide.slug)).toEqual(expectedSlugs);
-    expect(new Set(guideCatalog.map((guide) => guide.slug)).size).toBe(15);
+    expect(new Set(guideCatalog.map((guide) => guide.slug)).size).toBe(16);
   });
 
   it("provides complete review, source and rendering metadata", () => {
@@ -37,7 +38,7 @@ describe("guide catalog", () => {
     }
   });
 
-  it("does not publish a dedicated train checker guide", () => {
-    expect(guideCatalog.some((guide) => /train check(er)?/i.test(`${guide.title} ${guide.description}`))).toBe(false);
+  it("publishes a dedicated train booking guide", () => {
+    expect(guideCatalog.some((guide) => guide.slug === "train-booking-for-foreign-visitors")).toBe(true);
   });
 });

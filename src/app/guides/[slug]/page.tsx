@@ -10,6 +10,7 @@ import { guideCatalog, guidesBySlug } from "@/features/guides/catalog";
 import type { GuideSlug } from "@/features/guides/types";
 import { formatReviewDate } from "@/lib/format-date";
 import { siteConfig } from "@/lib/site";
+import { GuideTaskList } from "@/features/guides/components/guide-task-list";
 
 export function generateStaticParams() {
   return guideCatalog.map((guide) => ({ slug: guide.slug }));
@@ -64,6 +65,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
           <p className="mt-5 text-lg leading-8 text-[var(--muted)]">{guide.description}</p>
           <div className="my-10 h-px bg-[var(--line)]" />
           <Content />
+          {guide.howTo?.length ? <GuideTaskList guideSlug={guide.slug} steps={guide.howTo} /> : null}
           <div className="mt-12 border-t border-[var(--line)] pt-6 text-sm leading-6 text-[var(--muted)]">
             <p>Last reviewed {formatReviewDate(guide.lastReviewedAt)}</p>
             <p className="mt-2">This guide is conservative preparation guidance. Confirm important details with the official provider before travel.</p>

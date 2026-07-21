@@ -7,7 +7,7 @@ describe("public discovery metadata", () => {
   it("publishes the complete canonical sitemap", () => {
     const entries = sitemap();
 
-    expect(entries).toHaveLength(28);
+    expect(entries).toHaveLength(29);
     expect(entries.every((entry) => entry.url.startsWith("https://chinatripcheck.com"))).toBe(true);
     expect(entries.map((entry) => entry.url)).toEqual(expect.arrayContaining([
       "https://chinatripcheck.com/checks/readiness",
@@ -21,6 +21,7 @@ describe("public discovery metadata", () => {
       "https://chinatripcheck.com/guides/buy-sim-or-esim-for-china",
       "https://chinatripcheck.com/guides/cash-and-atms-in-china",
       "https://chinatripcheck.com/guides/first-city-shanghai-or-beijing",
+      "https://chinatripcheck.com/guides/train-booking-for-foreign-visitors",
       "https://chinatripcheck.com/privacy",
       "https://chinatripcheck.com/terms",
     ]));
