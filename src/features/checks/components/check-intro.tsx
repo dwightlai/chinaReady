@@ -64,6 +64,20 @@ export function CheckIntro({ config, hasDraft, onStart }: CheckIntroProps) {
               </ul>
             </div>
           ) : null}
+
+          {config.faqs?.length ? (
+            <div className="mt-12">
+              <h2 className="text-sm font-extrabold tracking-[-0.02em] text-[var(--ink)]">Before you start</h2>
+              <div className="mt-4 space-y-3">
+                {config.faqs.slice(0, 2).map((faq) => (
+                  <details className="rounded-xl border border-[var(--line)] bg-[var(--surface)] px-4 py-3 text-sm" key={faq.question}>
+                    <summary className="cursor-pointer font-bold text-[var(--ink)]">{faq.question}</summary>
+                    <p className="mt-2 leading-6 text-[var(--muted)]">{faq.answer}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
 
         <aside className="rounded-[var(--radius-lg)] border border-[var(--line)] bg-[var(--surface)] p-6 sm:p-7">

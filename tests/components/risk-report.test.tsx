@@ -54,16 +54,14 @@ describe("RiskReport", () => {
     expect(screen.getByText("Last reviewed July 14, 2026")).toBeInTheDocument();
   });
 
-  it("renders deduplicated ordered actions and calls clear", async () => {
+  it("renders a checkable action plan and calls clear", async () => {
     const user = userEvent.setup();
     const onClear = vi.fn();
     render(<RiskReport report={report} onEdit={vi.fn()} onRestart={vi.fn()} onClear={onClear} />);
 
-    expect(screen.getAllByRole("listitem").map((item) => item.textContent)).toEqual([
-      "Test a small payment.",
-      "Add a backup card.",
-      "Carry emergency RMB cash.",
-    ]);
+    expect(screen.getByLabelText("Test a small payment.")).toBeInTheDocument();
+    expect(screen.getByLabelText("Add a backup card.")).toBeInTheDocument();
+    expect(screen.getByText("Carry emergency RMB cash.")).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Clear report" }));
     await user.click(screen.getByRole("button", { name: "Yes, clear report" }));

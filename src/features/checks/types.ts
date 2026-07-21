@@ -63,9 +63,16 @@ export interface RiskRule {
   title: string;
   explanation: string;
   actions: string[];
+  steps?: string[];
+  doneWhen?: string[];
   backup?: string;
   relatedGuides?: string[];
   relatedCheck?: CheckSlug;
+}
+
+export interface SourceLink {
+  label: string;
+  url: string;
 }
 
 export interface SampleFindingPreview {
@@ -84,6 +91,7 @@ export interface ToolConfig {
   coveragePoints: string[];
   sampleFinding: SampleFindingPreview;
   faqs?: ArticleFaq[];
+  sources?: SourceLink[];
   questions: Question[];
   rules: RiskRule[];
 }
@@ -96,6 +104,8 @@ export interface Finding {
   title: string;
   explanation: string;
   actions: string[];
+  steps?: string[];
+  doneWhen?: string[];
   backup?: string;
   relatedGuides: string[];
   relatedCheck?: CheckSlug;

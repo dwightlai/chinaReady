@@ -23,14 +23,11 @@ export const appsConfig: ToolConfig = {
     { question: "Do I need every China travel app?", answer: "No. This check only recommends apps that match your plan. A payment path, maps and a way to book or manage trains are the core decisions." },
     { question: "Does having an app installed mean it is ready?", answer: "No. Registration, identity checks and a real test can still be required. The report separates install, verification and backup risks." },
   ],
+  sources: [
+    { label: "Alipay: Visiting China", url: "https://www.alipay.com/global/visiting-china/" },
+    { label: "12306 English site", url: "https://www.12306.cn/en/index.html" },
+  ],
   questions: [
-    { id: "travelerRegion", prompt: "Where is your phone number from?", type: "single", required: true, section: "Your setup", options: [
-      { label: "Europe or the UK", value: "europe" },
-      { label: "North America", value: "north-america" },
-      { label: "Australia or New Zealand", value: "anz" },
-      { label: "Asia-Pacific", value: "apac" },
-      { label: "Somewhere else", value: "other" },
-    ] },
     choice("originalNumber", "Will you keep access to your original mobile number?", yesNoUnsure, "Some issuers and apps may use the registered number for a code or account recovery.", "Your setup"),
     choice("needsPayment", "Will you use mobile payment for everyday spending?", yesNo, undefined, "Payments"),
     { id: "paymentApps", prompt: "Which payment apps have you installed and opened?", type: "multiple", required: true, section: "Payments", options: [

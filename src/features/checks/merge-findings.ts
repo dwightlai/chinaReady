@@ -33,6 +33,8 @@ export function mergeFindings(rules: RiskRule[]): Finding[] {
         title: strongest.title,
         explanation: strongest.explanation,
         actions: unique(ordered.flatMap((rule) => rule.actions)),
+        steps: unique(ordered.flatMap((rule) => rule.steps ?? [])),
+        doneWhen: unique(ordered.flatMap((rule) => rule.doneWhen ?? [])),
         backup: ordered.find((rule) => rule.backup)?.backup,
         relatedGuides: unique(ordered.flatMap((rule) => rule.relatedGuides ?? [])),
         relatedCheck: ordered.find((rule) => rule.relatedCheck)?.relatedCheck,

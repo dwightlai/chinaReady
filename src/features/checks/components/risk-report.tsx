@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { formatReviewDate } from "@/lib/format-date";
 import { checkCatalog } from "@/features/checks/catalog";
+import { checkConfigs } from "@/features/checks/configs";
 import { guidesBySlug } from "@/features/guides/catalog";
 import type { GuideSlug } from "@/features/guides/types";
 
@@ -54,6 +55,8 @@ export function RiskReport({ report, onEdit, onRestart, onClear }: RiskReportPro
   const relatedGuides = report.relatedGuides
     .map((slug) => guidesBySlug[slug as GuideSlug])
     .filter(Boolean);
+  const sources = checkConfigs[report.tool].sources ?? [];
+  const [completedActions, setCompletedActions] = useState<string[]>([]);
 
   async function copyReport() {
     try {
@@ -77,7 +80,8 @@ export function RiskReport({ report, onEdit, onRestart, onClear }: RiskReportPro
             {statusLabels[report.overallStatus]}
           </span>
         </div>
-        <ReportMetrics counts={report.counts} />
+        <ReportMetrics counts={report.counts} actionCount={report.actions.length} />
+        <p className="text-sm leading-6 text-[var(--muted)]">Triage score, not an approval. Clear Critical items first, then High risk items, and run the check again.</p>
       </div>
 
       <div className="mt-8 space-y-3">
@@ -93,10 +97,19 @@ export function RiskReport({ report, onEdit, onRestart, onClear }: RiskReportPro
 
       {(report.actions.length || report.backupPlan.length) ? (
         <section className="mt-8 rounded-[var(--radius-md)] bg-[var(--surface)] p-5 sm:p-7">
-          <h2 className="font-[var(--font-display)] text-2xl tracking-[-0.03em]">What to do next</h2>
-          <ol className="mt-4 space-y-3 pl-6 leading-7 text-[var(--ink)]">
-            {report.actions.map((action) => <li className="list-decimal pl-2" key={action}>{action}</li>)}
-          </ol>
+          <h2 className="font-[var(--font-display)] text-2xl tracking-[-0.03em]">Your action plan</h2>
+          <p className="mt-2 text-sm leading-6 text-[var(--muted)]">Tick each item when it is complete. Your progress stays in this report until you clear it.</p>
+          <div className="mt-4 space-y-3 text-[var(--ink)]">
+            {report.actions.map((action) => {
+              const done = completedActions.includes(action);
+              return (
+                <label className={`flex cursor-pointer items-start gap-3 rounded-xl border px-4 py-3 text-sm leading-6 transition ${done ? "border-[#b9ddc7] bg-[#eef8f2] text-[var(--muted)] line-through" : "border-[var(--line)] bg-white"}`} key={action}>
+                  <input checked={done} className="mt-1 size-4 accent-[var(--primary)]" onChange={() => setCompletedActions((items) => done ? items.filter((item) => item !== action) : [...items, action])} type="checkbox" />
+                  <span>{action}</span>
+                </label>
+              );
+            })}
+          </div>
           {report.backupPlan.length ? (
             <div className="mt-6 border-l-2 border-[var(--warm)] pl-4">
               <h2 className="font-bold">Backup plan</h2>
@@ -105,6 +118,16 @@ export function RiskReport({ report, onEdit, onRestart, onClear }: RiskReportPro
               </ul>
             </div>
           ) : null}
+        </section>
+      ) : null}
+
+      {sources.length ? (
+        <section className="mt-8 rounded-[var(--radius-md)] border border-[var(--line)] bg-white p-5 sm:p-7">
+          <h2 className="font-[var(--font-display)] text-2xl tracking-[-0.03em]">Verify with the source</h2>
+          <p className="mt-2 text-sm leading-6 text-[var(--muted)]">Rules and providers can change. Use these official or booking-provider pages for the final confirmation.</p>
+          <div className="mt-4 flex flex-wrap gap-3">
+            {sources.map((source) => <a className="rounded-full border border-[var(--line)] px-4 py-2 text-sm font-bold text-[var(--primary)] hover:bg-[var(--surface)]" href={source.url} key={source.url} rel="noreferrer" target="_blank">{source.label} ↗</a>)}
+          </div>
         </section>
       ) : null}
 

@@ -26,6 +26,9 @@ export const paymentConfig: ToolConfig = {
     explanation: "There is no tested payment path or practical backup if one app or card fails.",
   },
   faqs: paymentFaqs,
+  sources: [
+    { label: "Alipay: Visiting China", url: "https://www.alipay.com/global/visiting-china/" },
+  ],
   questions: [
     { id: "paymentApps", prompt: "Which mobile payment apps have you set up?", type: "multiple", required: true, section: "Setup", options: [
       { label: "Alipay", value: "alipay" },

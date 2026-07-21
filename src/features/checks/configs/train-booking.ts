@@ -23,8 +23,12 @@ export const trainBookingConfig: ToolConfig = {
     { question: "Can foreign visitors buy China train tickets?", answer: "The official 12306 English FAQ says foreign passengers can purchase real-name tickets with valid passports usable under the relevant regulations. This tool checks preparation, not eligibility guarantees." },
     { question: "Is a 12306 order the same as an issued ticket?", answer: "No. Keep checking the booking status until the ticket is formally issued, and compare the passenger details with the original passport." },
   ],
+  sources: [
+    { label: "12306 English FAQ", url: "https://www.12306.cn/en/faq.html" },
+    { label: "12306 English site", url: "https://www.12306.cn/en/index.html" },
+    { label: "Trip.com trains", url: "https://www.trip.com/trains/" },
+  ],
   questions: [
-    { id: "passportCountry", prompt: "What country issued the passport you will use?", type: "text", required: true, section: "Passenger details" },
     choice("phoneAccess", "Will you have reliable access to your booking email or phone?", yesNoUnsure, "A China phone number is not assumed here; reliable account recovery and notification access is the safer check.", "Passenger details"),
     { id: "ticketChannel", prompt: "How will you book the train?", type: "single", required: true, section: "Booking channel", options: [
       { label: "12306", value: "12306" },
@@ -35,7 +39,6 @@ export const trainBookingConfig: ToolConfig = {
     choice("accountReady", "Is the chosen booking account or channel ready to use?", yesNoUnsure, undefined, "Booking channel"),
     choice("identityVerified", "Has the passenger passport identity been accepted or verified?", yesNoUnsure, "12306 describes foreign passport passenger verification as a separate status to check.", "Passenger details"),
     choice("nameMatches", "Does the passenger name match the passport booking details exactly?", yesNoUnsure, "Use the spelling and order shown in the passport and booking record.", "Passenger details"),
-    { id: "travelDate", prompt: "What is your first train travel date?", type: "date", required: true, section: "Travel day" },
     choice("hasTransfer", "Will you change trains during the journey?", yesNo, undefined, "Connections"),
     { ...choice("transferBuffer", "Is your planned connection buffer at least 30 minutes?", [
       { label: "Yes, 30 minutes or more", value: "30-plus" },

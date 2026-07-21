@@ -1,11 +1,11 @@
 import type { ReportCounts } from "../types";
 
-export function ReportMetrics({ counts }: { counts: ReportCounts }) {
+export function ReportMetrics({ counts, actionCount }: { counts: ReportCounts; actionCount: number }) {
   const metrics = [
     ["Critical", counts.critical, "text-[var(--critical)]"],
     ["High risk", counts.high, "text-[var(--high)]"],
     ["Info", counts.information, "text-[var(--pending)]"],
-    ["Ready", counts.ready, "text-[var(--ready)]"],
+    ["Next actions", actionCount, "text-[var(--primary)]"],
   ] as const;
 
   return (
