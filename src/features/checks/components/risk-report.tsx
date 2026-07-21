@@ -98,7 +98,7 @@ export function RiskReport({ report, onEdit, onRestart, onClear }: RiskReportPro
       {(report.actions.length || report.backupPlan.length) ? (
         <section className="mt-8 rounded-[var(--radius-md)] bg-[var(--surface)] p-5 sm:p-7">
           <h2 className="font-[var(--font-display)] text-2xl tracking-[-0.03em]">Your action plan</h2>
-          <p className="mt-2 text-sm leading-6 text-[var(--muted)]">Tick each item when it is complete. Your progress stays in this report until you clear it.</p>
+          <p className="mt-2 text-sm leading-6 text-[var(--muted)]">Tick each item as you complete it, then rerun the check to refresh your risk status.</p>
           <div className="mt-4 space-y-3 text-[var(--ink)]">
             {report.actions.map((action) => {
               const done = completedActions.includes(action);
