@@ -68,7 +68,7 @@ export default function HomePage() {
       <section className="bg-[var(--surface)] py-16 sm:py-24">
         <Container>
           <p className="text-sm font-bold text-[var(--primary)]">Start where the risk is</p>
-          <h2 className="mt-4 max-w-3xl font-[var(--font-display)] text-3xl leading-[1.15] tracking-[-0.03em] text-balance sm:text-4xl">Four checks. One clearer plan.</h2>
+          <h2 className="mt-4 max-w-3xl font-[var(--font-display)] text-3xl leading-[1.15] tracking-[-0.03em] text-balance sm:text-4xl">Six checks. One clearer plan.</h2>
           <p className="mt-4 max-w-2xl text-lg leading-8 text-[var(--muted)]">Start with the full check or go directly to the part of your trip that needs attention.</p>
           <ToolGrid />
           <div className="mt-14">
@@ -84,7 +84,7 @@ export default function HomePage() {
             <p className="text-sm font-bold text-[var(--primary)]">How the checks work</p>
             <h2 className="mt-4 font-[var(--font-display)] text-3xl leading-[1.15] tracking-[-0.03em] sm:text-4xl">Short questions. Clear rules. Local report.</h2>
             <p className="mt-4 max-w-xl text-lg leading-8 text-[var(--muted)]">
-              Answer focused questions about payment, dates and hotel arrival. Deterministic rules flag blockers and backups. Nothing is sent to a server for scoring.
+              Answer focused questions about apps, payments, trains, dates and arrival. Deterministic rules flag blockers and backups. Nothing is sent to a server for scoring.
             </p>
           </div>
           <ol className="space-y-4">

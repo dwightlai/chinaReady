@@ -1,6 +1,6 @@
 import type { ArticleFaq } from "@/features/guides/content/article-sections";
 
-export type CheckSlug = "readiness" | "payment" | "dates" | "hotel-arrival";
+export type CheckSlug = "readiness" | "apps" | "payment" | "train-booking" | "dates" | "hotel-arrival";
 export type Severity = "critical" | "high" | "information" | "ready";
 export type OverallStatus = "not-ready" | "action-required" | "review" | "ready";
 export type AnswerValue = string | number | boolean | string[] | null;

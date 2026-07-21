@@ -17,11 +17,25 @@ export const checkCatalog: CheckCatalogItem[] = [
     cta: "Start full check",
   },
   {
+    slug: "apps",
+    name: "China App Readiness Checker",
+    description: "Know which apps to install, register and verify before you land.",
+    duration: "3 minutes",
+    cta: "Check my apps",
+  },
+  {
     slug: "payment",
-    name: "Payment Setup Check",
-    description: "Identify single points of failure before you need to pay.",
+    name: "Payment Readiness Test",
+    description: "Test your payment path and the backups behind it.",
     duration: "3 minutes",
     cta: "Check payments",
+  },
+  {
+    slug: "train-booking",
+    name: "Train Booking Readiness Checker",
+    description: "Catch passport, account and connection risks before train day.",
+    duration: "4 minutes",
+    cta: "Check train plans",
   },
   {
     slug: "dates",

@@ -9,8 +9,8 @@ export function ToolGrid() {
   if (!primary) return null;
 
   return (
-    <div className="mt-10 grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
-      <article className="min-h-72 rounded-[var(--radius-lg)] bg-[var(--primary)] p-8 text-white sm:p-10" data-testid="check-card">
+    <div className="mt-10 grid gap-4 lg:grid-cols-3">
+      <article className="min-h-72 rounded-[var(--radius-lg)] bg-[var(--primary)] p-8 text-white sm:p-10 lg:col-span-2" data-testid="check-card">
         <p className="text-sm font-bold text-blue-100">01 · {primary.duration}</p>
         <h3 className="mt-8 text-3xl font-extrabold tracking-[-0.035em] sm:text-4xl">{primary.name}</h3>
         <p className="mt-4 max-w-[48ch] text-lg leading-8 text-blue-50">{primary.description}</p>
@@ -19,7 +19,7 @@ export function ToolGrid() {
         </Link>
       </article>
 
-      <div className="grid gap-4">
+      <div className="contents">
         {rest.map((tool, index) => (
           <article className="rounded-[var(--radius-lg)] border border-[var(--line)] bg-white p-6 sm:p-7" data-testid="check-card" key={tool.slug}>
             <p className="text-sm font-bold text-[var(--muted)]">0{index + 2} · {tool.duration}</p>

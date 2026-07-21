@@ -1,0 +1,106 @@
+import type { ToolConfig } from "../types";
+import { choice, yesNo, yesNoUnsure } from "./shared";
+
+export const trainBookingConfig: ToolConfig = {
+  slug: "train-booking",
+  name: "Train Booking Readiness Checker",
+  shortName: "Train booking",
+  description: "Catch passport, account and connection risks before train day.",
+  duration: "4 minutes",
+  lastReviewedAt: "2026-07-21",
+  coveragePoints: [
+    "Foreign passport and real-name passenger setup",
+    "12306 versus Trip.com booking channel choice",
+    "Name, passport and ticket status checks",
+    "Transfer buffer and station exit preparation",
+  ],
+  sampleFinding: {
+    severity: "critical",
+    title: "Your train passenger details may not be ready for verification.",
+    explanation: "A valid passport can be accepted for real-name tickets, but the passenger record still needs to match and be verified.",
+  },
+  faqs: [
+    { question: "Can foreign visitors buy China train tickets?", answer: "The official 12306 English FAQ says foreign passengers can purchase real-name tickets with valid passports usable under the relevant regulations. This tool checks preparation, not eligibility guarantees." },
+    { question: "Is a 12306 order the same as an issued ticket?", answer: "No. Keep checking the booking status until the ticket is formally issued, and compare the passenger details with the original passport." },
+  ],
+  questions: [
+    { id: "passportCountry", prompt: "What country issued the passport you will use?", type: "text", required: true, section: "Passenger details" },
+    choice("phoneAccess", "Will you have reliable access to your booking email or phone?", yesNoUnsure, "A China phone number is not assumed here; reliable account recovery and notification access is the safer check.", "Passenger details"),
+    { id: "ticketChannel", prompt: "How will you book the train?", type: "single", required: true, section: "Booking channel", options: [
+      { label: "12306", value: "12306" },
+      { label: "Trip.com", value: "trip" },
+      { label: "Station counter or agent", value: "station" },
+      { label: "I have not chosen yet", value: "none" },
+    ] },
+    choice("accountReady", "Is the chosen booking account or channel ready to use?", yesNoUnsure, undefined, "Booking channel"),
+    choice("identityVerified", "Has the passenger passport identity been accepted or verified?", yesNoUnsure, "12306 describes foreign passport passenger verification as a separate status to check.", "Passenger details"),
+    choice("nameMatches", "Does the passenger name match the passport booking details exactly?", yesNoUnsure, "Use the spelling and order shown in the passport and booking record.", "Passenger details"),
+    { id: "travelDate", prompt: "What is your first train travel date?", type: "date", required: true, section: "Travel day" },
+    choice("hasTransfer", "Will you change trains during the journey?", yesNo, undefined, "Connections"),
+    { ...choice("transferBuffer", "Is your planned connection buffer at least 30 minutes?", [
+      { label: "Yes, 30 minutes or more", value: "30-plus" },
+      { label: "No, under 30 minutes", value: "under-30" },
+      { label: "I am not sure", value: "unsure" },
+    ], "Allow time for platform changes, queues and unfamiliar stations.", "Connections"), visibleWhen: { field: "hasTransfer", equals: true } },
+    choice("originalPassportCarry", "Will you carry the original passport used for the booking?", yesNo, undefined, "Travel day"),
+    choice("stationExitPlan", "Have you saved your destination and exit plan for the arrival station?", yesNoUnsure, "Large stations can have multiple exits and long walking routes.", "Travel day"),
+  ],
+  rules: [
+    {
+      code: "TRAIN_NO_CHANNEL", severity: "critical", priority: 1, group: "train-channel",
+      all: [{ field: "ticketChannel", operator: "eq", value: "none" }],
+      title: "You have not chosen a train booking channel.",
+      explanation: "Passenger verification and ticket timing depend on the channel you use.",
+      actions: ["Choose 12306, Trip.com or a station counter before planning around the train."],
+    },
+    {
+      code: "TRAIN_NAME_MISMATCH", severity: "critical", priority: 2, group: "train-name",
+      all: [{ field: "nameMatches", operator: "eq", value: false }],
+      title: "The passenger name does not match the passport details.",
+      explanation: "Real-name rail tickets are tied to the passenger identity used during booking.",
+      actions: ["Correct the passenger record before travel and bring the same original passport."],
+    },
+    {
+      code: "TRAIN_IDENTITY", severity: "high", priority: 3, group: "train-identity",
+      any: [{ field: "identityVerified", operator: "eq", value: false }, { field: "identityVerified", operator: "eq", value: "unsure" }],
+      title: "Passport passenger verification is incomplete or unclear.",
+      explanation: "A booking can remain unusable if the passenger record still needs identity review.",
+      actions: ["Open the booking channel and confirm the passenger status before departure."],
+    },
+    {
+      code: "TRAIN_ACCOUNT", severity: "high", priority: 4, group: "train-account",
+      any: [{ field: "accountReady", operator: "eq", value: false }, { field: "accountReady", operator: "eq", value: "unsure" }],
+      title: "Your chosen booking channel is not ready to use.",
+      explanation: "An untested account or pending channel can delay payment, verification or ticket retrieval.",
+      actions: ["Sign in, add the passenger and confirm the channel can display your booking."],
+    },
+    {
+      code: "TRAIN_PHONE", severity: "high", priority: 5, group: "train-contact",
+      all: [{ field: "phoneAccess", operator: "not-yes" }],
+      title: "Booking recovery contact access is uncertain.",
+      explanation: "Reliable access to the account email or phone helps with notices, password recovery and booking support.",
+      actions: ["Confirm access to the contact method attached to the booking account."],
+    },
+    {
+      code: "TRAIN_TRANSFER", severity: "high", priority: 6, group: "train-transfer",
+      any: [{ field: "transferBuffer", operator: "eq", value: "under-30" }, { field: "transferBuffer", operator: "eq", value: "unsure" }],
+      title: "Your connection may be too tight for an unfamiliar station.",
+      explanation: "Platform changes, queues and long station corridors can consume a short connection buffer.",
+      actions: ["Choose a longer connection or confirm the exact platform and station layout."],
+    },
+    {
+      code: "TRAIN_PASSPORT", severity: "high", priority: 7, group: "train-passport",
+      all: [{ field: "originalPassportCarry", operator: "eq", value: false }],
+      title: "You may not have the original passport used for the booking.",
+      explanation: "The official 12306 FAQ directs passengers with foreign passport records to use the original passport for identity verification.",
+      actions: ["Carry the original passport used in the passenger record."],
+    },
+    {
+      code: "TRAIN_STATION_EXIT", severity: "information", priority: 20, group: "train-exit",
+      all: [{ field: "stationExitPlan", operator: "not-yes" }],
+      title: "Your arrival station exit plan needs a quick review.",
+      explanation: "Saving the destination in Chinese and the right station exit makes the final transfer easier.",
+      actions: ["Save the destination address, station name and a taxi or metro fallback."],
+    },
+  ],
+};

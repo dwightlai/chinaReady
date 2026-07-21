@@ -1,7 +1,7 @@
 import type { Answers, CheckSlug, RiskReport } from "./types";
 
 const VERSION = 1 as const;
-const CHECKS: CheckSlug[] = ["readiness", "payment", "dates", "hotel-arrival"];
+const CHECKS: CheckSlug[] = ["readiness", "apps", "payment", "train-booking", "dates", "hotel-arrival"];
 
 export interface DraftState {
   currentStep: number;

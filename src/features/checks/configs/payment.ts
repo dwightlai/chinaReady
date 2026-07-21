@@ -9,7 +9,7 @@ export const paymentFaqs = [
 
 export const paymentConfig: ToolConfig = {
   slug: "payment",
-  name: "Payment Setup Check",
+  name: "Payment Readiness Test",
   shortName: "Payment",
   description: "Check whether your payment plan has a single point of failure.",
   duration: "3 minutes",

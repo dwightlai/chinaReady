@@ -5,7 +5,7 @@ import HomePage from "@/app/page";
 import { Header } from "@/components/site/header";
 
 describe("HomePage", () => {
-  it("presents the approved brand, message and four working checks", () => {
+  it("presents the approved brand, message and six working checks", () => {
     render(<><Header /><HomePage /></>);
 
     expect(screen.getByRole("link", { name: "ChinaTripCheck home" })).toBeInTheDocument();
@@ -14,9 +14,11 @@ describe("HomePage", () => {
     expect(screen.getAllByRole("link", { name: "Check my trip" })[0]).toHaveAttribute("href", "/checks/readiness");
     expect(screen.getByRole("img", { name: /traveler preparing for a china trip/i })).toBeInTheDocument();
 
-    expect(screen.getAllByTestId("check-card")).toHaveLength(4);
+    expect(screen.getAllByTestId("check-card")).toHaveLength(6);
     expect(screen.getByText("China Readiness Check")).toBeInTheDocument();
-    expect(screen.getByText("Payment Setup Check")).toBeInTheDocument();
+    expect(screen.getByText("China App Readiness Checker")).toBeInTheDocument();
+    expect(screen.getByText("Payment Readiness Test")).toBeInTheDocument();
+    expect(screen.getByText("Train Booking Readiness Checker")).toBeInTheDocument();
     expect(screen.getByText("Travel Date Check")).toBeInTheDocument();
     expect(screen.getByText("Hotel Arrival Check")).toBeInTheDocument();
   });
@@ -25,7 +27,8 @@ describe("HomePage", () => {
     render(<HomePage />);
 
     expect(screen.queryByText(/coming soon/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/train check/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/train baggage/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/visa checker/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/China Ready/i)).not.toBeInTheDocument();
   });
 });
