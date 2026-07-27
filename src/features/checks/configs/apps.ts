@@ -39,6 +39,13 @@ export const appsConfig: ToolConfig = {
     choice("mapsReady", "Do you have a map app ready for China?", yesNoUnsure, "Save key places offline as a recovery path.", "Getting around"),
     choice("rideReady", "Do you have a ride-hailing plan for airport or station arrival?", yesNoUnsure, undefined, "Getting around"),
     choice("needsTrain", "Will you take a train during this trip?", yesNo, undefined, "Trains"),
+    { id: "tripActivities", prompt: "Which activities are part of this trip?", type: "multiple", required: true, section: "Your trip", options: [
+      { label: "Independent city travel", value: "independent" },
+      { label: "Ticketed attractions", value: "attractions" },
+      { label: "Business meetings", value: "business" },
+      { label: "Travelling with family", value: "family" },
+      { label: "None of these", value: "none", exclusive: true },
+    ] },
     { id: "trainChannel", prompt: "Which train booking channel will you use?", type: "single", required: true, section: "Trains", options: [
       { label: "12306", value: "12306" },
       { label: "Trip.com", value: "trip" },
@@ -56,6 +63,22 @@ export const appsConfig: ToolConfig = {
       explanation: "Installing an app without a verified account can still leave you unable to pay on arrival.",
       actions: ["Open Alipay or WeChat Pay before departure.", "Complete identity verification and link a usable card.", "Keep a physical card or RMB cash as a fallback."],
       relatedCheck: "payment", relatedGuides: ["test-mobile-payment-before-china"],
+    },
+    {
+      code: "APP_INDEPENDENT_STACK", severity: "information", priority: 30, group: "trip-app-plan",
+      all: [{ field: "tripActivities", operator: "includes", value: "independent" }],
+      title: "Independent travel needs a complete arrival app stack.",
+      explanation: "Self-guided trips depend more heavily on working maps, ride access, payment and saved Chinese place details.",
+      actions: ["Confirm maps, ride-hailing and payment apps all open and work before departure.", "Save the first hotel and arrival station in Chinese."],
+      relatedGuides: ["arrive-with-working-internet"],
+    },
+    {
+      code: "APP_ATTRACTION_IDENTITY", severity: "information", priority: 31, group: "attraction-app-plan",
+      all: [{ field: "tripActivities", operator: "includes", value: "attractions" }],
+      title: "Ticketed attractions may need advance account and identity setup.",
+      explanation: "Some real-name reservations are difficult to complete at the entrance.",
+      actions: ["Check each venue's official booking channel and passport support before departure."],
+      relatedCheck: "passport",
     },
     {
       code: "APP_NO_MAPS", severity: "high", priority: 2, group: "app-maps",

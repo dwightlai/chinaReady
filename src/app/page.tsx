@@ -36,11 +36,11 @@ export default function HomePage() {
       <SiteJsonLd />
       <Container className="grid min-h-[620px] items-center gap-12 py-14 lg:grid-cols-[1.02fr_0.98fr] lg:py-16">
         <div className="relative z-10 max-w-xl">
-          <h2 className="text-sm font-bold text-[var(--primary)]">Apps, payments and train booking</h2>
+          <h2 className="text-sm font-bold text-[var(--primary)]">Pre-trip China readiness checking system</h2>
           <h1 className="mt-4 font-[var(--font-display)] text-4xl leading-[1.12] tracking-[-0.03em] text-[var(--ink)] text-balance sm:text-5xl lg:text-[3.5rem] lg:leading-[1.1]">
             Find the risks before they disrupt your China trip.
           </h1>
-          <p className="mt-5 max-w-[36rem] text-lg leading-8 text-[var(--muted)]">Check your apps, payments, train plans and hotel arrival before you leave.</p>
+          <p className="mt-5 max-w-[36rem] text-lg leading-8 text-[var(--muted)]">Check your apps, payment and phone resilience, passport needs, train plans and hotel arrival before you leave.</p>
           <div className="mt-8 flex flex-wrap items-center gap-5">
             <Link className="rounded-full bg-[var(--primary)] px-6 py-3.5 font-extrabold text-white transition hover:bg-[var(--primary-dark)]" href="/checks/readiness">Check my trip</Link>
             <Link className="inline-flex items-center gap-2 font-extrabold text-[var(--ink)]" href="/how-it-works">See how it works<ArrowRight aria-hidden size={18} weight="bold" /></Link>
@@ -68,7 +68,7 @@ export default function HomePage() {
       <section className="bg-[var(--surface)] py-16 sm:py-24">
         <Container>
           <p className="text-sm font-bold text-[var(--primary)]">Start where the risk is</p>
-          <h2 className="mt-4 max-w-3xl font-[var(--font-display)] text-3xl leading-[1.15] tracking-[-0.03em] text-balance sm:text-4xl">Six checks. One clearer plan.</h2>
+          <h2 className="mt-4 max-w-3xl font-[var(--font-display)] text-3xl leading-[1.15] tracking-[-0.03em] text-balance sm:text-4xl">Seven checks. One clearer plan.</h2>
           <p className="mt-4 max-w-2xl text-lg leading-8 text-[var(--muted)]">Start with the full check or go directly to the part of your trip that needs attention.</p>
           <ToolGrid />
           <div className="mt-14">

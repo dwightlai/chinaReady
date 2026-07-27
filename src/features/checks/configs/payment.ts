@@ -9,9 +9,9 @@ export const paymentFaqs = [
 
 export const paymentConfig: ToolConfig = {
   slug: "payment",
-  name: "Payment Readiness Test",
+  name: "Payment & Phone Resilience Check",
   shortName: "Payment",
-  description: "Check whether your payment plan has a single point of failure.",
+  description: "Check whether your payment and phone verification plan has a single point of failure.",
   duration: "3 minutes",
   lastReviewedAt: "2026-07-14",
   coveragePoints: [
@@ -44,6 +44,7 @@ export const paymentConfig: ToolConfig = {
     choice("physicalCard", "Will you carry a physical bank card?", yesNoUnsure, undefined, "Backup"),
     choice("cashBackup", "Will you carry a small amount of RMB cash?", yesNoUnsure, undefined, "Backup"),
     choice("originalNumberAvailable", "Will your original mobile number remain available?", yesNoUnsure, undefined, "Verification"),
+    choice("dualSimReady", "If you will use dual SIM, have you tested which line receives verification messages?", yesNoUnsure, "Choose yes if you are not using dual SIM or have already tested the setup.", "Verification"),
     choice("esimReceivesSms", "Can your travel SIM or eSIM receive verification messages?", yesNoUnsure, undefined, "Verification"),
     choice("reliesOnOneApp", "Is Alipay or WeChat Pay your only mobile payment option?", yesNoUnsure, "Answer yes if losing one app would leave you with no other mobile payment path.", "Backup"),
   ],
@@ -126,6 +127,17 @@ export const paymentConfig: ToolConfig = {
       title: "Bank verification may be unavailable.",
       explanation: "Your issuer may block a transaction that cannot be approved by message or app.",
       actions: ["Confirm how your bank approves overseas transactions.", "Keep your original number available if needed."],
+      relatedGuides: ["esim-bank-verification-messages"],
+    },
+    {
+      code: "PAY_DUAL_SIM_UNTESTED", severity: "high", priority: 13, group: "dual-sim-verification",
+      all: [
+        { field: "dualSimReady", operator: "not-yes" },
+        { field: "originalNumberAvailable", operator: "not-yes" },
+      ],
+      title: "Your SIM setup may block payment verification.",
+      explanation: "Switching data lines does not guarantee that the registered number can receive a bank or account code.",
+      actions: ["Keep the original line enabled for messages.", "Test the dual-SIM setup before departure.", "Save a bank-app approval path as backup."],
       relatedGuides: ["esim-bank-verification-messages"],
     },
     {

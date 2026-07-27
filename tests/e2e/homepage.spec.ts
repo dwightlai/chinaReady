@@ -1,10 +1,10 @@
 import { expect, test } from "@playwright/test";
 
-test("homepage exposes the approved four-check experience", async ({ page }) => {
+test("homepage exposes the approved seven-check experience", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.getByRole("heading", { name: "Find the risks before they disrupt your China trip." })).toBeVisible();
-  await expect(page.getByTestId("check-card")).toHaveCount(4);
+  await expect(page.getByTestId("check-card")).toHaveCount(7);
   await expect(page.getByRole("link", { name: "Check my trip" }).first()).toHaveAttribute("href", "/checks/readiness");
   await expect(page.getByText(/China Ready|coming soon|train checker/i)).toHaveCount(0);
 });

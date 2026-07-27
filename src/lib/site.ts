@@ -3,7 +3,7 @@ export const siteConfig = {
   wordmark: "ChinaTripCheck",
   url: "https://chinatripcheck.com",
   description:
-    "Check your China trip for app, payment, train booking, travel date and hotel arrival risks before you leave. Verify foreign-card setup, passport details, Chinese holiday crowds, eSIM readiness and late hotel check-in.",
+    "Run pre-trip China readiness checks for apps, payment and dual-SIM resilience, passport carry needs, train booking, travel dates and hotel arrival.",
   ogImage: "/images/china-trip-check-hero.png",
   lastReviewedAt: "2026-07-15",
   keywords: [
@@ -18,6 +18,8 @@ export const siteConfig = {
     "Canton Fair travel",
     "China travel apps",
     "12306 foreign passport",
+    "WeChat dual SIM China",
+    "carry passport in China",
     "China train tickets",
   ],
 } as const;

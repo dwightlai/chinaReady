@@ -5,20 +5,21 @@ import HomePage from "@/app/page";
 import { Header } from "@/components/site/header";
 
 describe("HomePage", () => {
-  it("presents the approved brand, message and six working checks", () => {
+  it("presents the approved brand, message and seven working checks", () => {
     render(<><Header /><HomePage /></>);
 
     expect(screen.getByRole("link", { name: "ChinaTripCheck home" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Find the risks before they disrupt your China trip." })).toBeInTheDocument();
-    expect(screen.getByText("Apps, payments and train booking")).toBeInTheDocument();
+    expect(screen.getByText("Pre-trip China readiness checking system")).toBeInTheDocument();
     expect(screen.getAllByRole("link", { name: "Check my trip" }).length).toBeGreaterThanOrEqual(2);
     expect(screen.getAllByRole("link", { name: "Check my trip" })[0]).toHaveAttribute("href", "/checks/readiness");
     expect(screen.getByRole("img", { name: /traveler preparing for a china trip/i })).toBeInTheDocument();
 
-    expect(screen.getAllByTestId("check-card")).toHaveLength(6);
+    expect(screen.getAllByTestId("check-card")).toHaveLength(7);
     expect(screen.getByText("China Readiness Check")).toBeInTheDocument();
     expect(screen.getByText("China App Readiness Checker")).toBeInTheDocument();
-    expect(screen.getByText("Payment Readiness Test")).toBeInTheDocument();
+    expect(screen.getByText("Payment & Phone Resilience Check")).toBeInTheDocument();
+    expect(screen.getByText("Passport Carry & Identity Checker")).toBeInTheDocument();
     expect(screen.getByText("Train Booking Readiness Checker")).toBeInTheDocument();
     expect(screen.getByText("Travel Date Check")).toBeInTheDocument();
     expect(screen.getByText("Hotel Arrival Check")).toBeInTheDocument();

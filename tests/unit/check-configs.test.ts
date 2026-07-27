@@ -23,11 +23,12 @@ const GUIDE_SLUGS = new Set([
 ]);
 
 describe("check catalog", () => {
-  it("publishes exactly the six approved checks", () => {
+  it("publishes the seven approved checks in priority order", () => {
     expect(checkCatalog.map((tool) => tool.slug)).toEqual([
       "readiness",
       "apps",
       "payment",
+      "passport",
       "train-booking",
       "dates",
       "hotel-arrival",

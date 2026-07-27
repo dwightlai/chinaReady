@@ -25,10 +25,17 @@ export const checkCatalog: CheckCatalogItem[] = [
   },
   {
     slug: "payment",
-    name: "Payment Readiness Test",
-    description: "Test your payment path and the backups behind it.",
+    name: "Payment & Phone Resilience Check",
+    description: "Test your payment, phone verification and backup paths.",
     duration: "3 minutes",
-    cta: "Check payments",
+    cta: "Check payment resilience",
+  },
+  {
+    slug: "passport",
+    name: "Passport Carry & Identity Checker",
+    description: "Know when to carry the original and where identity checks can block your day.",
+    duration: "2 minutes",
+    cta: "Check passport needs",
   },
   {
     slug: "train-booking",

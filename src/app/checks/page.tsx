@@ -7,11 +7,11 @@ import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Trip checks",
-  description: "Choose one of six practical China travel preparation checks.",
+  description: "Choose one of seven practical China travel preparation checks.",
   alternates: { canonical: "/checks" },
   openGraph: {
     title: "Trip checks",
-    description: "Choose one of four practical China travel preparation checks.",
+    description: "Choose one of seven practical China travel preparation checks.",
     url: `${siteConfig.url}/checks`,
     images: [{ url: siteConfig.ogImage }],
   },

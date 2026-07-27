@@ -4,9 +4,31 @@ import { evaluateCheck } from "@/features/checks/evaluate";
 import {
   datesConfig,
   hotelArrivalConfig,
+  passportConfig,
   paymentConfig,
   readinessConfig,
 } from "@/features/checks/configs";
+
+describe("passport scenarios", () => {
+  it("flags an original-passport blocker for a hotel and train day", () => {
+    const report = evaluateCheck(passportConfig, {
+      hotelCheckIn: true,
+      trainTravel: true,
+      flightTravel: false,
+      ticketedAttraction: false,
+      otherIdentityService: false,
+      originalAvailable: false,
+      bookingMatches: true,
+      secureCopy: true,
+      lossContacts: true,
+    });
+
+    expect(report.findings).toEqual(expect.arrayContaining([
+      expect.objectContaining({ group: "original-required", severity: "critical" }),
+    ]));
+    expect(report.relatedChecks).toContain("hotel-arrival");
+  });
+});
 
 describe("payment scenarios", () => {
   it("flags the absence of any practical payment path as critical", () => {
