@@ -38,9 +38,9 @@ export default async function CheckPage({ params }: { params: Promise<{ slug: st
     <main className="min-h-[65vh]">
       {config.faqs?.length ? <FaqPageJsonLd faqs={config.faqs} /> : null}
       <SoftwareApplicationJsonLd description={config.description} name={config.name} path={`/checks/${config.slug}`} />
-      <BreadcrumbJsonLd items={[{ name: "Checks", path: "/checks" }, { name: config.name, path: `/checks/${config.slug}` }]} />
+      <BreadcrumbJsonLd items={[{ name: "Tools", path: "/checks" }, { name: config.name, path: `/checks/${config.slug}` }]} />
       <Container className="pt-8">
-        <Breadcrumbs items={[{ href: "/checks", label: "Checks" }, { label: config.name }]} />
+        <Breadcrumbs items={[{ href: "/checks", label: "Tools" }, { label: config.name }]} />
       </Container>
       <CheckExperience config={config} />
     </main>

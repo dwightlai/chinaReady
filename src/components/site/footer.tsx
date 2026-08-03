@@ -22,7 +22,7 @@ export function Footer() {
             <p className="mt-3 text-sm text-[var(--muted)]">© {year} {siteConfig.wordmark}</p>
           </div>
           <nav aria-label="Footer navigation" className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-bold text-[var(--muted)]">
-            <Link href="/checks">Checks</Link>
+            <Link href="/checks">Tools</Link>
             <Link href="/guides">Checker support</Link>
             <Link href="/how-it-works">How it works</Link>
             <Link href="/about">About</Link>

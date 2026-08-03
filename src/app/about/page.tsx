@@ -47,7 +47,7 @@ export default function AboutPage() {
             </ul>
           </div>
           <p>It supports preparation and points travelers back to official providers for final verification.</p>
-          <Link className="inline-block rounded-full bg-[var(--primary)] px-6 py-3 text-base font-extrabold text-white" href="/checks">Explore the checks</Link>
+          <Link className="inline-block rounded-full bg-[var(--primary)] px-6 py-3 text-base font-extrabold text-white" href="/checks">Explore the tools</Link>
         </div>
       </Container>
     </main>

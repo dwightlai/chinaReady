@@ -15,6 +15,7 @@ describe("Header", () => {
     await user.click(toggle);
     expect(screen.getByRole("navigation", { name: "Mobile navigation" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Close navigation" })).toHaveAttribute("aria-expanded", "true");
+    expect(within(screen.getByRole("navigation", { name: "Mobile navigation" })).getByRole("link", { name: "Tools" })).toHaveAttribute("href", "/checks");
 
     await user.click(within(screen.getByRole("navigation", { name: "Mobile navigation" })).getByRole("link", { name: "Support" }));
     expect(screen.queryByRole("navigation", { name: "Mobile navigation" })).not.toBeInTheDocument();
