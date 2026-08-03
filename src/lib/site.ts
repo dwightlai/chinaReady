@@ -3,11 +3,14 @@ export const siteConfig = {
   wordmark: "ChinaTripCheck",
   url: "https://chinatripcheck.com",
   description:
-    "Run pre-trip China readiness checks for apps, payment and dual-SIM resilience, passport carry needs, train booking, travel dates and hotel arrival.",
+    "Free China travel readiness checker for payment, Alipay, WeChat, essential apps, passport, train booking and hotel preparation before departure.",
   ogImage: "/images/china-trip-check-hero.png",
-  lastReviewedAt: "2026-07-15",
+  lastReviewedAt: "2026-08-03",
   keywords: [
     "China travel preparation",
+    "China travel readiness checker",
+    "China travel",
+    "China payment",
     "China trip checklist",
     "Alipay setup",
     "WeChat Pay foreigner",
@@ -21,5 +24,7 @@ export const siteConfig = {
     "WeChat dual SIM China",
     "carry passport in China",
     "China train tickets",
+    "China passport travel",
+    "China entry preparation",
   ],
 } as const;

@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { Container } from "@/components/site/container";
-import { BreadcrumbJsonLd, FaqPageJsonLd } from "@/components/site/seo-json-ld";
+import { BreadcrumbJsonLd, FaqPageJsonLd, SoftwareApplicationJsonLd } from "@/components/site/seo-json-ld";
 import { CheckExperience } from "@/features/checks/components/check-experience";
 import { checkConfigs } from "@/features/checks/configs";
 import type { CheckSlug } from "@/features/checks/types";
@@ -37,6 +37,7 @@ export default async function CheckPage({ params }: { params: Promise<{ slug: st
   return (
     <main className="min-h-[65vh]">
       {config.faqs?.length ? <FaqPageJsonLd faqs={config.faqs} /> : null}
+      <SoftwareApplicationJsonLd description={config.description} name={config.name} path={`/checks/${config.slug}`} />
       <BreadcrumbJsonLd items={[{ name: "Checks", path: "/checks" }, { name: config.name, path: `/checks/${config.slug}` }]} />
       <Container className="pt-8">
         <Breadcrumbs items={[{ href: "/checks", label: "Checks" }, { label: config.name }]} />

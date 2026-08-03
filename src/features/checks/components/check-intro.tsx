@@ -50,21 +50,6 @@ export function CheckIntro({ config, hasDraft, onStart }: CheckIntroProps) {
             </ul>
           </div>
 
-          {relatedGuides.length ? (
-            <div className="mt-12">
-              <h2 className="text-sm font-extrabold tracking-[-0.02em] text-[var(--ink)]">Read before you start</h2>
-              <ul className="mt-4 space-y-3">
-                {relatedGuides.map((guide) => (
-                  <li key={guide.slug}>
-                    <Link className="font-bold text-[var(--primary)] underline-offset-4 hover:underline" href={`/guides/${guide.slug}`}>
-                      {guide.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
-
           {config.faqs?.length ? (
             <div className="mt-12">
               <h2 className="text-sm font-extrabold tracking-[-0.02em] text-[var(--ink)]">Before you start</h2>
@@ -76,6 +61,18 @@ export function CheckIntro({ config, hasDraft, onStart }: CheckIntroProps) {
                   </details>
                 ))}
               </div>
+            </div>
+          ) : null}
+
+          {relatedGuides.length ? (
+            <div className="mt-12 border-t border-[var(--line)] pt-8">
+              <h2 className="text-sm font-extrabold tracking-[-0.02em] text-[var(--ink)]">Supporting guides after your check</h2>
+              <p className="mt-2 text-sm leading-6 text-[var(--muted)]">Use these explanations when your report identifies a related gap.</p>
+              <ul className="mt-4 space-y-3">
+                {relatedGuides.map((guide) => (
+                  <li key={guide.slug}><Link className="font-bold text-[var(--primary)] underline-offset-4 hover:underline" href={`/guides/${guide.slug}`}>{guide.title}</Link></li>
+                ))}
+              </ul>
             </div>
           ) : null}
         </div>

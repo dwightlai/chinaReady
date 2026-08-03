@@ -1,5 +1,30 @@
 import { siteConfig } from "@/lib/site";
 
+export function SoftwareApplicationJsonLd({
+  name,
+  description,
+  path,
+}: {
+  name: string;
+  description: string;
+  path: string;
+}) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name,
+    description,
+    url: `${siteConfig.url}${path}`,
+    applicationCategory: "TravelApplication",
+    operatingSystem: "Web",
+    isAccessibleForFree: true,
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    publisher: { "@type": "Organization", name: siteConfig.name, url: siteConfig.url },
+  };
+
+  return <script dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} type="application/ld+json" />;
+}
+
 export function HowToJsonLd({
   name,
   description,

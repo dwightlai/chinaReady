@@ -5,6 +5,7 @@ import type { MetadataRoute } from "next";
 
 import { checkCatalog } from "@/features/checks/catalog";
 import { guideCatalog } from "@/features/guides/catalog";
+import { landingPages } from "@/features/landing-pages/catalog";
 import { siteConfig } from "@/lib/site";
 
 function fileModifiedAt(...segments: string[]): Date {
@@ -39,6 +40,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: fileModifiedAt("src", "app", "checks", "[slug]", "page.tsx"),
       changeFrequency: "weekly" as const,
       priority: 0.85,
+    })),
+    ...landingPages.map((page) => ({
+      url: `${siteConfig.url}/${page.slug}`,
+      lastModified: fileModifiedAt("src", "features", "landing-pages", "catalog.ts"),
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
     })),
     ...guideCatalog.map((guide) => ({
       url: `${siteConfig.url}/guides/${guide.slug}`,

@@ -17,13 +17,14 @@ export function SiteJsonLd() {
         description: siteConfig.description,
       },
       {
-        "@type": "WebApplication",
+        "@type": "SoftwareApplication",
         name: siteConfig.name,
         url: siteConfig.url,
         applicationCategory: "TravelApplication",
         operatingSystem: "Web",
         description: siteConfig.description,
-        offers: { "@type": "Offer", price: "0", priceCurrency: "CNY" },
+        isAccessibleForFree: true,
+        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
       },
     ],
   };

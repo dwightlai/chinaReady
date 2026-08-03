@@ -22,7 +22,7 @@ export function ToolGrid() {
       <div className="contents">
         {rest.map((tool, index) => (
           <article className="rounded-[var(--radius-lg)] border border-[var(--line)] bg-white p-6 sm:p-7" data-testid="check-card" key={tool.slug}>
-            <p className="text-sm font-bold text-[var(--muted)]">0{index + 2} · {tool.duration}</p>
+            <p className="text-sm font-bold text-[var(--muted)]">{String(index + 2).padStart(2, "0")} · {tool.duration}</p>
             <h3 className="mt-3 text-xl font-extrabold tracking-[-0.03em]">{tool.name}</h3>
             <p className="mt-2 leading-7 text-[var(--muted)]">{tool.description}</p>
             <Link className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold" href={`/checks/${tool.slug}`}>

@@ -9,11 +9,11 @@ describe("HomePage", () => {
     render(<><Header /><HomePage /></>);
 
     expect(screen.getByRole("link", { name: "ChinaTripCheck home" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Find the risks before they disrupt your China trip." })).toBeInTheDocument();
-    expect(screen.getByText("Pre-trip China readiness checking system")).toBeInTheDocument();
-    expect(screen.getAllByRole("link", { name: "Check my trip" }).length).toBeGreaterThanOrEqual(2);
-    expect(screen.getAllByRole("link", { name: "Check my trip" })[0]).toHaveAttribute("href", "/checks/readiness");
-    expect(screen.getByRole("img", { name: /traveler preparing for a china trip/i })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "China Travel Readiness Checker" })).toBeInTheDocument();
+    expect(screen.getByText("Check if you're ready to travel to China before payment, apps, bookings or identity checks interrupt your trip.")).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "Start Free Readiness Check" }).length).toBeGreaterThanOrEqual(2);
+    expect(screen.getAllByRole("link", { name: "Start Free Readiness Check" })[0]).toHaveAttribute("href", "/checks/readiness");
+    expect(screen.getByRole("img", { name: /traveler checking china travel readiness/i })).toBeInTheDocument();
 
     expect(screen.getAllByTestId("check-card")).toHaveLength(7);
     expect(screen.getByText("China Readiness Check")).toBeInTheDocument();
@@ -23,6 +23,9 @@ describe("HomePage", () => {
     expect(screen.getByText("Train Booking Readiness Checker")).toBeInTheDocument();
     expect(screen.getByText("Travel Date Check")).toBeInTheDocument();
     expect(screen.getByText("Hotel Arrival Check")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Am I ready for China?" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Tools first. Supporting answers second." })).toBeInTheDocument();
+    expect(screen.getByText("Can foreigners use Alipay in China?")).toBeInTheDocument();
   });
 
   it("does not advertise excluded or unfinished features", () => {

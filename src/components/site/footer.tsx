@@ -23,7 +23,7 @@ export function Footer() {
           </div>
           <nav aria-label="Footer navigation" className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-bold text-[var(--muted)]">
             <Link href="/checks">Checks</Link>
-            <Link href="/guides">Guides</Link>
+            <Link href="/guides">Checker support</Link>
             <Link href="/how-it-works">How it works</Link>
             <Link href="/about">About</Link>
             <Link href="/privacy">Privacy</Link>

@@ -9,7 +9,7 @@ import { Container } from "./container";
 
 const navItems = [
   { href: "/checks", label: "Checks" },
-  { href: "/guides", label: "Guides" },
+  { href: "/guides", label: "Support" },
   { href: "/how-it-works", label: "How it works" },
   { href: "/about", label: "About" },
 ] as const;
@@ -40,10 +40,10 @@ export function Header() {
           ))}
         </nav>
         <Link className="hidden whitespace-nowrap rounded-full bg-[var(--primary)] px-5 py-2.5 text-sm font-extrabold text-white transition hover:bg-[var(--primary-dark)] md:inline-flex" href="/checks/readiness">
-          Check my trip
+          Start readiness check
         </Link>
         <Link className="rounded-full bg-[var(--primary)] px-4 py-2 text-sm font-extrabold text-white md:hidden" href="/checks/readiness">
-          Check my trip
+          Start check
         </Link>
         <button
           aria-expanded={isOpen}
@@ -63,7 +63,7 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
-            <Link className="mt-2 rounded-full bg-[var(--primary)] px-5 py-3 text-center font-extrabold text-white" href="/checks/readiness" onClick={close}>Check my trip</Link>
+            <Link className="mt-2 rounded-full bg-[var(--primary)] px-5 py-3 text-center font-extrabold text-white" href="/checks/readiness" onClick={close}>Start readiness check</Link>
           </div>
         </nav>
       ) : null}

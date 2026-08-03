@@ -54,15 +54,21 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
       <ArticleJsonLd dateModified={guide.lastReviewedAt} datePublished={guide.lastReviewedAt} description={guide.description} path={path} title={guide.title} />
       {guide.howTo?.length ? <HowToJsonLd description={guide.description} name={guide.title} steps={guide.howTo} /> : null}
       {guide.faqs?.length ? <FaqPageJsonLd faqs={guide.faqs} /> : null}
-      <BreadcrumbJsonLd items={[{ name: "Guides", path: "/guides" }, { name: guide.title, path }]} />
+      <BreadcrumbJsonLd items={[{ name: "Support", path: "/guides" }, { name: guide.title, path }]} />
       <Container>
-        <Breadcrumbs items={[{ href: "/guides", label: "Guides" }, { label: guide.title }]} />
+        <Breadcrumbs items={[{ href: "/guides", label: "Support" }, { label: guide.title }]} />
       </Container>
       <Container className="mt-2 grid gap-12 lg:grid-cols-[minmax(0,1fr)_18rem]">
         <article className="max-w-3xl">
           <p className="text-sm font-bold text-[var(--primary)]">{guide.category}</p>
           <h1 className="mt-4 font-[var(--font-display)] text-3xl leading-[1.2] tracking-[-0.03em] text-balance sm:text-4xl lg:text-5xl">{guide.title}</h1>
           <p className="mt-5 text-lg leading-8 text-[var(--muted)]">{guide.description}</p>
+          {relatedChecks[0] ? <div className="mt-8 rounded-[var(--radius-md)] border border-blue-200 bg-blue-50 p-6">
+            <p className="text-sm font-bold text-[var(--primary)]">Start with the tool</p>
+            <h2 className="mt-2 text-xl font-extrabold">Get a result before reading the explanation.</h2>
+            <p className="mt-2 leading-7 text-[var(--muted)]">The checker identifies whether this topic applies to your trip and orders the actions that matter.</p>
+            <Link className="mt-5 inline-flex rounded-full bg-[var(--primary)] px-5 py-3 text-sm font-extrabold text-white" href={`/checks/${relatedChecks[0].slug}`}>Run {relatedChecks[0].name}</Link>
+          </div> : null}
           <div className="my-10 h-px bg-[var(--line)]" />
           <Content />
           {guide.howTo?.length ? <GuideTaskList guideSlug={guide.slug} steps={guide.howTo} /> : null}
@@ -72,9 +78,9 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
           </div>
         </article>
         <aside className="h-fit rounded-[var(--radius-md)] bg-[var(--surface)] p-6 lg:sticky lg:top-6">
-          <h2 className="font-extrabold">Related checks</h2>
+          <h2 className="font-extrabold">Use a checker first</h2>
           <div className="mt-4 space-y-3">{relatedChecks.map((check) => check ? <Link className="block rounded-xl bg-white px-4 py-3 text-sm font-bold" href={`/checks/${check.slug}`} key={check.slug}>{check.name}</Link> : null)}</div>
-          <h2 className="mt-7 font-extrabold">Sources and review notes</h2>
+          <h2 className="mt-7 font-extrabold">Guide sources and review notes</h2>
           <ul className="mt-3 space-y-3 text-sm leading-6 text-[var(--muted)]">{guide.sourceNotes.map((source) => <li key={source.label}>{source.url ? <a className="underline underline-offset-4" href={source.url} rel="noreferrer" target="_blank">{source.label}</a> : source.label}</li>)}</ul>
         </aside>
       </Container>
