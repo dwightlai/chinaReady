@@ -9,10 +9,22 @@ interface CheckIntroProps {
   config: ToolConfig;
   hasDraft: boolean;
   onStart: () => void;
+  onQuickStart?: () => void;
+  onFullStart?: () => void;
 }
 
-export function CheckIntro({ config, hasDraft, onStart }: CheckIntroProps) {
+export function CheckIntro({ config, hasDraft, onStart, onQuickStart, onFullStart }: CheckIntroProps) {
   const relatedGuides = guideCatalog.filter((guide) => guide.applicableChecks.includes(config.slug)).slice(0, 3);
+  const flowCopy = config.slug === "payment" ? {
+    quickTitle: "Diagnose a payment problem", quickBody: "Choose the failure, answer 2–4 follow-ups, and get the next action.", quickTime: "About 60 seconds →",
+    fullTitle: "Run full payment preflight", fullBody: "Check setup, verification, phone access and independent backups.", fullTime: "About 5 minutes →",
+  } : config.slug === "train-booking" ? {
+    quickTitle: "Fix a train booking problem", quickBody: "Check passport verification, ticket status or an urgent departure risk.", quickTime: "About 60–90 seconds →",
+    fullTitle: "Check my complete train plan", fullBody: "Review booking, identity, ticket status, connections and train-day backup.", fullTime: "About 5 minutes →",
+  } : {
+    quickTitle: "Check my travel dates", quickBody: "Enter your trip dates and cities to see holiday and demand risk immediately.", quickTime: "About 45 seconds →",
+    fullTitle: "Assess my booking exposure", fullBody: "Add rail, attraction, flexibility and booking details for a complete assessment.", fullTime: "About 2 minutes →",
+  };
 
   return (
     <section className="mx-auto w-full max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
@@ -30,13 +42,24 @@ export function CheckIntro({ config, hasDraft, onStart }: CheckIntroProps) {
             <span className="inline-flex items-center gap-2"><LockKey aria-hidden size={18} />Answers stay on this device</span>
           </div>
 
-          <button
+          {onQuickStart && onFullStart && !hasDraft ? <div className="mt-9 grid gap-3 sm:grid-cols-2">
+            <button className="rounded-[var(--radius-md)] bg-[var(--primary)] p-5 text-left text-white transition hover:bg-[var(--primary-dark)]" onClick={onQuickStart} type="button">
+              <span className="block text-lg font-extrabold">{flowCopy.quickTitle}</span>
+              <span className="mt-2 block text-sm leading-6 text-blue-100">{flowCopy.quickBody}</span>
+              <span className="mt-3 block text-sm font-extrabold">{flowCopy.quickTime}</span>
+            </button>
+            <button className="rounded-[var(--radius-md)] border border-[var(--line)] bg-white p-5 text-left transition hover:bg-[var(--surface)]" onClick={onFullStart} type="button">
+              <span className="block text-lg font-extrabold">{flowCopy.fullTitle}</span>
+              <span className="mt-2 block text-sm leading-6 text-[var(--muted)]">{flowCopy.fullBody}</span>
+              <span className="mt-3 block text-sm font-extrabold text-[var(--primary)]">{flowCopy.fullTime}</span>
+            </button>
+          </div> : <button
             className="mt-9 rounded-full bg-[var(--primary)] px-6 py-3 font-extrabold text-white transition hover:bg-[var(--primary-dark)] active:translate-y-px"
             onClick={onStart}
             type="button"
           >
             {hasDraft ? "Continue my check" : `Start ${config.shortName.toLowerCase()} check`}
-          </button>
+          </button>}
 
           <div className="mt-12">
             <h2 className="text-sm font-extrabold tracking-[-0.02em] text-[var(--ink)]">What this check looks for</h2>

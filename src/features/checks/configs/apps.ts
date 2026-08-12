@@ -30,12 +30,12 @@ export const appsConfig: ToolConfig = {
   questions: [
     choice("originalNumber", "Will you keep access to your original mobile number?", yesNoUnsure, "Some issuers and apps may use the registered number for a code or account recovery.", "Your setup"),
     choice("needsPayment", "Will you use mobile payment for everyday spending?", yesNo, undefined, "Payments"),
-    { id: "paymentApps", prompt: "Which payment apps have you installed and opened?", type: "multiple", required: true, section: "Payments", options: [
+    { id: "paymentApps", prompt: "Which payment apps have you installed and opened?", type: "multiple", required: true, section: "Payments", visibleWhen: { field: "needsPayment", equals: true }, options: [
       { label: "Alipay", value: "alipay" },
       { label: "WeChat Pay", value: "wechat" },
       { label: "Neither yet", value: "none", exclusive: true },
     ] },
-    choice("identityVerified", "Have you completed the relevant identity verification?", yesNoUnsure, "A downloaded app is not the same as an account that can transact.", "Verification"),
+    { ...choice("identityVerified", "Have you completed the relevant identity verification?", yesNoUnsure, "A downloaded app is not the same as an account that can transact.", "Verification"), visibleWhen: { field: "needsPayment", equals: true } },
     choice("mapsReady", "Do you have a map app ready for China?", yesNoUnsure, "Save key places offline as a recovery path.", "Getting around"),
     choice("rideReady", "Do you have a ride-hailing plan for airport or station arrival?", yesNoUnsure, undefined, "Getting around"),
     choice("needsTrain", "Will you take a train during this trip?", yesNo, undefined, "Trains"),
@@ -46,13 +46,13 @@ export const appsConfig: ToolConfig = {
       { label: "Travelling with family", value: "family" },
       { label: "None of these", value: "none", exclusive: true },
     ] },
-    { id: "trainChannel", prompt: "Which train booking channel will you use?", type: "single", required: true, section: "Trains", options: [
+    { id: "trainChannel", prompt: "Which train booking channel will you use?", type: "single", required: true, section: "Trains", visibleWhen: { field: "needsTrain", equals: true }, options: [
       { label: "12306", value: "12306" },
       { label: "Trip.com", value: "trip" },
       { label: "A station counter or agent", value: "station" },
       { label: "I have not chosen one", value: "none" },
     ] },
-    choice("trainIdentity", "If you book trains, has your passport identity been accepted?", yesNoUnsure, undefined, "Trains"),
+    { ...choice("trainIdentity", "If you book trains, has your passport identity been accepted?", yesNoUnsure, undefined, "Trains"), visibleWhen: { field: "needsTrain", equals: true } },
   ],
   rules: [
     {

@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { Questionnaire, visibleQuestions } from "@/features/checks/components/questionnaire";
-import { paymentConfig } from "@/features/checks/configs";
+import { appsConfig, hotelArrivalConfig, paymentConfig, trainBookingConfig } from "@/features/checks/configs";
 import type { ToolConfig } from "@/features/checks/types";
 
 const miniConfig: ToolConfig = {
@@ -51,6 +51,41 @@ describe("Questionnaire", () => {
     expect(linkedFailure.length).toBeLessThanOrEqual(17);
     expect(riskControl.length).toBeLessThanOrEqual(15);
     expect(preflight.length).toBeLessThanOrEqual(14);
+  });
+
+  it("limits quick diagnosis to the selected failure branch", () => {
+    expect(visibleQuestions(paymentConfig, { failureStage: "cant-verify-id" }, "diagnostic").map((question) => question.id)).toEqual([
+      "failureStage", "paymentApps", "identityVerified",
+    ]);
+    expect(visibleQuestions(paymentConfig, { failureStage: "risk-control" }, "diagnostic").map((question) => question.id)).toEqual([
+      "failureStage", "paymentApps", "riskRecovery",
+    ]);
+  });
+
+  it("limits train diagnosis to the selected problem", () => {
+    expect(visibleQuestions(trainBookingConfig, { trainIssue: "ticket-status" }, "train-diagnostic").map((question) => question.id)).toEqual([
+      "trainIssue", "ticketChannel", "ticketStatus",
+    ]);
+    expect(visibleQuestions(trainBookingConfig, { trainIssue: "departure-risk" }, "train-diagnostic").map((question) => question.id)).toEqual([
+      "trainIssue", "ticketChannel", "ticketStatus", "departureWindow", "backupTrain", "criticalDependency",
+    ]);
+  });
+
+  it("hides app setup questions that do not apply", () => {
+    const ids = visibleQuestions(appsConfig, { needsPayment: false, needsTrain: false }).map((question) => question.id);
+    expect(ids).not.toContain("paymentApps");
+    expect(ids).not.toContain("identityVerified");
+    expect(ids).not.toContain("trainChannel");
+    expect(ids).not.toContain("trainIdentity");
+  });
+
+  it("only asks late-arrival questions during the overnight window", () => {
+    const daytime = visibleQuestions(hotelArrivalConfig, { hotelArrivalTime: "16:00" }).map((question) => question.id);
+    const late = visibleQuestions(hotelArrivalConfig, { hotelArrivalTime: "00:30" }).map((question) => question.id);
+    expect(daytime).not.toContain("frontDesk24Hours");
+    expect(daytime).not.toContain("lateArrivalConfirmed");
+    expect(daytime).not.toContain("backupHotel");
+    expect(late).toEqual(expect.arrayContaining(["frontDesk24Hours", "lateArrivalConfirmed", "backupHotel"]));
   });
 
   it("blocks progression until a required answer is selected", async () => {

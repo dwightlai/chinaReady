@@ -37,10 +37,9 @@ export interface QuestionOption {
   exclusive?: boolean;
 }
 
-export interface VisibilityRule {
-  field: string;
-  equals: AnswerValue;
-}
+export type VisibilityRule =
+  | { field: string; equals: AnswerValue }
+  | { field: string; timeBetween: { start: string; end: string } };
 
 export interface Question {
   id: string;

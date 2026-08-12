@@ -1,17 +1,18 @@
 interface ProgressProps {
   current: number;
   total: number;
+  label?: string;
 }
 
-export function Progress({ current, total }: ProgressProps) {
+export function Progress({ current, total, label = "Question" }: ProgressProps) {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between text-sm font-semibold text-[var(--muted)]">
-        <span>Question {current} of {total}</span>
+        <span>{label} · {current} of {total}</span>
         <span>{Math.round((current / total) * 100)}%</span>
       </div>
       <progress
-        aria-label={`Question ${current} of ${total}`}
+        aria-label={`${label} ${current} of ${total}`}
         className="h-1.5 w-full overflow-hidden rounded-full accent-[var(--primary)]"
         max={total}
         value={current}

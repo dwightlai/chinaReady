@@ -29,15 +29,15 @@ export const hotelArrivalConfig: ToolConfig = {
   questions: [
     { id: "city", prompt: "Which city is the hotel in?", type: "text", required: true, section: "Stay details" },
     { id: "hotelArrivalTime", prompt: "What time do you expect to reach the hotel?", help: "Use China local time in 24-hour format (for example 23:30).", type: "time", required: true, section: "Stay details" },
-    choice("frontDesk24Hours", "Does the hotel confirm a 24-hour front desk?", yesNoUnsure, undefined, "Late arrival"),
-    choice("lateArrivalConfirmed", "Do you have written late-arrival confirmation?", yesNoUnsure, undefined, "Late arrival"),
+    { ...choice("frontDesk24Hours", "Does the hotel confirm a 24-hour front desk?", yesNoUnsure, undefined, "Late arrival"), visibleWhen: { field: "hotelArrivalTime", timeBetween: { start: "23:00", end: "05:00" } } },
+    { ...choice("lateArrivalConfirmed", "Do you have written late-arrival confirmation?", yesNoUnsure, undefined, "Late arrival"), visibleWhen: { field: "hotelArrivalTime", timeBetween: { start: "23:00", end: "05:00" } } },
     choice("chineseHotelName", "Have you saved the hotel name in Chinese?", yesNoUnsure, undefined, "Local details"),
     choice("chineseAddress", "Have you saved the full address in Chinese?", yesNoUnsure, undefined, "Local details"),
     choice("hotelPhone", "Have you saved the hotel phone number?", yesNoUnsure, undefined, "Local details"),
     choice("bookingNameMatches", "Does the booking name match the passport?", yesNoUnsure, undefined, "Booking"),
     choice("mainstreamPlatform", "Was the stay booked through a recognized platform or directly?", yesNoUnsure, undefined, "Booking"),
     choice("freeCancellation", "Can the booking still be cancelled without charge?", yesNoUnsure, undefined, "Booking"),
-    choice("backupHotel", "Have you identified a nearby 24-hour backup hotel?", yesNoUnsure, undefined, "Backup"),
+    { ...choice("backupHotel", "Have you identified a nearby 24-hour backup hotel?", yesNoUnsure, undefined, "Backup"), visibleWhen: { field: "hotelArrivalTime", timeBetween: { start: "23:00", end: "05:00" } } },
     choice("arrivalTransport", "Do you have a working transport and payment plan for arrival?", yesNoUnsure, undefined, "Backup"),
   ],
   rules: [

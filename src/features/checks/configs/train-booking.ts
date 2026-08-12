@@ -30,6 +30,12 @@ export const trainBookingConfig: ToolConfig = {
     { label: "Trip.com 12306 guide", url: "https://us.trip.com/guide/train/12306.html" },
   ],
   questions: [
+    { id: "trainIssue", prompt: "What do you need help with right now?", type: "single", required: true, section: "Quick diagnosis", options: [
+      { label: "12306 passport verification", value: "verification" },
+      { label: "Is my ticket actually confirmed?", value: "ticket-status" },
+      { label: "My train is soon and I need a backup", value: "departure-risk" },
+      { label: "Check my complete train plan", value: "preflight" },
+    ] },
     { id: "ticketChannel", prompt: "Where are you booking the train?", type: "single", required: true, section: "Booking channel", options: [
       { label: "Railway 12306", value: "12306" },
       { label: "Trip.com", value: "trip" },

@@ -13,6 +13,7 @@ interface QuestionnaireProps {
   onSave: (draft: DraftState) => void;
   onComplete: (answers: Answers) => void;
   onExit?: () => void;
+  flow?: "standard" | "diagnostic" | "preflight" | "train-diagnostic" | "train-preflight" | "dates-basic" | "dates-preflight";
 }
 
 function isAnswered(value: unknown): boolean {
@@ -20,22 +21,64 @@ function isAnswered(value: unknown): boolean {
     (!Array.isArray(value) || value.length > 0);
 }
 
-export function visibleQuestions(config: ToolConfig, answers: Answers) {
-  return config.questions.filter((question) =>
-    !question.visibleWhen || answers[question.visibleWhen.field] === question.visibleWhen.equals,
-  );
+const diagnosticBranches: Record<string, string[]> = {
+  "cant-add-card": ["failureStage", "paymentApps", "foreignCardLinked", "overseasTransactions"],
+  "cant-verify-id": ["failureStage", "paymentApps", "identityVerified"],
+  "cant-verify-bank": ["failureStage", "paymentApps", "bankVerificationAccess", "originalNumberAvailable"],
+  "linked-payment-fails": ["failureStage", "paymentApps", "issuerSignal", "otherCardResult", "merchantScope"],
+  "risk-control": ["failureStage", "paymentApps", "riskRecovery"],
+  "top-up": ["failureStage", "paymentApps", "topUpReason"],
+};
+
+const trainDiagnosticBranches: Record<string, string[]> = {
+  verification: ["trainIssue", "ticketChannel", "platformMode", "verificationStatus", "verificationError", "photoMethod", "nameMatches"],
+  "ticket-status": ["trainIssue", "ticketChannel", "ticketStatus"],
+  "departure-risk": ["trainIssue", "ticketChannel", "ticketStatus", "departureWindow", "backupTrain", "criticalDependency"],
+};
+
+function isTimeBetween(value: unknown, start: string, end: string) {
+  if (typeof value !== "string" || !/^\d{2}:\d{2}$/.test(value)) return false;
+  return start <= end ? value >= start && value <= end : value >= start || value <= end;
 }
 
-export function Questionnaire({ config, initialDraft, onSave, onComplete, onExit }: QuestionnaireProps) {
+function matchesVisibility(question: ToolConfig["questions"][number], answers: Answers) {
+  if (!question.visibleWhen) return true;
+  if ("equals" in question.visibleWhen) return answers[question.visibleWhen.field] === question.visibleWhen.equals;
+  return isTimeBetween(answers[question.visibleWhen.field], question.visibleWhen.timeBetween.start, question.visibleWhen.timeBetween.end);
+}
+
+export function visibleQuestions(config: ToolConfig, answers: Answers, flow: QuestionnaireProps["flow"] = "standard") {
+  const visible = config.questions.filter((question) => matchesVisibility(question, answers));
+  if (flow === "diagnostic") {
+    const ids = diagnosticBranches[String(answers.failureStage)] ?? ["failureStage"];
+    return visible.filter((question) => ids.includes(question.id));
+  }
+  if (flow === "preflight") {
+    return visible.filter((question) => question.id !== "failureStage" && !["issuerSignal", "otherCardResult", "merchantScope", "riskRecovery", "topUpReason"].includes(question.id));
+  }
+  if (flow === "train-diagnostic") {
+    const ids = trainDiagnosticBranches[String(answers.trainIssue)] ?? ["trainIssue"];
+    return visible.filter((question) => ids.includes(question.id));
+  }
+  if (flow === "train-preflight") return visible.filter((question) => question.id !== "trainIssue");
+  if (flow === "dates-basic") return visible.filter((question) => ["arrivalDate", "departureDate", "cities"].includes(question.id));
+  if (flow === "dates-preflight") return visible;
+  return visible;
+}
+
+export function Questionnaire({ config, initialDraft, onSave, onComplete, onExit, flow = "standard" }: QuestionnaireProps) {
   const [answers, setAnswers] = useState<Answers>(initialDraft?.answers ?? {});
   const [currentStep, setCurrentStep] = useState(initialDraft?.currentStep ?? 0);
   const [error, setError] = useState<string>();
-  const questions = useMemo(() => visibleQuestions(config, answers), [answers, config]);
+  const questions = useMemo(() => visibleQuestions(config, answers, flow), [answers, config, flow]);
   const safeStep = Math.min(currentStep, Math.max(questions.length - 1, 0));
   const question = questions[safeStep];
 
   if (!question) return null;
   const currentQuestion = question;
+  const displayedQuestion = flow === "diagnostic" && currentQuestion.id === "failureStage"
+    ? { ...currentQuestion, options: currentQuestion.options?.filter((option) => !["setup", "preflight"].includes(String(option.value))) }
+    : currentQuestion;
 
   const isLast = safeStep === questions.length - 1;
 
@@ -70,7 +113,7 @@ export function Questionnaire({ config, initialDraft, onSave, onComplete, onExit
 
   return (
     <section className="mx-auto w-full max-w-2xl px-4 py-8 sm:px-6 sm:py-12">
-      <Progress current={safeStep + 1} total={questions.length} />
+      <Progress current={safeStep + 1} label={flow === "diagnostic" ? "Quick diagnosis" : ["train-diagnostic", "dates-basic"].includes(flow) ? "Quick check" : ["preflight", "train-preflight", "dates-preflight"].includes(flow) ? "Full preflight" : "Question"} total={questions.length} />
       <div aria-live="polite" className="mt-10">
         {currentQuestion.section ? <p className="mb-3 text-sm font-bold text-[var(--primary)]">{currentQuestion.section}</p> : null}
         <h1 className="font-[var(--font-display)] text-3xl leading-[1.2] tracking-[-0.03em] text-[var(--ink)] text-balance sm:text-4xl">
@@ -79,7 +122,7 @@ export function Questionnaire({ config, initialDraft, onSave, onComplete, onExit
         {currentQuestion.help ? <p className="mt-3 max-w-[60ch] leading-7 text-[var(--muted)]">{currentQuestion.help}</p> : null}
       </div>
       <div className="mt-7">
-        <QuestionField error={error} onChange={updateAnswer} question={currentQuestion} value={answers[currentQuestion.id]} />
+        <QuestionField error={error} onChange={updateAnswer} question={displayedQuestion} value={answers[currentQuestion.id]} />
       </div>
       <div className="mt-8 flex flex-wrap items-center justify-between gap-3">
         <div className="flex gap-3">
