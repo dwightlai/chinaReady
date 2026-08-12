@@ -7,7 +7,84 @@ import {
   passportConfig,
   paymentConfig,
   readinessConfig,
+  trainBookingConfig,
 } from "@/features/checks/configs";
+
+describe("train diagnostic scenarios", () => {
+  it("diagnoses a passport image upload failure", () => {
+    const report = evaluateCheck(trainBookingConfig, {
+      ticketChannel: "12306",
+      verificationStatus: "failed",
+      verificationError: "photo-upload",
+      photoMethod: "screenshot",
+      nameMatches: true,
+      ticketStatus: "none",
+      backupTrain: true,
+      criticalDependency: false,
+      phoneAccess: true,
+      originalPassportCarry: true,
+    });
+
+    expect(report.findings).toEqual(expect.arrayContaining([
+      expect.objectContaining({ group: "train-verification-photo", severity: "high" }),
+    ]));
+  });
+
+  it("marks an unissued waitlist with a fixed dependency as critical", () => {
+    const report = evaluateCheck(trainBookingConfig, {
+      ticketChannel: "trip",
+      verificationStatus: "verified",
+      nameMatches: true,
+      ticketStatus: "waitlisted",
+      backupTrain: false,
+      criticalDependency: true,
+      phoneAccess: true,
+      originalPassportCarry: true,
+    });
+
+    expect(report.findings).toEqual(expect.arrayContaining([
+      expect.objectContaining({ group: "train-waitlist-risk", severity: "critical" }),
+      expect.objectContaining({ group: "train-critical-dependency", severity: "critical" }),
+    ]));
+  });
+
+  it("does not report a ticket-status risk for an issued ticket with a backup", () => {
+    const report = evaluateCheck(trainBookingConfig, {
+      ticketChannel: "trip",
+      verificationStatus: "verified",
+      nameMatches: true,
+      ticketStatus: "issued",
+      backupTrain: true,
+      criticalDependency: true,
+      phoneAccess: true,
+      originalPassportCarry: true,
+    });
+
+    expect(report.findings).not.toEqual(expect.arrayContaining([
+      expect.objectContaining({ group: "train-ticket-not-issued" }),
+      expect.objectContaining({ group: "train-waitlist-risk" }),
+      expect.objectContaining({ group: "train-critical-dependency" }),
+    ]));
+  });
+
+  it("escalates an unissued ticket within two days", () => {
+    const report = evaluateCheck(trainBookingConfig, {
+      ticketChannel: "trip",
+      verificationStatus: "verified",
+      nameMatches: true,
+      ticketStatus: "pending",
+      departureWindow: "0-2",
+      backupTrain: true,
+      criticalDependency: false,
+      phoneAccess: true,
+      originalPassportCarry: true,
+    });
+
+    expect(report.findings).toEqual(expect.arrayContaining([
+      expect.objectContaining({ group: "train-imminent-unissued", severity: "critical" }),
+    ]));
+  });
+});
 
 describe("passport scenarios", () => {
   it("flags an original-passport blocker for a hotel and train day", () => {
@@ -31,6 +108,82 @@ describe("passport scenarios", () => {
 });
 
 describe("payment scenarios", () => {
+  it("diagnoses an issuer decline after a card has been linked", () => {
+    const report = evaluateCheck(paymentConfig, {
+      failureStage: "linked-payment-fails",
+      paymentApps: ["alipay"],
+      identityVerified: true,
+      foreignCardLinked: true,
+      overseasTransactions: true,
+      bankVerificationAccess: true,
+      paymentTested: false,
+      issuerSignal: "issuer-declined",
+      otherCardResult: "not-tried",
+      merchantScope: "several",
+      backupCard: true,
+      physicalCard: true,
+      cashBackup: true,
+      originalNumberAvailable: true,
+      dualSimReady: true,
+      esimReceivesSms: true,
+      reliesOnOneApp: false,
+    });
+
+    expect(report.findings).toEqual(expect.arrayContaining([
+      expect.objectContaining({ group: "issuer-decline", severity: "critical" }),
+    ]));
+  });
+
+  it("separates a merchant-specific failure from a full payment failure", () => {
+    const report = evaluateCheck(paymentConfig, {
+      failureStage: "linked-payment-fails",
+      paymentApps: ["alipay"],
+      identityVerified: true,
+      foreignCardLinked: true,
+      overseasTransactions: true,
+      bankVerificationAccess: true,
+      paymentTested: false,
+      issuerSignal: "unsure",
+      otherCardResult: "not-tried",
+      merchantScope: "one-merchant",
+      backupCard: true,
+      physicalCard: true,
+      cashBackup: true,
+      originalNumberAvailable: true,
+      dualSimReady: true,
+      esimReceivesSms: true,
+      reliesOnOneApp: false,
+    });
+
+    expect(report.findings).toEqual(expect.arrayContaining([
+      expect.objectContaining({ group: "merchant-specific-failure", severity: "information" }),
+    ]));
+  });
+
+  it("stops repeated attempts when risk control freezes the account", () => {
+    const report = evaluateCheck(paymentConfig, {
+      failureStage: "risk-control",
+      paymentApps: ["alipay"],
+      identityVerified: true,
+      foreignCardLinked: true,
+      overseasTransactions: true,
+      bankVerificationAccess: true,
+      paymentTested: false,
+      riskRecovery: true,
+      backupCard: true,
+      physicalCard: true,
+      cashBackup: true,
+      originalNumberAvailable: true,
+      dualSimReady: true,
+      esimReceivesSms: true,
+      reliesOnOneApp: false,
+    });
+
+    expect(report.findings).toEqual(expect.arrayContaining([
+      expect.objectContaining({ group: "payment-risk-control", severity: "critical" }),
+    ]));
+  });
+
   it("flags the absence of any practical payment path as critical", () => {
     const report = evaluateCheck(paymentConfig, {
       paymentApps: [],

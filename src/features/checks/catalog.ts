@@ -25,10 +25,10 @@ export const checkCatalog: CheckCatalogItem[] = [
   },
   {
     slug: "payment",
-    name: "Payment & Phone Resilience Check",
-    description: "Test your payment, phone verification and backup paths.",
-    duration: "3 minutes",
-    cta: "Check payment resilience",
+    name: "China Payment Preflight & Failure Diagnostic",
+    description: "Find where app setup, card authorization, verification or merchant payment is failing.",
+    duration: "5 minutes",
+    cta: "Diagnose payment",
   },
   {
     slug: "passport",
@@ -39,10 +39,10 @@ export const checkCatalog: CheckCatalogItem[] = [
   },
   {
     slug: "train-booking",
-    name: "Train Booking Readiness Checker",
-    description: "Catch passport, account and connection risks before train day.",
-    duration: "4 minutes",
-    cta: "Check train plans",
+    name: "China Train Booking Diagnostic",
+    description: "Diagnose 12306 passport verification, ticket status and itinerary dependency risks.",
+    duration: "5 minutes",
+    cta: "Diagnose train booking",
   },
   {
     slug: "dates",

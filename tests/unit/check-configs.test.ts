@@ -39,7 +39,7 @@ describe("check catalog", () => {
 describe.each(Object.values(checkConfigs))("$slug config", (config) => {
   it("contains a short, complete questionnaire", () => {
     expect(config.questions.length).toBeGreaterThanOrEqual(8);
-    expect(config.questions.length).toBeLessThanOrEqual(15);
+    expect(config.questions.length).toBeLessThanOrEqual(20);
     expect(new Set(config.questions.map((question) => question.id)).size).toBe(config.questions.length);
   });
 

@@ -18,9 +18,9 @@ describe("HomePage", () => {
     expect(screen.getAllByTestId("check-card")).toHaveLength(7);
     expect(screen.getByText("China Readiness Check")).toBeInTheDocument();
     expect(screen.getByText("China App Readiness Checker")).toBeInTheDocument();
-    expect(screen.getByText("Payment & Phone Resilience Check")).toBeInTheDocument();
+    expect(screen.getByText("China Payment Preflight & Failure Diagnostic")).toBeInTheDocument();
     expect(screen.getByText("Passport Carry & Identity Checker")).toBeInTheDocument();
-    expect(screen.getByText("Train Booking Readiness Checker")).toBeInTheDocument();
+    expect(screen.getByText("China Train Booking Diagnostic")).toBeInTheDocument();
     expect(screen.getByText("Travel Date Check")).toBeInTheDocument();
     expect(screen.getByText("Hotel Arrival Check")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Am I ready for China?" })).toBeInTheDocument();

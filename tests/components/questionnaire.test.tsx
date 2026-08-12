@@ -2,7 +2,8 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
-import { Questionnaire } from "@/features/checks/components/questionnaire";
+import { Questionnaire, visibleQuestions } from "@/features/checks/components/questionnaire";
+import { paymentConfig } from "@/features/checks/configs";
 import type { ToolConfig } from "@/features/checks/types";
 
 const miniConfig: ToolConfig = {
@@ -41,6 +42,17 @@ const miniConfig: ToolConfig = {
 };
 
 describe("Questionnaire", () => {
+  it("keeps each payment diagnostic branch focused", () => {
+    const commonAnswers = { paymentApps: ["alipay"] };
+    const linkedFailure = visibleQuestions(paymentConfig, { ...commonAnswers, failureStage: "linked-payment-fails" });
+    const riskControl = visibleQuestions(paymentConfig, { ...commonAnswers, failureStage: "risk-control" });
+    const preflight = visibleQuestions(paymentConfig, { ...commonAnswers, failureStage: "preflight" });
+
+    expect(linkedFailure.length).toBeLessThanOrEqual(17);
+    expect(riskControl.length).toBeLessThanOrEqual(15);
+    expect(preflight.length).toBeLessThanOrEqual(14);
+  });
+
   it("blocks progression until a required answer is selected", async () => {
     const user = userEvent.setup();
     render(<Questionnaire config={miniConfig} onComplete={vi.fn()} onSave={vi.fn()} />);

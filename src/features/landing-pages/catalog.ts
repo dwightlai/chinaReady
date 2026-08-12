@@ -1,7 +1,7 @@
 import type { CheckSlug } from "@/features/checks/types";
 import type { GuideSlug } from "@/features/guides/types";
 
-export type LandingSlug = "china-payment-checker" | "china-app-checker" | "china-phone-checker" | "china-booking-checker" | "china-hotel-checker" | "china-train-checker";
+export type LandingSlug = "china-payment-checker" | "china-app-checker" | "china-phone-checker" | "china-booking-checker" | "china-hotel-checker" | "china-train-checker" | "12306-passport-verification-not-working" | "trip-com-reservation-vs-ticket-confirmed" | "china-train-ticket-waitlist-checker" | "alipay-card-linked-but-not-working";
 
 export interface LandingPageConfig {
   slug: LandingSlug; eyebrow: string; title: string; description: string; intro: string;
@@ -15,7 +15,7 @@ export const landingPages: LandingPageConfig[] = [
     slug: "china-payment-checker", eyebrow: "China payment readiness", title: "China Payment Checker for Foreign Visitors",
     description: "Check whether Alipay, WeChat Pay, foreign cards, bank verification and cash backups are ready for your China trip.",
     intro: "A linked card is not the same as a reliable payment path. Test the complete chain before you depend on it for transport, food or your first hotel transfer.",
-    checkSlug: "payment", cta: "Check My China Payments", duration: "3 minutes",
+    checkSlug: "payment", cta: "Check My China Payments", duration: "5 minutes",
     outcomes: ["A payment readiness score", "Critical setup and verification gaps", "Independent card and cash backups"],
     checks: [
       { title: "Alipay and WeChat Pay", text: "Review installation, identity verification, card linking and whether one app is your only route." },
@@ -110,7 +110,7 @@ export const landingPages: LandingPageConfig[] = [
     slug: "china-train-checker", eyebrow: "China train readiness", title: "China Train Booking Checker for Foreign Visitors",
     description: "Check 12306 or Trip.com booking, foreign-passport identity, ticket status, station access and train-day backups.",
     intro: "Choosing a booking app is only the first step. Verify the passenger record, issued ticket, original passport and station-day connection before travel.",
-    checkSlug: "train-booking", cta: "Check My China Train", duration: "4 minutes",
+    checkSlug: "train-booking", cta: "Check My China Train", duration: "5 minutes",
     outcomes: ["Passenger identity warnings", "Booking-channel and ticket-status checks", "Station-day action and backup plan"],
     checks: [
       { title: "12306 or Trip.com", text: "Choose a channel deliberately and understand where passenger verification and support happen." },
@@ -124,6 +124,82 @@ export const landingPages: LandingPageConfig[] = [
       { question: "Should I use 12306 or Trip.com?", answer: "12306 is the official channel, while third-party platforms may offer a different interface and support model. Choose based on verification readiness, fees and support needs." },
       { question: "Do I need my original passport for a China train?", answer: "Carry the original passport used in the passenger record for station and onboard identity checks or manual assistance." },
     ], relatedGuides: ["train-booking-for-foreign-visitors", "china-holidays-tickets-hotels", "travel-during-china-national-day"],
+  },
+  {
+    slug: "12306-passport-verification-not-working", eyebrow: "12306 passport diagnosis", title: "12306 Passport Verification Not Working? Diagnose the Cause",
+    description: "Diagnose why a foreign passport is pending, rejected or failing to upload on Railway 12306, then decide whether to retry, wait or use a backup booking channel.",
+    intro: "A generic 12306 error does not tell you whether the blocker is the passenger name, passport image, review status or a temporary system response. Answer focused questions to narrow the likely failure point.",
+    checkSlug: "train-booking", cta: "Check My 12306 Verification", duration: "5 minutes",
+    outcomes: ["The most likely verification blocker", "A retry-or-wait recommendation", "A usable fallback booking path"],
+    checks: [
+      { title: "Verification status", text: "Separate a pending review from a failed, rejected or never-submitted passenger record." },
+      { title: "Passport image", text: "Check whether the upload method or image quality is the likely blocker." },
+      { title: "Passenger name", text: "Compare spelling, order and document details with the original passport." },
+      { title: "Booking fallback", text: "Decide when Trip.com or a staffed station counter becomes the sensible recovery path." },
+    ],
+    useCases: ["12306 says system busy", "The passport photo will not upload", "The passenger name is rejected", "Verification remains pending before ticket sales"],
+    faqs: [
+      { question: "How long should I wait for 12306 passport verification?", answer: "Use the status and timing shown by 12306, then check again before ticket sales open. Keep another booking channel ready if the review remains pending." },
+      { question: "Does 12306 require a Chinese phone number?", answer: "Do not treat the phone number alone as proof of passenger verification. Confirm the actual passenger status and keep reliable access to the account contact method." },
+      { question: "Can I use Trip.com if 12306 verification fails?", answer: "Trip.com can be a fallback booking channel, but confirm its passenger requirements, fees and final issued-ticket status rather than assuming a request is a ticket." },
+    ], relatedGuides: ["train-booking-for-foreign-visitors", "china-holidays-tickets-hotels", "travel-during-china-national-day"],
+  },
+  {
+    slug: "trip-com-reservation-vs-ticket-confirmed", eyebrow: "Trip.com ticket diagnosis", title: "Trip.com Train Reservation vs Confirmed Ticket in China",
+    description: "Check whether a Trip.com train order is only reserved, requested or pending, or whether the China train ticket has actually been issued for your passport.",
+    intro: "A reservation acknowledgement proves that a request exists, not necessarily that a seat has been issued. Diagnose the displayed status before building hotels, flights or attractions around it.",
+    checkSlug: "train-booking", cta: "Check My Trip.com Train Status", duration: "5 minutes",
+    outcomes: ["A confirmed-or-not verdict", "The risk to linked itinerary bookings", "A deadline and backup train action"],
+    checks: [
+      { title: "Displayed status", text: "Interpret issued, ticketed, reserved, requested, pending and awaiting-payment states." },
+      { title: "Passenger record", text: "Confirm that the issued status belongs to the correct foreign-passport passenger." },
+      { title: "Time remaining", text: "Escalate an unissued order as departure approaches." },
+      { title: "Itinerary dependency", text: "Protect fixed hotels, flights and attractions with an independent alternative." },
+    ],
+    useCases: ["Trip.com says reserved or requested", "The order is still pending", "A hotel depends on this train", "You are unsure whether the ticket is issued"],
+    faqs: [
+      { question: "Does reserved mean my China train ticket is confirmed?", answer: "No. Treat the seat as confirmed only when the provider shows the ticket as issued or ticketed for the correct passenger." },
+      { question: "What does pending mean on a Trip.com train order?", answer: "Pending means the purchase or issuance process is incomplete. Check the provider deadline and keep another train or route available." },
+      { question: "Should I cancel my backup train after making a reservation?", answer: "Wait until the required train is formally issued and check the cancellation terms of both bookings before removing your fallback." },
+    ], relatedGuides: ["train-booking-for-foreign-visitors", "china-holidays-tickets-hotels", "travel-during-china-national-day"],
+  },
+  {
+    slug: "china-train-ticket-waitlist-checker", eyebrow: "China train waitlist risk", title: "China Train Ticket Waitlist Checker",
+    description: "Assess a 12306 or Trip.com train waitlist, success percentage, departure timing and itinerary dependency to see whether you need another China train now.",
+    intro: "A waitlist percentage is an estimate, not a seat. This diagnostic checks how exposed the rest of your itinerary is and tells you when to choose another train or route.",
+    checkSlug: "train-booking", cta: "Check My Train Waitlist Risk", duration: "5 minutes",
+    outcomes: ["A waitlist risk verdict", "Critical itinerary dependency warnings", "A practical alternative-train plan"],
+    checks: [
+      { title: "Waitlist state", text: "Separate an issued ticket from a waitlist, sold-out result or estimated success rate." },
+      { title: "Departure timing", text: "Raise urgency when the train is close and still unissued." },
+      { title: "Fixed dependencies", text: "Identify flights, hotels and attractions that fail if this train does not clear." },
+      { title: "Independent backup", text: "Confirm another train, route or flexible date that does not depend on the same queue." },
+    ],
+    useCases: ["12306 shows a waitlist", "Trip.com shows a success percentage", "The preferred train is sold out", "You have no backup train"],
+    faqs: [
+      { question: "Does a China train waitlist guarantee a ticket?", answer: "No. Until the status becomes issued or ticketed, plan as though the seat is not confirmed." },
+      { question: "What does a train waitlist success percentage mean?", answer: "It is an estimate rather than a confirmed seat. The safe decision also depends on departure timing and the cost of missing linked bookings." },
+      { question: "What backup should I prepare for a sold-out China train?", answer: "Look for an earlier or later train, another station or route, or a flexible travel date, and verify that the alternative can actually be booked." },
+    ], relatedGuides: ["train-booking-for-foreign-visitors", "china-holidays-tickets-hotels", "travel-during-china-national-day"],
+  },
+  {
+    slug: "alipay-card-linked-but-not-working", eyebrow: "Alipay payment diagnosis", title: "Alipay Card Linked but Not Working? Diagnose the Failure",
+    description: "Diagnose why a foreign card linked to Alipay still fails at payment, including issuer declines, bank verification, merchant acceptance and account risk control.",
+    intro: "A visible linked card only proves one stage of setup. The payment can still fail at bank authorization, verification, merchant processing or Alipay risk control. Identify the stage before retrying.",
+    checkSlug: "payment", cta: "Diagnose My Alipay Payment", duration: "5 minutes",
+    outcomes: ["The most likely failure stage", "A safe retry or recovery action", "An independent payment backup"],
+    checks: [
+      { title: "Issuer authorization", text: "Check whether the bank declined the transaction or received no payment attempt." },
+      { title: "Verification access", text: "Confirm SMS, banking-app approval and original-number recovery." },
+      { title: "Merchant scope", text: "Separate one merchant failure from an account-wide payment problem." },
+      { title: "Risk control", text: "Recognize when to stop retrying and use the app's appeal or identity recovery flow." },
+    ],
+    useCases: ["Alipay shows the card as linked", "A real merchant payment still fails", "The bank approved but Alipay failed", "Another foreign card has not been tested"],
+    faqs: [
+      { question: "Why does Alipay decline a linked foreign card?", answer: "The issuer, verification challenge, Alipay account controls or merchant payment path can each stop the transaction. A linked status alone does not identify the failing stage." },
+      { question: "Should I keep retrying a failed Alipay payment?", answer: "Avoid repeated rapid attempts, especially when the app shows a security or risk-control message. Preserve the error and use the official recovery path or another payment method." },
+      { question: "Does adding money to Alipay fix a linked-card failure?", answer: "Do not assume balance top-up is required or supported as a workaround. First determine whether direct payment from the linked card is failing at the issuer, app or merchant stage." },
+    ], relatedGuides: ["foreign-card-fails-in-china", "test-mobile-payment-before-china", "one-payment-method-is-not-enough"],
   },
 ];
 
