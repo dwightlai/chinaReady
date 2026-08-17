@@ -1,7 +1,7 @@
 import type { CheckSlug } from "@/features/checks/types";
 import type { GuideSlug } from "@/features/guides/types";
 
-export type LandingSlug = "china-payment-checker" | "china-app-checker" | "china-phone-checker" | "china-booking-checker" | "china-hotel-checker" | "china-train-checker" | "12306-passport-verification-not-working" | "trip-com-reservation-vs-ticket-confirmed" | "china-train-ticket-waitlist-checker" | "alipay-card-linked-but-not-working";
+export type LandingSlug = "china-payment-checker" | "china-app-checker" | "china-phone-checker" | "china-booking-checker" | "china-hotel-checker" | "china-train-checker" | "12306-passport-verification-not-working" | "trip-com-reservation-vs-ticket-confirmed" | "china-train-ticket-waitlist-checker" | "alipay-card-linked-but-not-working" | "alipay-backup-payment-checker";
 
 export interface LandingPageConfig {
   slug: LandingSlug; eyebrow: string; title: string; description: string; intro: string;
@@ -200,6 +200,25 @@ export const landingPages: LandingPageConfig[] = [
       { question: "Should I keep retrying a failed Alipay payment?", answer: "Avoid repeated rapid attempts, especially when the app shows a security or risk-control message. Preserve the error and use the official recovery path or another payment method." },
       { question: "Does adding money to Alipay fix a linked-card failure?", answer: "Do not assume balance top-up is required or supported as a workaround. First determine whether direct payment from the linked card is failing at the issuer, app or merchant stage." },
     ], relatedGuides: ["foreign-card-fails-in-china", "test-mobile-payment-before-china", "one-payment-method-is-not-enough"],
+  },
+  {
+    slug: "alipay-backup-payment-checker", eyebrow: "China payment resilience", title: "Alipay Backup Payment Checker for China",
+    description: "Check whether your Alipay setup has an independent WeChat Pay, bank card, verification and RMB cash backup before travelling to China.",
+    intro: "Payment is resilient only when one failed wallet, issuer, verification channel or network path does not stop every way you can pay.",
+    checkSlug: "payment", cta: "Check My Payment Backups", duration: "5 minutes",
+    outcomes: ["Primary payment readiness", "Single points of failure", "Independent wallet, card and cash recovery paths"],
+    checks: [
+      { title: "Second wallet", text: "Check whether losing Alipay still leaves a usable WeChat Pay or non-phone route." },
+      { title: "Independent card", text: "Use a second bank or card network so one issuer decision does not block both cards." },
+      { title: "Recovery channel", text: "Keep the original number or banking-app approval needed for a challenge." },
+      { title: "Network and cash fallback", text: "Know when to retry without a VPN and retain a modest emergency RMB reserve." },
+    ],
+    useCases: ["Alipay is your only wallet", "Both cards come from one bank", "You use a data-only travel eSIM", "You have not prepared RMB cash"],
+    faqs: [
+      { question: "Is Alipay alone enough for China travel?", answer: "It may work for many purchases, but a second wallet or non-phone option reduces the impact of an account, phone or merchant-specific failure." },
+      { question: "What makes a backup bank card independent?", answer: "Prefer a card from another issuer or card network so the backup does not rely on the same authorization system as the primary card." },
+      { question: "Can a VPN affect Alipay payment?", answer: "A VPN or unusual network path can complicate some risk or verification flows. If a payment fails, stop repeated attempts and retry once on a trusted connection without the VPN." },
+    ], relatedGuides: ["one-payment-method-is-not-enough", "cash-and-atms-in-china", "esim-bank-verification-messages"],
   },
 ];
 

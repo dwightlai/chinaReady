@@ -20,6 +20,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [
     { path: "", file: "src/app/page.tsx", priority: 1, changeFrequency: "weekly" as const, images: [`${siteConfig.url}${siteConfig.ogImage}`] },
     { path: "/checks", file: "src/app/checks/page.tsx", priority: 0.9, changeFrequency: "weekly" as const },
+    { path: "/china-train-station-arrival-time-calculator", file: "src/app/china-train-station-arrival-time-calculator/page.tsx", priority: 0.95, changeFrequency: "monthly" as const },
+    { path: "/how-early-arrive-china-train-station", file: "src/app/how-early-arrive-china-train-station/page.tsx", priority: 0.9, changeFrequency: "monthly" as const },
+    { path: "/china-trip-difficulty-checker", file: "src/app/china-trip-difficulty-checker/page.tsx", priority: 0.9, changeFrequency: "monthly" as const },
     { path: "/guides", file: "src/app/guides/page.tsx", priority: 0.9, changeFrequency: "weekly" as const },
     { path: "/how-it-works", file: "src/app/how-it-works/page.tsx", priority: 0.7, changeFrequency: "monthly" as const },
     { path: "/about", file: "src/app/about/page.tsx", priority: 0.6, changeFrequency: "monthly" as const },

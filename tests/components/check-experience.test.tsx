@@ -67,7 +67,7 @@ describe("CheckExperience", () => {
     await user.click(screen.getByRole("button", { name: /Run full payment preflight/ }));
     expect(screen.getByRole("heading", { name: "Which mobile payment apps have you set up?" })).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Where are you in the payment setup or failure path?" })).not.toBeInTheDocument();
-    expect(screen.getByRole("progressbar", { name: "Full preflight 1 of 13" })).toBeInTheDocument();
+    expect(screen.getByRole("progressbar", { name: "Full preflight 1 of 14" })).toBeInTheDocument();
   });
 
   it("offers quick and complete train paths", async () => {

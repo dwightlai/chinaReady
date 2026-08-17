@@ -4,10 +4,11 @@ import Link from "next/link";
 const clusters = [
   { name: "Payment", check: "/china-payment-checker", checkLabel: "Check payment readiness", topics: [{ label: "Alipay & WeChat", href: "/guides/test-mobile-payment-before-china" }, { label: "Cards & cash", href: "/guides/one-payment-method-is-not-enough" }, { label: "Phone & eSIM checker", href: "/china-phone-checker" }] },
   { name: "Apps", check: "/china-app-checker", checkLabel: "Check China apps", topics: [{ label: "Arrival internet", href: "/guides/arrive-with-working-internet" }, { label: "DiDi", href: "/guides/didi-without-chinese-number" }, { label: "SIM or eSIM", href: "/guides/buy-sim-or-esim-for-china" }] },
-  { name: "Train booking", check: "/china-train-checker", checkLabel: "Check train booking", topics: [{ label: "All booking readiness", href: "/china-booking-checker" }, { label: "12306 & passport", href: "/guides/train-booking-for-foreign-visitors" }, { label: "Holiday demand", href: "/guides/china-holidays-tickets-hotels" }] },
+  { name: "Train travel", check: "/china-train-station-arrival-time-calculator", checkLabel: "Calculate station arrival", topics: [{ label: "Train booking diagnostic", href: "/china-train-checker" }, { label: "12306 & passport", href: "/guides/train-booking-for-foreign-visitors" }, { label: "How early to arrive", href: "/how-early-arrive-china-train-station" }] },
   { name: "Passport", check: "/checks/passport", checkLabel: "Check passport needs", topics: [{ label: "Entry documents", href: "/guides/china-entry-requirements-checklist" }, { label: "Real-name bookings", href: "/guides/train-booking-for-foreign-visitors" }] },
   { name: "Hotels", check: "/china-hotel-checker", checkLabel: "Check hotel arrival", topics: [{ label: "Late check-in", href: "/guides/confirm-late-hotel-check-in-china" }, { label: "Chinese address", href: "/guides/save-hotel-name-address-in-chinese" }] },
   { name: "Travel dates", check: "/checks/dates", checkLabel: "Check travel dates", topics: [{ label: "Public holidays", href: "/guides/china-holidays-tickets-hotels" }, { label: "National Day", href: "/guides/travel-during-china-national-day" }] },
+  { name: "First trip", check: "/china-trip-difficulty-checker", checkLabel: "Check trip difficulty", topics: [{ label: "Full readiness check", href: "/checks/readiness" }, { label: "Essential apps", href: "/china-app-checker" }, { label: "First city choice", href: "/guides/first-city-shanghai-or-beijing" }] },
 ] as const;
 
 export function ToolClusters() {

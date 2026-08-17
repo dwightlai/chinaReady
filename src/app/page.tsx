@@ -99,6 +99,19 @@ export default function HomePage() {
         </Container>
       </section>
 
+      <section className="border-y border-[var(--line)] bg-[var(--ink)] py-14 text-white sm:py-16">
+        <Container>
+          <p className="text-sm font-bold text-blue-300">New planning tools</p>
+          <div className="mt-4 grid gap-8 lg:grid-cols-[0.65fr_1.35fr] lg:items-end">
+            <div><h2 className="font-[var(--font-display)] text-3xl tracking-[-0.03em] sm:text-4xl">Solve the timing and complexity questions first.</h2><p className="mt-4 leading-7 text-slate-300">Use a lightweight calculator when you need one decision, then run the full readiness check only when the trip needs it.</p></div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Link className="rounded-[var(--radius-md)] bg-white p-6 text-[var(--ink)]" href="/china-train-station-arrival-time-calculator"><p className="text-sm font-bold text-[var(--primary)]">Train station timing</p><h3 className="mt-2 text-xl font-extrabold">When should I leave my hotel?</h3><p className="mt-2 text-sm leading-6 text-[var(--muted)]">Calculate a station arrival window from your actual risk factors.</p><span className="mt-4 inline-flex items-center gap-2 font-extrabold">Calculate time<ArrowRight aria-hidden size={17} /></span></Link>
+              <Link className="rounded-[var(--radius-md)] border border-slate-600 bg-slate-800 p-6" href="/china-trip-difficulty-checker"><p className="text-sm font-bold text-blue-300">First-trip complexity</p><h3 className="mt-2 text-xl font-extrabold">Is my China trip too ambitious?</h3><p className="mt-2 text-sm leading-6 text-slate-300">Get an easy, moderate, high or advanced preparation level.</p><span className="mt-4 inline-flex items-center gap-2 font-extrabold">Check difficulty<ArrowRight aria-hidden size={17} /></span></Link>
+            </div>
+          </div>
+        </Container>
+      </section>
+
       <section className="bg-[var(--surface)] py-16 sm:py-24" id="seven-checks">
         <Container>
           <p className="text-sm font-bold text-[var(--primary)]">Seven focused tools</p>

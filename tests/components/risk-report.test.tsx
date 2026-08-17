@@ -63,6 +63,9 @@ describe("RiskReport", () => {
     expect(screen.getByLabelText("Add a backup card.")).toBeInTheDocument();
     expect(screen.getByText("Carry emergency RMB cash.")).toBeInTheDocument();
 
+    await user.click(screen.getByLabelText("Test a small payment."));
+    expect(screen.getByRole("button", { name: "Update answers and reassess" })).toBeInTheDocument();
+
     await user.click(screen.getByRole("button", { name: "Clear report" }));
     await user.click(screen.getByRole("button", { name: "Yes, clear report" }));
     expect(onClear).toHaveBeenCalledOnce();

@@ -48,9 +48,9 @@ describe("Questionnaire", () => {
     const riskControl = visibleQuestions(paymentConfig, { ...commonAnswers, failureStage: "risk-control" });
     const preflight = visibleQuestions(paymentConfig, { ...commonAnswers, failureStage: "preflight" });
 
-    expect(linkedFailure.length).toBeLessThanOrEqual(17);
-    expect(riskControl.length).toBeLessThanOrEqual(15);
-    expect(preflight.length).toBeLessThanOrEqual(14);
+    expect(linkedFailure.length).toBeLessThanOrEqual(18);
+    expect(riskControl.length).toBeLessThanOrEqual(16);
+    expect(preflight.length).toBeLessThanOrEqual(15);
   });
 
   it("limits quick diagnosis to the selected failure branch", () => {

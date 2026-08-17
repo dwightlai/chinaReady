@@ -108,6 +108,20 @@ describe("passport scenarios", () => {
 });
 
 describe("payment scenarios", () => {
+  it("recognizes a resilient payment setup", () => {
+    const report = evaluateCheck(paymentConfig, {
+      failureStage: "preflight", paymentApps: ["alipay", "wechat"], identityVerified: true,
+      foreignCardLinked: true, overseasTransactions: true, bankVerificationAccess: true,
+      paymentTested: true, backupCard: true, physicalCard: true, cashBackup: true,
+      originalNumberAvailable: true, dualSimReady: true, esimReceivesSms: true,
+      reliesOnOneApp: false, vpnPaymentAware: true,
+    });
+
+    expect(report.findings).toEqual(expect.arrayContaining([
+      expect.objectContaining({ group: "payment-resilience-ready", severity: "ready" }),
+    ]));
+  });
+
   it("diagnoses an issuer decline after a card has been linked", () => {
     const report = evaluateCheck(paymentConfig, {
       failureStage: "linked-payment-fails",

@@ -1,0 +1,18 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+
+import { Breadcrumbs } from "@/components/site/breadcrumbs";
+import { Container } from "@/components/site/container";
+import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/site/seo-json-ld";
+import { siteConfig } from "@/lib/site";
+
+const path = "/how-early-arrive-china-train-station";
+const description = "Learn how early to arrive at a China high-speed rail station, including extra time for foreign passports, security, luggage, large stations and holiday crowds.";
+export const metadata: Metadata = { title: "How Early to Arrive at a China Train Station", description, alternates: { canonical: path }, openGraph: { title: "How Early to Arrive at a China Train Station", description, url: `${siteConfig.url}${path}`, images: [{ url: siteConfig.ogImage }] } };
+
+export default function TrainArrivalGuidePage() {
+  return <main><ArticleJsonLd dateModified="2026-08-17" datePublished="2026-08-17" description={description} path={path} title="How Early to Arrive at a China Train Station" /><BreadcrumbJsonLd items={[{ name: "Train Station Arrival Guide", path }]} />
+    <section className="border-b border-[var(--line)] py-14 sm:py-20"><Container className="max-w-4xl"><Breadcrumbs items={[{ label: "How early to arrive at a China train station" }]} /><p className="mt-8 text-sm font-bold text-[var(--primary)]">Train-day guide · Reviewed August 17, 2026</p><h1 className="mt-4 font-[var(--font-display)] text-4xl leading-[1.1] tracking-[-0.04em] sm:text-6xl">How Early to Arrive at a China Train Station</h1><p className="mt-5 text-xl leading-9 text-[var(--muted)]">Plan for the whole station process—not only the walk from the entrance to the platform.</p><Link className="mt-8 inline-flex rounded-full bg-[var(--primary)] px-6 py-3.5 font-extrabold text-white" href="/china-train-station-arrival-time-calculator">Calculate my arrival time</Link></Container></section>
+    <article className="py-16"><Container className="max-w-4xl space-y-10 text-lg leading-8"><section><h2 className="font-[var(--font-display)] text-3xl">Use a factor-based buffer</h2><p className="mt-4 text-[var(--muted)]">A familiar traveler at a smaller station can use a different buffer from a first-time visitor entering a large hub with a foreign passport and several suitcases. Start with a normal station process, then add time for unfamiliarity, staffed identity handling, luggage and peak demand.</p></section><section><h2 className="font-[var(--font-display)] text-3xl">What happens before boarding</h2><ol className="mt-5 space-y-3">{["Reach the correct station and entrance.", "Complete baggage security.", "Pass identity or ticket access, potentially through a staffed channel.", "Find the correct waiting area and gate.", "Enter before ticket checking closes and reach the platform."].map((step, index) => <li className="flex gap-4" key={step}><span className="font-extrabold text-[var(--primary)]">{index + 1}</span>{step}</li>)}</ol></section><section><h2 className="font-[var(--font-display)] text-3xl">When to add extra time</h2><p className="mt-4 text-[var(--muted)]">Add extra margin for a first Chinese high-speed rail journey, a foreign passport, large luggage, a major station, weekend or holiday demand, or a fixed booking that would fail if the train is missed.</p></section><aside className="rounded-[var(--radius-lg)] bg-[var(--surface)] p-7"><h2 className="font-extrabold">Before leaving</h2><p className="mt-3 text-[var(--muted)]">Recheck the official train status, the exact station name, live travel time and the original passport connected to the ticket.</p></aside></Container></article>
+  </main>;
+}

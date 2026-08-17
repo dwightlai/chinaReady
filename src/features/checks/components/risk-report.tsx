@@ -98,7 +98,7 @@ export function RiskReport({ report, onEdit, onRestart, onClear }: RiskReportPro
       {(report.actions.length || report.backupPlan.length) ? (
         <section className="mt-8 rounded-[var(--radius-md)] bg-[var(--surface)] p-5 sm:p-7">
           <h2 className="font-[var(--font-display)] text-2xl tracking-[-0.03em]">Your action plan</h2>
-          <p className="mt-2 text-sm leading-6 text-[var(--muted)]">Tick each item as you complete it, then rerun the check to refresh your risk status.</p>
+          <p className="mt-2 text-sm leading-6 text-[var(--muted)]">Ticking an item tracks progress on this page only. Update the related answer to recalculate your risk status.</p>
           <div className="mt-4 space-y-3 text-[var(--ink)]">
             {report.actions.map((action) => {
               const done = completedActions.includes(action);
@@ -110,6 +110,7 @@ export function RiskReport({ report, onEdit, onRestart, onClear }: RiskReportPro
               );
             })}
           </div>
+          {completedActions.length ? <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-[#b9ddc7] bg-[#eef8f2] p-4"><p className="text-sm font-bold text-[var(--ready)]">{completedActions.length} action{completedActions.length === 1 ? "" : "s"} marked complete. Ready to refresh the report?</p><button className="rounded-full bg-[var(--ready)] px-4 py-2 text-sm font-extrabold text-white" onClick={onEdit} type="button">Update answers and reassess</button></div> : null}
           {report.backupPlan.length ? (
             <div className="mt-6 border-l-2 border-[var(--warm)] pl-4">
               <h2 className="font-bold">Backup plan</h2>
