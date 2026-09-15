@@ -18,6 +18,8 @@ function fileModifiedAt(...segments: string[]): Date {
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [
+    { path: "/china-visa-free-checker", file: "src/app/china-visa-free-checker/page.tsx", priority: 0.95, changeFrequency: "weekly" as const },
+    { path: "/china-train-ticket-sale-planner", file: "src/app/china-train-ticket-sale-planner/page.tsx", priority: 0.95, changeFrequency: "monthly" as const },
     { path: "", file: "src/app/page.tsx", priority: 1, changeFrequency: "weekly" as const, images: [`${siteConfig.url}${siteConfig.ogImage}`] },
     { path: "/checks", file: "src/app/checks/page.tsx", priority: 0.9, changeFrequency: "weekly" as const },
     { path: "/china-train-station-arrival-time-calculator", file: "src/app/china-train-station-arrival-time-calculator/page.tsx", priority: 0.95, changeFrequency: "monthly" as const },

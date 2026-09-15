@@ -70,6 +70,8 @@ export function RiskReport({ report, onEdit, onRestart, onClear }: RiskReportPro
 
   return (
     <section className="mx-auto w-full max-w-4xl px-4 py-10 sm:px-6 sm:py-14">
+      {report.tool === "readiness" && <aside className="mb-6 rounded-xl bg-[var(--surface)] p-5"><h2 className="font-bold">Check entry eligibility separately</h2><p className="my-2">Your readiness score does not verify visa-free eligibility.</p><Link className="font-bold underline" href="/china-visa-free-checker">Check nationality, entry date and policy conditions →</Link></aside>}
+      {(report.tool === "dates" || report.tool === "train-booking") && <aside className="mb-6 rounded-xl bg-[var(--surface)] p-5"><h2 className="font-bold">Turn your travel dates into booking actions</h2><p className="my-2">Choose the departure date of each train, which may differ from your China arrival date.</p><Link className="font-bold underline" href="/china-train-ticket-sale-planner">Find sale dates and download a calendar reminder →</Link></aside>}
       <div className="flex flex-col gap-6 rounded-[var(--radius-lg)] border border-[var(--line)] bg-white p-5 shadow-[0_20px_60px_rgba(29,58,78,0.08)] sm:p-8">
         <div className="flex flex-wrap items-start justify-between gap-5">
           <div>

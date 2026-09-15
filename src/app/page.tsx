@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/site/container";
+import { GoldenWeekBanner } from "@/components/site/golden-week-banner";
 import { FeaturedGuides } from "@/components/site/featured-guides";
 import { ResultPreview } from "@/components/site/result-preview";
 import { FaqPageJsonLd } from "@/components/site/seo-json-ld";
@@ -39,6 +40,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <main>
+      <GoldenWeekBanner />
       <SiteJsonLd />
       <FaqPageJsonLd faqs={homeFaqs} />
 

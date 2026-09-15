@@ -7,9 +7,11 @@ describe("public discovery metadata", () => {
   it("publishes the complete canonical sitemap", () => {
     const entries = sitemap();
 
-    expect(entries).toHaveLength(44);
+    expect(entries).toHaveLength(46);
     expect(entries.every((entry) => entry.url.startsWith("https://chinatripcheck.com"))).toBe(true);
     expect(entries.map((entry) => entry.url)).toEqual(expect.arrayContaining([
+      "https://chinatripcheck.com/china-train-ticket-sale-planner",
+      "https://chinatripcheck.com/china-visa-free-checker",
       "https://chinatripcheck.com/checks/readiness",
       "https://chinatripcheck.com/checks/apps",
       "https://chinatripcheck.com/checks/payment",
