@@ -6,7 +6,7 @@ export const guideHowTos: Record<GuideSlug, { name: string; text: string }[]> = 
     { name: "Link a foreign card", text: "Link the card you plan to use and enable overseas transactions with the issuer." },
     { name: "Keep approval access ready", text: "Make sure you can reach the number or banking app used for transaction approvals." },
     { name: "Prepare backups", text: "Add a second card from another issuer and carry a small amount of RMB cash." },
-    { name: "Make a real purchase", text: "Buy something small through the same app and card combination you plan to use in China." },
+    { name: "Test after arrival", text: "Make a small purchase at a legitimate mainland merchant with your chosen app and card. Confirm the app result and merchant receipt. If no supported test is available before departure, keep the status as untested and prepare a backup." },
     { name: "Repeat after changes", text: "Run the test again if you change cards, phone numbers or app accounts." },
   ],
   "foreign-card-fails-in-china": [

@@ -11,6 +11,7 @@ import type { GuideSlug } from "@/features/guides/types";
 import { formatReviewDate } from "@/lib/format-date";
 import { siteConfig } from "@/lib/site";
 import { GuideTaskList } from "@/features/guides/components/guide-task-list";
+import { HotelHelper } from "@/features/guides/components/hotel-helper";
 
 export function generateStaticParams() {
   return guideCatalog.map((guide) => ({ slug: guide.slug }));
@@ -63,14 +64,11 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
           <p className="text-sm font-bold text-[var(--primary)]">{guide.category}</p>
           <h1 className="mt-4 font-[var(--font-display)] text-3xl leading-[1.2] tracking-[-0.03em] text-balance sm:text-4xl lg:text-5xl">{guide.title}</h1>
           <p className="mt-5 text-lg leading-8 text-[var(--muted)]">{guide.description}</p>
-          {relatedChecks[0] ? <div className="mt-8 rounded-[var(--radius-md)] border border-blue-200 bg-blue-50 p-6">
-            <p className="text-sm font-bold text-[var(--primary)]">Start with the tool</p>
-            <h2 className="mt-2 text-xl font-extrabold">Get a result before reading the explanation.</h2>
-            <p className="mt-2 leading-7 text-[var(--muted)]">The checker identifies whether this topic applies to your trip and orders the actions that matter.</p>
-            <Link className="mt-5 inline-flex rounded-full bg-[var(--primary)] px-5 py-3 text-sm font-extrabold text-white" href={`/checks/${relatedChecks[0].slug}`}>Run {relatedChecks[0].name}</Link>
-          </div> : null}
           <div className="my-10 h-px bg-[var(--line)]" />
+          {guide.slug === "confirm-late-hotel-check-in-china" ? <HotelHelper mode="arrival" /> : null}
+          {guide.slug === "save-hotel-name-address-in-chinese" ? <HotelHelper mode="address" /> : null}
           <Content />
+          {relatedChecks[0] ? <p className="mt-8 rounded-xl bg-blue-50 p-5">Need help applying this to your trip? <Link className="font-bold underline" href={`/checks/${relatedChecks[0].slug}`}>Open {relatedChecks[0].name}</Link>. The tool is optional; the guidance above is available without completing a check.</p> : null}
           {guide.howTo?.length ? <GuideTaskList guideSlug={guide.slug} steps={guide.howTo} /> : null}
           <div className="mt-12 border-t border-[var(--line)] pt-6 text-sm leading-6 text-[var(--muted)]">
             <p>Last reviewed {formatReviewDate(guide.lastReviewedAt)}</p>
@@ -78,7 +76,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
           </div>
         </article>
         <aside className="h-fit rounded-[var(--radius-md)] bg-[var(--surface)] p-6 lg:sticky lg:top-6">
-          <h2 className="font-extrabold">Use a checker first</h2>
+          <h2 className="font-extrabold">Related tools</h2>
           <div className="mt-4 space-y-3">{relatedChecks.map((check) => check ? <Link className="block rounded-xl bg-white px-4 py-3 text-sm font-bold" href={`/checks/${check.slug}`} key={check.slug}>{check.name}</Link> : null)}</div>
           <h2 className="mt-7 font-extrabold">Guide sources and review notes</h2>
           <ul className="mt-3 space-y-3 text-sm leading-6 text-[var(--muted)]">{guide.sourceNotes.map((source) => <li key={source.label}>{source.url ? <a className="underline underline-offset-4" href={source.url} rel="noreferrer" target="_blank">{source.label}</a> : source.label}</li>)}</ul>

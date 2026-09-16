@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import { Container } from "@/components/site/container";
 import { GoldenWeekBanner } from "@/components/site/golden-week-banner";
+import { planningTools } from "@/components/site/planning-tools";
 import { FeaturedGuides } from "@/components/site/featured-guides";
 import { ResultPreview } from "@/components/site/result-preview";
 import { FaqPageJsonLd } from "@/components/site/seo-json-ld";
@@ -26,11 +27,11 @@ const homeFaqs = [
 ];
 
 export const metadata: Metadata = {
-  title: "China Travel Readiness Checker",
+  title: "China Travel Tools: Visa-Free, Train Tickets & Payments",
   description: siteConfig.description,
   alternates: { canonical: "/" },
   openGraph: {
-    title: "China Travel Readiness Checker | ChinaTripCheck",
+    title: "China Travel Tools: Visa-Free, Train Tickets & Payments | ChinaTripCheck",
     description: siteConfig.description,
     url: siteConfig.url,
     images: [{ url: siteConfig.ogImage }],
@@ -49,9 +50,13 @@ export default function HomePage() {
           <div className="relative z-10 max-w-2xl">
             <p className="text-sm font-extrabold uppercase tracking-[0.12em] text-[var(--primary)]">Free pre-trip check · Private by design</p>
             <h1 className="mt-5 font-[var(--font-display)] text-5xl leading-[1.06] tracking-[-0.045em] text-[var(--ink)] text-balance sm:text-6xl lg:text-[4.25rem]">
-              China Travel Readiness Checker
+              Free China Travel Tools
             </h1>
-            <p className="mt-6 max-w-[38rem] text-xl leading-9 text-[var(--muted)]">Check if you&apos;re ready to travel to China before payment, apps, bookings or identity checks interrupt your trip.</p>
+            <p className="mt-6 max-w-[38rem] text-xl leading-9 text-[var(--muted)]">Check visa-free options, calculate train booking dates, or troubleshoot payments. Choose one task first; the full readiness check is optional.</p>
+            <nav aria-label="Choose a travel task" className="mt-5 grid gap-2 sm:grid-cols-2">
+              {planningTools.slice(0, 3).map(tool => <Link key={tool.href} href={tool.href} className="rounded-xl border border-[var(--line)] bg-white px-4 py-3 text-sm font-bold text-[var(--primary)] hover:underline">{tool.label}</Link>)}
+              <Link href="/china-payment-checker" className="rounded-xl border border-[var(--line)] bg-white px-4 py-3 text-sm font-bold text-[var(--primary)] hover:underline">Alipay &amp; WeChat payment help</Link>
+            </nav>
             <ul className="mt-7 grid max-w-xl grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3" aria-label="Readiness topics">
               {readinessAreas.map((area) => (
                 <li className="flex items-center gap-2 font-extrabold text-[var(--ink)]" key={area}>

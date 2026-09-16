@@ -9,8 +9,10 @@ describe("HomePage", () => {
     render(<><Header /><HomePage /></>);
 
     expect(screen.getByRole("link", { name: "ChinaTripCheck home" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "China Travel Readiness Checker" })).toBeInTheDocument();
-    expect(screen.getByText("Check if you're ready to travel to China before payment, apps, bookings or identity checks interrupt your trip.")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Free China Travel Tools" })).toBeInTheDocument();
+    expect(screen.getByRole("navigation", { name: "Choose a travel task" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Visa-free eligibility checker" })).toHaveAttribute("href", "/china-visa-free-checker");
+    expect(screen.getByRole("link", { name: "Train ticket sale planner" })).toHaveAttribute("href", "/china-train-ticket-sale-planner");
     expect(screen.getAllByRole("link", { name: "Start Free Readiness Check" }).length).toBeGreaterThanOrEqual(2);
     expect(screen.getAllByRole("link", { name: "Start Free Readiness Check" })[0]).toHaveAttribute("href", "/checks/readiness");
     expect(screen.getByRole("img", { name: /traveler checking china travel readiness/i })).toBeInTheDocument();
@@ -33,7 +35,6 @@ describe("HomePage", () => {
 
     expect(screen.queryByText(/coming soon/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/train baggage/i)).not.toBeInTheDocument();
-    expect(screen.queryByText(/visa checker/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/China Ready/i)).not.toBeInTheDocument();
   });
 });

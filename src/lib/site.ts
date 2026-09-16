@@ -3,7 +3,7 @@ export const siteConfig = {
   wordmark: "ChinaTripCheck",
   url: "https://chinatripcheck.com",
   description:
-    "Free China travel readiness checker for payment, Alipay, WeChat, essential apps, passport, train booking and hotel preparation before departure.",
+    "Free China travel tools: check visa-free options, calculate train ticket sale and station arrival times, and prepare Alipay, WeChat, apps and hotels.",
   ogImage: "/images/china-trip-check-hero.png",
   lastReviewedAt: "2026-08-03",
   keywords: [

@@ -1,4 +1,5 @@
 import { ArticleSections, type ArticleFaq } from "./article-sections";
+import Link from "next/link";
 
 export const paymentTestFaqs: ArticleFaq[] = [
   {
@@ -17,6 +18,18 @@ export const paymentTestFaqs: ArticleFaq[] = [
 
 export function PaymentTestGuide() {
   return (
+    <>
+    <section className="mb-10 space-y-4 rounded-2xl bg-[var(--surface)] p-6" aria-labelledby="payment-test-answer">
+      <h2 id="payment-test-answer" className="text-2xl font-bold">How do I test if WeChat Pay or Alipay works?</h2>
+      <p className="leading-7">Before departure, check that your card is linked and complete any verification requested by the app. That is setup, not a successful payment. After arrival, make a small purchase at a legitimate merchant, confirm the app shows payment success and ask the merchant to confirm receipt. Keep a backup available.</p>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div><h3 className="font-bold">Still outside China?</h3><p className="mt-2 leading-7">You may not have a supported transaction to test. Do not send money to strangers or use an unknown QR code as a test. Leave your status as “set up, not yet tested in China.”</p></div>
+        <div><h3 className="font-bold">Already in China?</h3><p className="mt-2 leading-7">Check the merchant and amount, use the card you intend to rely on, and inspect the payment result. A pending bank authorization alone is not proof the merchant was paid; confirm the order before retrying.</p></div>
+      </div>
+      <p className="leading-7">One successful purchase proves that transaction, not every shop, transfer or future payment. This website cannot test your wallet or charge your card, and does not provide a payment test account.</p>
+      <Link className="block font-bold underline" href="/checks/payment">Payment failed or setup incomplete? Open the payment diagnostic</Link>
+      <Link className="block font-bold underline" href="/alipay-backup-payment-checker">Prepare an independent payment backup</Link>
+    </section>
     <ArticleSections
       answer="A linked card in Alipay or WeChat Pay is only a setup milestone. Prove each setup layer before departure, then keep a separate backup for the first live purchase in China."
       sections={[
@@ -62,5 +75,6 @@ export function PaymentTestGuide() {
       ]}
       faqs={paymentTestFaqs}
     />
+    </>
   );
 }
